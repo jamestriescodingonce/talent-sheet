@@ -1,0 +1,35 @@
+/*
+ * Talent Sheet — brand color tokens
+ *
+ * Three values given directly:
+ *   accent      #68bf0f
+ *   background  #151515  (main content surface)
+ *   dark partner #111111 (paired secondary surface — sidebar / nav / elevated
+ *                          panels; darker than --color-background)
+ *
+ * Everything else here (foreground, muted, border, accent-foreground) is
+ * derived for contrast, not specified — adjust freely.
+ *
+ * Plain CSS custom properties for now since there's no Tailwind/shadcn
+ * config in this repo yet. Once scaffolded, map these into
+ * tailwind.config's theme.colors (or a Tailwind v4 @theme block) under the
+ * same names shadcn components expect: background, foreground, card,
+ * card-foreground, muted, muted-foreground, accent, accent-foreground,
+ * border.
+ */
+
+:root {
+  --color-accent: #68bf0f;
+  --color-accent-foreground: #111111;
+
+  --color-background: #151515;
+  --color-foreground: #ececea;
+
+  --color-surface: #111111;
+  --color-surface-foreground: #ececea;
+
+  --color-muted: #1f1f1f;
+  --color-muted-foreground: #9a9a94;
+
+  --color-border: #262626;
+}
