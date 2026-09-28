@@ -1,4 +1,4 @@
-# Talent Sheet — Design System (v2)
+# Talent Sheet — Design System (v3)
 
 **Who owns what.** Talent Sheet is the public record of equity between athletes, other public figures and the companies they back: a directory you can search and a newsletter you actually open. It reads as a trusted record first and a great column second. Never as a sportsbook.
 
@@ -10,8 +10,8 @@ This file is the single source of truth for design. If code and this file disagr
 
 ## 1. Principles
 
-- **Paper first.** Light is the primary theme. A warm off-white ground reads as a record; black reads as an app.
-- **Deep green, not neon.** `brand` is forest green; `pitch` is the clubhouse-wall green for big signature fields.
+- **Night first.** Dark (Night) is the primary theme: a deep green-black ground, never pure black. Light (Paper) is kept as an alternate theme.
+- **Cool green that pops, not neon.** In dark, `brand` is a cool, bright green used sparingly; `pitch` is the clubhouse-wall green for big signature fields.
 - **One lime moment.** `highlight` (#B8E986) appears only on `pitch` fields: the wordmark dot, one underline, or one figure. It's memorable because it's rare.
 - **Mode-tuned greens.** `brand` has a different value per theme on purpose. Never swap them.
 - **Drawn with lines, not shadows.** No shadows, gradients or glows. Hierarchy comes from ground colour and 1px hairlines.
@@ -39,9 +39,9 @@ A typical page is ~90% `surface` / `surface-raised` / `ink`, ~8% `ink-muted` and
 | `ink` | #0C1510 | #F1F0E9 | Primary text and figures. |
 | `ink-muted` | #545D57 | #9CA79F | Secondary text, metadata, column labels. |
 | `ink-disabled` | #A3A69F | #56615A | Disabled controls only. |
-| `brand` | #0F5B38 | #5FCB92 | Links, the one primary action, verified marks, wordmark. |
+| `brand` | #0F5B38 | #3DDC97 | Links, the one primary action, verified marks, wordmark, active tab. |
 | `on-brand` | #FFFFFF | #0B120E | Text/icons on a brand fill. |
-| `brand-wash` | #E3EFE7 | #12261B | Selected rows, active filter chips, verified badge. Text on it: `brand`. |
+| `brand-wash` | #E3EFE7 | #0E2A1E | Selected rows, active filter chips, verified badge. Text on it: `brand`. |
 | `pitch` | #0B3B27 | #12432D | Signature field: masthead, share cards, hero band, footer. |
 | `on-pitch` | #F4F1E6 | #F4F1E6 | Cream text on pitch. |
 | `highlight` | #B8E986 | #B8E986 | Lime. **Only on pitch.** Never on paper or surface. |
@@ -150,10 +150,20 @@ Non-public amounts render as "Undisclosed" in `ink-muted`, never a dash or zero.
 - Gated view: Round and Date render as `locked` with lock + "Unlock."
 - Data: the deal record from Airtable plus a source URL for the status tag.
 
-**Profile header**
-- `label` line (talent type, league, position) above the name in `headline`; one-line `deck` in italic `ink-muted`, written by an editor, never generated.
-- Stat strip: exactly three counts (DM Sans 600 tabular), labels in `ink-muted`, above a `hairline`. Counts use verified deals only.
-- Photo: square, `radius-md`, `hairline` edge; `surface-sunk` placeholder when none.
+**Profile header** (photo banner)
+- A full-width banner on `surface-sunk`, `radius-md`, `hairline` edge. Photo on the left, cropped tight and bleeding to the banner's top and bottom edges; text on the right.
+- Contents, and nothing more: name in `headline` (`display` size on wide screens), a `label` line (league, and team/number when current), and social icons (line icons, `ink-muted` at rest, `ink` on hover, 44px tap targets).
+- No bio, tagline or stat strip in the header. Associated companies (e.g. the talent's own fund) sit in a single `small` line under the name.
+- Placeholder when no licensed photo exists: a neutral illustrated silhouette on `surface-sunk`. Never a generated likeness of a real person.
+
+**Portfolio card** (profile Portfolio/Overview grid)
+- `surface-raised` ground, 1px `hairline` edge, `radius-md`, padding `space-4`; hover `surface-hover` and `control-border` edge. No shadow, no lift.
+- Grid: 4 columns at `content-max`, 3 below 1100px, 2 below `bp-md`, 1 below `bp-sm`; `space-6` gutter.
+- Top: company logo tile (40px, `radius-md`, `hairline`) **beside** the company name (`title` weight, 15-16px) and sector (`small`, `ink-muted`). Never stacked logo-on-top.
+- Middle: one-line description (`small`, `ink-muted`, two lines max).
+- Bottom: relationship (precise wording) and year invested (`figure`, "Undisclosed" if not public) as `label`-headed pairs; verification tag bottom-right; "View details" link in `brand` with an arrow.
+- View details expands in place to show round/amount and the source link.
+- Sector filter chips above the grid (filter chip style, `radius-pill`).
 
 **Newsletter masthead**
 - `pitch` ground; wordmark in Newsreader 600 `on-pitch`; full stop in `highlight` (the only lime on the page).
@@ -170,7 +180,7 @@ Non-public amounts render as "Undisclosed" in `ink-muted`, never a dash or zero.
 - **Wordmark (interim):** "Talent Sheet" in Newsreader 600. On paper: `ink` with a `brand` full stop. On pitch: `on-pitch` with a `highlight` full stop. The full stop is the brand's signature detail. Clear space = cap height.
 - **Monogram** (favicon, avatars): "TS" in Newsreader 600, `on-pitch` on `pitch`, `radius-md` square.
 - **Icons:** line icons, 1.5px stroke, square caps, `ink-muted` at rest, `ink` on hover. No filled icons, no emoji in product UI.
-- **Photos:** cropped tight in a `radius-md` frame with a `hairline` edge.
+- **Photos:** cropped tight in a `radius-md` frame with a `hairline` edge. Only licensed photos of real people; otherwise the silhouette placeholder.
 - **Company logos:** keep their own colours on `surface-raised` tiles; never recolour.
 
 ---
@@ -186,10 +196,21 @@ Non-public amounts render as "Undisclosed" in `ink-muted`, never a dash or zero.
 ## 10. Implementation
 
 ### CSS variables
-Every token is a CSS variable of the same name. Themes switch with `data-theme="light"` / `data-theme="dark"` on `<html>`. Light is the default.
+Every token is a CSS variable of the same name. Themes switch with `data-theme="light"` / `data-theme="dark"` on `<html>`. Dark is the default.
 
 ```css
-:root, [data-theme="light"] {
+:root, [data-theme="dark"] {
+  --surface: #0B120E; --surface-raised: #131C17; --surface-sunk: #080D0A; --surface-hover: #18231D;
+  --hairline: #25332B; --control-border: #607268;
+  --ink: #F1F0E9; --ink-muted: #9CA79F; --ink-disabled: #56615A;
+  --brand: #3DDC97; --on-brand: #0B120E; --brand-wash: #0E2A1E;
+  --pitch: #12432D; --on-pitch: #F4F1E6; --highlight: #B8E986;
+  --fresh: #F0B25A; --fresh-wash: #2C2010; --negative: #F08C7C;
+  --focus-ring: #8FB4FF; --locked: #1A2520;
+  --cat-athlete: #8DB0EE; --cat-coach: #D29BDC; --cat-entertainer: #F0A27F;
+  --cat-executive: #6FC6CB; --cat-investor: #DDBF5C; --cat-other: #AAB6C2;
+}
+[data-theme="light"] {
   --surface: #F7F6F1; --surface-raised: #FFFFFF; --surface-sunk: #EEEDE6; --surface-hover: #F0EFE8;
   --hairline: #DCDAD0; --control-border: #8C897D;
   --ink: #0C1510; --ink-muted: #545D57; --ink-disabled: #A3A69F;
@@ -199,17 +220,6 @@ Every token is a CSS variable of the same name. Themes switch with `data-theme="
   --focus-ring: #2F6FDB; --locked: #EEEDE6;
   --cat-athlete: #2C5AA0; --cat-coach: #7B3F86; --cat-entertainer: #A8522B;
   --cat-executive: #1D6E73; --cat-investor: #7F6512; --cat-other: #4F5B67;
-}
-[data-theme="dark"] {
-  --surface: #0B120E; --surface-raised: #131C17; --surface-sunk: #080D0A; --surface-hover: #18231D;
-  --hairline: #25332B; --control-border: #607268;
-  --ink: #F1F0E9; --ink-muted: #9CA79F; --ink-disabled: #56615A;
-  --brand: #5FCB92; --on-brand: #0B120E; --brand-wash: #12261B;
-  --pitch: #12432D; --on-pitch: #F4F1E6; --highlight: #B8E986;
-  --fresh: #F0B25A; --fresh-wash: #2C2010; --negative: #F08C7C;
-  --focus-ring: #8FB4FF; --locked: #1A2520;
-  --cat-athlete: #8DB0EE; --cat-coach: #D29BDC; --cat-entertainer: #F0A27F;
-  --cat-executive: #6FC6CB; --cat-investor: #DDBF5C; --cat-other: #AAB6C2;
 }
 :root {
   --font-display: "Newsreader", Georgia, "Times New Roman", serif;

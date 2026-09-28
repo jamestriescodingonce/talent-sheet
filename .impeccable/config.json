@@ -20,6 +20,24 @@
         ],
         "createdAt": "2026-09-28T05:21:25.639Z",
         "reason": "Claude: flagged wrappers (table frame, FAQ list) hold cells/summaries that carry their own 12-16px padding"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "previews/profile-v3.html"
+        ],
+        "createdAt": "2026-09-28T05:30:44.184Z",
+        "reason": "Claude: #000 is the default fill of the hidden SVG icon sprite, not rendered text; rendered check shows DESIGN.md dark pairings pass"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "previews/profile-v3.html"
+        ],
+        "createdAt": "2026-09-28T05:30:44.195Z",
+        "reason": "Claude: photo placeholder is full-bleed by design; its only text label is inset 16px"
       }
     ]
   }
