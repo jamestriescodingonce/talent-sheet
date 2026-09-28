@@ -65,6 +65,33 @@
         ],
         "createdAt": "2026-09-28T05:50:46.012Z",
         "reason": "Claude: flagged pairs use #ffffff or a white-blended wash as ground, which never renders on this dark-only page; rendered check passes"
+      },
+      {
+        "rule": "undersized-ui-text",
+        "value": "*",
+        "files": [
+          "previews/experiment-1.html"
+        ],
+        "createdAt": "2026-09-28T06:00:38.694Z",
+        "reason": "User spec for this experiment sets the wordmark at 10px and metadata at 8-10px; flagged to the user"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "previews/experiment-1.html"
+        ],
+        "createdAt": "2026-09-28T06:00:38.706Z",
+        "reason": "Claude: static scan pairs text with #ffffff, which never renders on this dark-only page"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "previews/experiment-1.html"
+        ],
+        "createdAt": "2026-09-28T06:00:38.718Z",
+        "reason": "Claude: tab band is a fixed 42px bar with vertically centred labels, per spec"
       }
     ]
   }
