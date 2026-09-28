@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "previews/talent-sheet-v2.html"
+        ],
+        "createdAt": "2026-09-28T05:21:25.629Z",
+        "reason": "Claude: static scan pairs dark-theme ink tokens with light-theme surfaces; rendered check in both themes shows DESIGN.md pairings pass"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "previews/talent-sheet-v2.html"
+        ],
+        "createdAt": "2026-09-28T05:21:25.639Z",
+        "reason": "Claude: flagged wrappers (table frame, FAQ list) hold cells/summaries that carry their own 12-16px padding"
+      }
+    ]
+  }
+}
