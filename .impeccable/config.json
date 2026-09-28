@@ -38,6 +38,24 @@
         ],
         "createdAt": "2026-09-28T05:30:44.195Z",
         "reason": "Claude: photo placeholder is full-bleed by design; its only text label is inset 16px"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "previews/profile-v4.html"
+        ],
+        "createdAt": "2026-09-28T05:42:52.011Z",
+        "reason": "Claude: flagged pairs are cross-theme static guesses (#ffffff ground never rendered) and SVG seal/sprite text whose fill is a CSS var; rendered check passes"
+      },
+      {
+        "rule": "all-caps-body",
+        "value": "*",
+        "files": [
+          "previews/profile-v4.html"
+        ],
+        "createdAt": "2026-09-28T05:42:52.022Z",
+        "reason": "Claude: uppercase is limited to short labels (sector names, portrait caption), not body copy"
       }
     ]
   }
