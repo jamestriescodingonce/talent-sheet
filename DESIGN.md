@@ -1,10 +1,10 @@
-# Talent Sheet — Design System (v4)
+# Talent Sheet — Design System (v5)
 
 **Who owns what.** Talent Sheet is the public record of equity between athletes, other public figures and the companies they back: a directory you can search and a newsletter you actually open. It reads as a trusted record first and a great column second. Never as a sportsbook.
 
 **In one line:** The Ringer's voice, Fidelity's restraint, and a green you could only find in a clubhouse.
 
-**Visual world (v4): the share register.** Profiles read like engraved share certificates, because a certificate is the physical proof of who owns what. Guilloche linework, fine double-rule borders, oval portrait vignettes and circular verification seals, all drawn in one cool green on a green-black night ground. Reference build: `previews/profile-v4.html`.
+**Visual world (v5):** dark, photo-led and premium, following the user's reference layout for profiles. The v4 "share register" certificate treatment was rejected and is retired. Reference build: `previews/profile-v5.html` (three versions of the hero treatment, pick pending).
 
 This file is the single source of truth for design. If code and this file disagree, this file wins. All example names are fictional.
 
@@ -13,10 +13,10 @@ This file is the single source of truth for design. If code and this file disagr
 ## 1. Principles
 
 - **Night first.** Dark (Night) is the primary theme: a deep green-black ground, never pure black. Light (Paper) is kept as an alternate theme.
-- **Cool green that pops, not neon.** In dark, `brand` is a cool, bright green used sparingly; `pitch` is the clubhouse-wall green for big signature fields.
+- **Cool green that pops, not neon.** In dark, `brand` is a cool, bright green. Use it generously on interactive and key elements (links, active tabs and chips, key figures, verified marks), never as a large flat fill.
 - **One lime moment.** `highlight` (#B8E986) appears only on `pitch` fields: the wordmark dot, one underline, or one figure. It's memorable because it's rare.
 - **Mode-tuned greens.** `brand` has a different value per theme on purpose. Never swap them.
-- **Drawn with lines, not shadows.** No shadows, gradients or glows. Hierarchy comes from ground colour and 1px hairlines.
+- **Depth, lightly (loosened, medium).** Allowed: a soft green glow or gradient behind the hero, and soft shadows on cards that deepen slightly on hover with a 2px lift. Still not allowed: glowing text, glowing borders, neon fills, rainbow or multi-hue gradients, glassmorphism.
 - **Trust is the product.** Every deal shows how we know it.
 
 Deliberately avoided: neon as a background (Robinhood, Cash App), gradients and crowns (DraftKings), pure black (Spotify), and any green/red up/down pairing (trading apps).
@@ -26,7 +26,7 @@ Deliberately avoided: neon as a background (Robinhood, Cash App), gradients and 
 ## 2. Colour
 
 ### Proportion
-A typical page is ~90% `surface` / `surface-raised` / `ink`, ~8% `ink-muted` and `hairline`, ~2% `brand`. A large `pitch` field appears **at most once per page** (masthead, hero or footer).
+A typical page is ~85% `surface` / `surface-raised` / `ink`, ~8% `ink-muted` and `hairline`, ~5–7% `brand` (accents plus the hero glow). A large `pitch` field appears **at most once per page** (masthead, hero or footer).
 
 ### Tokens
 
@@ -71,26 +71,19 @@ Every text pairing above passes 4.5:1 in both themes; `control-border` and `focu
 
 ## 3. Typography
 
-Rule of thumb: **a name is engraved, a sentence is sans.**
+One family, **Geist**, used with tight tracking at display sizes and plain at reading sizes. The reference is a clean, modern sans throughout; hierarchy comes from size and weight, not a second face. No monospace.
 
-- **Bodoni Moda** (display, optical sizes): the engraved voice of a certificate. Talent names, company names on holdings, big register figures, year figures in the ledger. Italic for the surname and for certificate clauses ("Held as … since …").
-- **Schibsted Grotesk** (sans): everything read at interface size, and small uppercase labels (600, 11px, 0.14em tracking). All numbers use `font-variant-numeric: tabular-nums lining-nums`.
-- No monospace.
+Load from Google Fonts: Geist (400, 500, 600, 700). All numbers use `font-variant-numeric: tabular-nums` where they line up.
 
-Load from Google Fonts: Bodoni Moda (ital, opsz 6..96, 400/500/600, italic 400/500), Schibsted Grotesk (400, 500, 600, 700).
-
-| Style | Font | Size / line | Weight | Notes | Use |
-|---|---|---|---|---|---|
-| `display` | Bodoni Moda | clamp(52px, 7.2vw, 104px) / 0.92 | 500 (surname italic 400) | -0.025em | Profile name only |
-| `headline` | Bodoni Moda | 36 / 40 | 500 | -0.01em | Page titles, story headlines |
-| `holding` | Bodoni Moda | 26 / 1.05 | 500 | -0.01em | Company name on a holding |
-| `clause` | Bodoni Moda | 19 / 1.35 | 400 italic | | "Held as investor since 2018" (the role and year in sans) |
-| `register` | Bodoni Moda | 34 / 1 | 500 | lining nums | Register summary figures, ledger years |
-| `body` | Schibsted Grotesk | 16 / 1.6 | 400 | | Paragraphs, descriptions |
-| `small` | Schibsted Grotesk | 14–15 / 1.5 | 400 | | Metadata, captions |
-| `label` | Schibsted Grotesk | 11 / 16 | 600 | uppercase, 0.14em | Sector under a company, captions. Never above a heading as an eyebrow. |
-| `title` | Schibsted Grotesk | 18 / 24 | 600 | | Card and section titles outside profiles |
-| `figure` | Schibsted Grotesk | 15 / 20 | 500 | tabular-nums | Round sizes, dates, counts; right-aligned in tables |
+| Style | Size / line | Weight | Tracking | Use |
+|---|---|---|---|---|
+| `display` | clamp(40px, 4.6vw, 60px) / 1 | 600 | -0.035em | Profile name |
+| `headline` | 22 / 28 | 600 | -0.02em | Section titles ("Investment portfolio") |
+| `figure-lg` | 24 / 30 | 600 | -0.02em | Hero facts (companies, sectors, earliest deal) |
+| `title` | 16 / 20 | 600 | -0.01em | Company name on a card |
+| `body` | 15 / 1.55 | 400 | 0 | Paragraphs, descriptions |
+| `small` | 13–14 / 1.45 | 400–500 | 0 | Sector, metadata, key/value labels, tags |
+| `caption` | 11 / 16 | 500 | 0.08em, uppercase | Rare: photo credit or placeholder label only |
 
 ---
 
@@ -98,7 +91,7 @@ Load from Google Fonts: Bodoni Moda (ital, opsz 6..96, 400/500/600, italic 400/5
 
 **Spacing:** `space-1` 4px (icon to label) · `space-2` 8px (inside chips) · `space-3` 12px (cell and button vertical padding) · `space-4` 16px (card padding, cell horizontal padding) · `space-6` 24px (card gutter, mobile side margin) · `space-10` 40px (between sections) · `space-16` 64px (hero and masthead).
 
-**Radius:** `radius-sm` 3px (tags, NEW marker, inputs; nearly square, this is a ledger) · `radius-md` 8px (cards, buttons, photos, share cards) · `radius-pill` 999px (filter chips and avatar stacks only).
+**Radius:** `radius-sm` 6px (tags, inputs, small controls) · `radius-md` 12px (cards, buttons) · `radius-lg` 16px (hero banner, large panels) · `radius-pill` 999px (filter chips and avatar stacks only).
 
 **Layout:**
 - `content-max` 1200px for directory and table pages; `reading-max` 680px for newsletter issues, bios, articles.
@@ -139,7 +132,7 @@ Non-public amounts render as "Undisclosed" in `ink-muted`, never a dash or zero.
 **Button**
 - Primary: `brand` fill, `on-brand` text. One per view (Subscribe, Search, Submit a deal).
 - Secondary: `control-border` outline, `ink` text. Link: `brand`, underlined.
-- `radius-md`, padding `space-3` × `space-4`, Schibsted Grotesk 600 15px. Focus: 2px `focus-ring`, 2px offset. Disabled: `surface-sunk` + `ink-disabled`. Labels are sentence-case verbs.
+- `radius-md`, padding `space-3` × `space-4`, Geist 600 15px. Focus: 2px `focus-ring`, 2px offset. Disabled: `surface-sunk` + `ink-disabled`. Labels are sentence-case verbs.
 
 **Tag**
 - Talent type: `label` text + 8px dot in the matching `cat-*` colour.
@@ -154,36 +147,33 @@ Non-public amounts render as "Undisclosed" in `ink-muted`, never a dash or zero.
 - Gated view: Round and Date render as `locked` with lock + "Unlock."
 - Data: the deal record from Airtable plus a source URL for the status tag.
 
-**Profile certificate** (profile header)
-- A full-width frame on `surface-raised`: 1px `control-border`-toned outer edge, a second 1px rule inset 7px in `brand` at ~38% opacity, and a guilloche wave band (tiled SVG, `brand`, ~50% opacity) along the inner top and bottom edges.
-- A generative guilloche rosette (woven sine rings on canvas, `brand` at ~16% opacity) bleeds off the right edge. It draws once on load (1.6s ease-out), instantly under reduced motion. The only motion on the page.
-- Left: portrait in an oval vignette (4:5), 1px `brand` rule plus a second ring. Photos are printed monotone green like a banknote engraving. Without a licensed photo, an engraved-hatching silhouette labelled "Placeholder portrait". Never a generated likeness of a real person.
-- Right: name in `display`, one meta line (league · position · associated company), a register summary of three figures in `register` style above a `hairline`, then social icons (44px targets).
-- No eyebrow above the name, no bio, no tagline.
+**Profile banner** (follows the user's reference)
+- App shell: 248px left sidebar (wordmark, icon nav, newsletter card at the foot) plus a slim top bar (section links, search). Below 1000px the sidebar becomes a top strip.
+- Banner: `radius` 16px, photo on the left (~44%), text on the right: league · position, name in `display`, one sentence (associated company and what they back), a row of three facts (`figure-lg`, the count in `brand`), social icons. No bio paragraph, no tagline.
+- The banner carries the page's one glow: a soft green radial or gradient behind the photo. Its exact treatment is the choice between versions A (Floodlight), B (Pitch) and C (Broadcast) in `previews/profile-v5.html`.
+- Photos fade into the banner on their inner edge. Placeholder: a rim-lit studio silhouette labelled "Placeholder photo", never a likeness of a real person.
 
-**Holding stub** (profile Holdings grid)
-- `surface-raised`, 1px `hairline` edge, `radius-md`, a second rule inset 5px, and a faint guilloche band across the top. Hover lifts the band and inner rule toward `brand`; no shadow, no movement.
-- Grid: 3 columns at `content-max`, 2 below 1100px, 1 below 800px; 24px gutter.
-- Logo tile (48px) **beside** the company name in `holding` style, sector as a `label` beneath. Never logo-on-top.
-- Verification seal top-right: a 64px circular stamp with the status lettered around the ring ("REPORTED · SECONDARY SOURCE", dashed inner ring, italic "Rep."; or "VERIFIED · PRIMARY SOURCE", `brand-wash` fill, check).
-- Then the clause ("Held as **investor** since **2018**", or "· date undisclosed"), a one-line description, a `hairline`, and a footer with "View details" (`brand`, arrow) and the amount or "Undisclosed".
-- View details expands in place: round, amount, source link.
-- Sector filter is a typographic index (underlined text buttons with count superscripts in `brand`), not pills.
+**Portfolio card**
+- `radius` 12px, 1px `hairline`, soft shadow; hover lifts 2px and deepens the shadow (220ms, strong ease-out). Reduced motion: no lift.
+- Grid: 4 columns ≥1280px, 3 ≥1000px, 2 ≥680px, 1 below; 16px gutter.
+- Logo in a 44px circle **beside** the company name and sector (never stacked). Logos keep their own colours on a light tile.
+- Two-line description, then Relationship / Invested (year or "Undisclosed"), then a footer: "View details →" in `brand` and a Verified/Reported tag. View details expands in place (round, amount, source).
+- Sector filter chips above the grid (`radius-pill`); "View all (n) →" link beside the section title.
 
 **Newsletter masthead**
-- `pitch` ground; wordmark in Bodoni Moda 600 `on-pitch`; full stop in `highlight` (the only lime on the page).
+- `pitch` ground; wordmark in Geist 700 `on-pitch`; full stop in `highlight` (the only lime on the page).
 - Meta bar: issue number, tagline, date in `label`, over a 1px `on-pitch` rule.
 
 **Share card**
 - 1200×630 (link previews) and 1080×1350 (Instagram, headline 80px).
-- `pitch` ground, Bodoni Moda 500 `on-pitch` headline, one key figure in `highlight` (never more), wordmark top-left, verification + source bottom-left. Typographic only, no photos.
+- `pitch` ground, Geist 600 `on-pitch` headline, one key figure in `highlight` (never more), wordmark top-left, verification + source bottom-left. Typographic only, no photos.
 
 ---
 
 ## 8. Logo, icons, imagery
 
-- **Wordmark (interim):** "Talent Sheet" in Bodoni Moda 600. On paper: `ink` with a `brand` full stop. On pitch: `on-pitch` with a `highlight` full stop. The full stop is the brand's signature detail. Clear space = cap height.
-- **Monogram** (favicon, avatars): "TS" in Bodoni Moda 600, `on-pitch` on `pitch`, `radius-md` square.
+- **Wordmark (interim):** "Talent Sheet" in Geist 700. On paper: `ink` with a `brand` full stop. On pitch: `on-pitch` with a `highlight` full stop. The full stop is the brand's signature detail. Clear space = cap height.
+- **Monogram** (favicon, avatars): "TS" in Geist 700, `on-pitch` on `pitch`, `radius-md` square.
 - **Icons:** line icons, 1.5px stroke, square caps, `ink-muted` at rest, `ink` on hover. No filled icons, no emoji in product UI.
 - **Photos:** cropped tight in a `radius-md` frame with a `hairline` edge. Only licensed photos of real people; otherwise the silhouette placeholder.
 - **Company logos:** keep their own colours on `surface-raised` tiles; never recolour.
@@ -192,9 +182,9 @@ Non-public amounts render as "Undisclosed" in `ink-muted`, never a dash or zero.
 
 ## 9. Do and don't
 
-**Do:** keep pages mostly paper · let one green thing be the loudest element · show how every deal is known · set numbers in tabular sans · separate with hairlines.
+**Do:** keep pages mostly dark ground · let the hero be the loudest element · show how every deal is known · set numbers in tabular sans · separate with hairlines and light depth.
 
-**Don't:** put lime on paper · pair green with red for up/down · use `fresh` for emphasis · put shadows on cards · recolour partner logos · use a category colour without its word.
+**Don't:** put lime on paper · pair green with red for up/down · use `fresh` for emphasis · stack heavy or coloured shadows on cards · recolour partner logos · use a category colour without its word.
 
 ---
 
@@ -227,11 +217,10 @@ Every token is a CSS variable of the same name. Themes switch with `data-theme="
   --cat-executive: #1D6E73; --cat-investor: #7F6512; --cat-other: #4F5B67;
 }
 :root {
-  --font-display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
-  --font-sans: "Schibsted Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
   --space-6: 24px; --space-10: 40px; --space-16: 64px;
-  --radius-sm: 3px; --radius-md: 8px; --radius-pill: 999px;
+  --radius-sm: 6px; --radius-md: 12px; --radius-lg: 16px; --radius-pill: 999px;
   --content-max: 1200px; --reading-max: 680px; --row-height: 56px;
 }
 ```
@@ -253,7 +242,6 @@ Map utilities to the variables rather than copying hex values, so theme switchin
   --color-highlight: var(--highlight);
   --color-fresh: var(--fresh);
   --color-negative: var(--negative);
-  --font-display: var(--font-display);
   --font-sans: var(--font-sans);
 }
 ```
@@ -264,4 +252,4 @@ Add `tabular-nums` to every table cell and figure. Breakpoints: `bp-sm` 640px, `
 Create colour styles named exactly as the tokens (Surface, Ink, Brand, Pitch, Highlight…) with light and dark values, and text styles for display, headline, deck, title, body, small, figure and label. Identical names mean changes here can be mirrored in minutes.
 
 ### Email (newsletter)
-Most clients ignore web fonts: Bodoni Moda falls back to Georgia, Schibsted Grotesk to Helvetica/Arial. Email is light-theme only. Build the masthead as a `pitch` table cell with live `on-pitch` text and the `highlight` full stop, not an image. Keep the body at `reading-max`.
+Most clients ignore web fonts: Geist falls back to Helvetica/Arial. Email is light-theme only. Build the masthead as a `pitch` table cell with live `on-pitch` text and the `highlight` full stop, not an image. Keep the body at `reading-max`.

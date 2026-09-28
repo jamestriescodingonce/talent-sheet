@@ -1,0 +1,463 @@
+<title>Kevin Durant Profile v5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  color-scheme: dark;
+  --ground: #070B09;
+  --panel: #0E1512;
+  --panel-2: #121B17;
+  --line: #1F2B25;
+  --line-2: #2C3B33;
+  --control: #607268;
+  --ink: #F1F0E9;
+  --ink-2: #A3AEA6;
+  --ink-3: #7D8981;
+  --green: #3DDC97;
+  --green-ink: #06140D;
+  --green-wash: rgba(61, 220, 151, 0.12);
+  --focus: #8FB4FF;
+  --sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r-sm: 6px; --r: 12px; --r-lg: 16px;
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* Take-specific (A: Floodlight is the default) */
+  --hero-bg: radial-gradient(60% 90% at 22% 38%, rgba(61, 220, 151, 0.22), transparent 70%), linear-gradient(180deg, #0B120E, #070B09);
+  --hero-border: var(--line);
+  --photo-mask: linear-gradient(90deg, #000 62%, transparent 100%);
+  --card-bg: var(--panel);
+  --card-shadow: 0 1px 0 rgba(255,255,255,0.03) inset, 0 8px 24px -12px rgba(0,0,0,0.6);
+  --card-shadow-hover: 0 1px 0 rgba(255,255,255,0.05) inset, 0 16px 36px -14px rgba(0,0,0,0.75), 0 0 0 1px rgba(61,220,151,0.18);
+  --card-border-hover: var(--line-2);
+  --chip-on-bg: var(--green-wash); --chip-on-ink: var(--green); --chip-on-border: rgba(61,220,151,0.5);
+  --tab-on: var(--green);
+}
+body[data-take="b"] {
+  --ground: #06100B;
+  --hero-bg: radial-gradient(70% 120% at 30% 20%, #1B7A4F 0%, transparent 60%), linear-gradient(120deg, #0F4E33 0%, #0C3322 45%, #0A1A12 100%);
+  --hero-border: rgba(61,220,151,0.22);
+  --card-bg: linear-gradient(180deg, #111A16, #0D1411);
+  --card-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 10px 28px -14px rgba(0,0,0,0.7);
+  --card-shadow-hover: 0 1px 0 rgba(255,255,255,0.06) inset, 0 18px 40px -16px rgba(0,0,0,0.8);
+  --card-border-hover: rgba(61,220,151,0.45);
+  --chip-on-bg: var(--green); --chip-on-ink: var(--green-ink); --chip-on-border: var(--green);
+}
+body[data-take="c"] {
+  --hero-bg: #050706;
+  --photo-mask: linear-gradient(90deg, #000 40%, transparent 78%);
+  --card-bg: var(--panel);
+  --card-shadow: none;
+  --card-shadow-hover: 0 14px 32px -16px rgba(0,0,0,0.8), 0 -1px 0 0 var(--green) inset;
+  --card-border-hover: var(--line-2);
+  --chip-on-bg: var(--ink); --chip-on-ink: var(--ground); --chip-on-border: var(--ink);
+  --tab-on: var(--ink);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--ground); }
+body {
+  margin: 0; background: var(--ground); color: var(--ink);
+  font: 400 15px/1.55 var(--sans); -webkit-font-smoothing: antialiased; font-feature-settings: "ss01", "tnum" 0;
+}
+::selection { background: var(--green); color: var(--green-ink); }
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3, p, ul, ol { margin: 0; padding: 0; }
+.icon { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* Preview switcher (not part of the design) */
+.switcher {
+  position: fixed; z-index: 50; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+  display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: 999px;
+  background: #F1F0E9; color: #0B120E; box-shadow: 0 10px 30px -8px rgba(0,0,0,0.7);
+  font-size: 13px; font-weight: 500; white-space: nowrap;
+}
+.switcher > span { padding: 0 10px 0 12px; color: #4b544e; }
+.switcher button { border: 0; background: none; cursor: pointer; padding: 8px 14px; border-radius: 999px; color: #0B120E; font-weight: 600; }
+.switcher button[aria-pressed="true"] { background: #0B120E; color: #F1F0E9; }
+
+/* Shell */
+.shell { display: grid; grid-template-columns: 248px minmax(0, 1fr); min-height: 100vh; }
+.side { position: sticky; top: 0; height: 100vh; border-right: 1px solid var(--line); padding: 28px 16px; display: flex; flex-direction: column; gap: 32px; }
+.brand { display: flex; align-items: center; gap: 10px; padding-inline: 12px; font-weight: 700; font-size: 17px; letter-spacing: -0.02em; white-space: nowrap; }
+.brand .mono { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; background: var(--green); color: var(--green-ink); font-size: 13px; font-weight: 700; letter-spacing: -0.02em; }
+.brand i { color: var(--green); font-style: normal; }
+.nav { display: grid; gap: 2px; }
+.nav a { display: flex; align-items: center; gap: 12px; height: 42px; padding-inline: 12px; border-radius: 10px; color: var(--ink-2); font-weight: 500; transition: background-color 150ms ease-out, color 150ms ease-out; }
+.nav a:hover { background: var(--panel-2); color: var(--ink); }
+.nav a[aria-current] { background: var(--green-wash); color: var(--green); }
+.side-foot { margin-top: auto; padding: 16px; border: 1px solid var(--line); border-radius: var(--r); background: var(--panel); }
+.side-foot p { font-size: 13px; color: var(--ink-2); line-height: 1.45; }
+.side-foot b { display: block; font-size: 14px; color: var(--ink); margin-bottom: 4px; }
+.side-foot a { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; color: var(--green); font-weight: 600; font-size: 13px; }
+
+.main { min-width: 0; padding: 0 40px 96px; }
+.inner { max-width: 1180px; margin-inline: auto; }
+.top { display: flex; align-items: center; gap: 28px; height: 76px; }
+.top nav { display: flex; gap: 26px; margin-right: auto; }
+.top nav a { color: var(--ink-2); font-weight: 500; transition: color 150ms ease-out; }
+.top nav a:hover { color: var(--ink); }
+.search { display: flex; align-items: center; gap: 8px; width: 280px; height: 40px; padding-inline: 12px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--panel); color: var(--ink-3); transition: border-color 150ms ease-out; }
+.search:hover { border-color: var(--control); }
+.search:focus-within { border-color: var(--control); outline: 2px solid var(--focus); outline-offset: 2px; }
+.search input { flex: 1; min-width: 0; border: 0; background: none; outline: none; color: var(--ink); }
+.search input::placeholder { color: var(--ink-3); }
+.search .icon { width: 16px; height: 16px; }
+
+/* Hero */
+.hero {
+  position: relative; display: grid; grid-template-columns: minmax(300px, 44%) 1fr; min-height: 340px;
+  border-radius: var(--r-lg); overflow: hidden; background: var(--hero-bg); border: 1px solid var(--hero-border); isolation: isolate;
+}
+.photo { position: relative; min-height: 340px; }
+.photo canvas { position: absolute; inset: 0; width: 100%; height: 100%; -webkit-mask-image: var(--photo-mask); mask-image: var(--photo-mask); }
+.photo .ph { position: absolute; left: 20px; bottom: 16px; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+body[data-take="c"] .photo { position: absolute; inset: 0 30% 0 0; }
+body[data-take="c"] .hero { grid-template-columns: 1fr minmax(0, 56%); }
+body[data-take="c"] .hero-copy { grid-column: 2; }
+body[data-take="c"] .hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: linear-gradient(90deg, var(--green), transparent 60%); }
+.hero-copy { position: relative; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 48px 48px 48px 8px; }
+.league { display: flex; align-items: center; gap: 10px; color: var(--ink-2); font-weight: 500; }
+.league .sep { width: 4px; height: 4px; border-radius: 50%; background: var(--ink-3); }
+.name-row { display: flex; align-items: center; gap: 14px; }
+.name { font-size: clamp(40px, 4.6vw, 60px); line-height: 1; font-weight: 600; letter-spacing: -0.035em; }
+.assoc { color: var(--ink-2); max-width: 46ch; }
+.assoc strong { color: var(--ink); font-weight: 500; }
+.socials { display: flex; gap: 6px; margin-top: 6px; margin-left: -9px; }
+.socials a { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 10px; color: var(--ink-2); transition: background-color 150ms ease-out, color 150ms ease-out; }
+.socials a:hover { background: rgba(255,255,255,0.06); color: var(--ink); }
+.facts { display: flex; gap: 32px; margin-top: 10px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08); }
+.facts div { display: grid; gap: 2px; }
+.facts b { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.facts b.g { color: var(--green); }
+.facts span { color: var(--ink-2); font-size: 13px; }
+
+/* Tabs */
+.tabs { display: flex; gap: 32px; margin-top: 28px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tabs button { position: relative; border: 0; background: none; cursor: pointer; padding: 14px 0; color: var(--ink-2); font-weight: 500; white-space: nowrap; transition: color 150ms ease-out; }
+.tabs button:hover { color: var(--ink); }
+.tabs button[aria-selected="true"] { color: var(--ink); }
+.tabs button[aria-selected="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; border-radius: 2px; background: var(--tab-on); }
+
+/* Section */
+.section { margin-top: 32px; display: grid; gap: 20px; }
+.section-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.section-head h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+.section-head p { color: var(--ink-2); margin-top: 4px; }
+.link { display: inline-flex; align-items: center; gap: 6px; color: var(--green); font-weight: 600; }
+.link .icon { width: 15px; height: 15px; transition: transform 200ms var(--ease); }
+.link:hover .icon { transform: translateX(2px); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { height: 36px; padding-inline: 16px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--panel); color: var(--ink-2); font-weight: 500; font-size: 14px; cursor: pointer; transition: background-color 150ms ease-out, color 150ms ease-out, border-color 150ms ease-out; }
+.chip:hover { color: var(--ink); border-color: var(--control); }
+.chip[aria-pressed="true"] { background: var(--chip-on-bg); color: var(--chip-on-ink); border-color: var(--chip-on-border); }
+
+/* Cards */
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.card {
+  display: flex; flex-direction: column; gap: 14px; padding: 20px; min-height: 250px;
+  border-radius: var(--r); border: 1px solid var(--line); background: var(--card-bg); box-shadow: var(--card-shadow);
+  transition: transform 220ms var(--ease), box-shadow 220ms var(--ease), border-color 220ms var(--ease);
+}
+.card:hover { transform: translateY(-2px); box-shadow: var(--card-shadow-hover); border-color: var(--card-border-hover); }
+.card-top { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.logo { width: 44px; height: 44px; flex: none; border-radius: 50%; display: grid; place-items: center; background: #EDEBE0; color: #0B120E; font-weight: 700; font-size: 13px; letter-spacing: -0.01em; }
+.card h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; }
+.card .sector { color: var(--ink-3); font-size: 13px; }
+.card .desc { color: var(--ink-2); font-size: 14px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; margin-top: auto; }
+.kv dt { color: var(--ink-3); font-size: 12px; }
+.kv dd { margin: 0; font-size: 14px; font-weight: 500; }
+.kv .r { text-align: right; }
+.kv .undisc { color: var(--ink-2); font-weight: 400; }
+.card-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 14px; border-top: 1px solid var(--line); }
+.details-btn { display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; padding: 6px 0; margin-block: -6px; cursor: pointer; color: var(--green); font-weight: 600; font-size: 14px; }
+.details-btn .icon { width: 15px; height: 15px; transition: transform 200ms var(--ease); }
+.details-btn[aria-expanded="true"] .icon { transform: rotate(90deg); }
+.tag { display: inline-flex; align-items: center; gap: 5px; height: 24px; padding-inline: 8px; border-radius: 6px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+.tag.reported { border: 1px solid var(--control); color: var(--ink-2); }
+.tag.verified { background: var(--green-wash); color: var(--green); }
+.tag .icon { width: 12px; height: 12px; stroke-width: 2.2; }
+.drawer { display: grid; gap: 8px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.25); border: 1px solid var(--line); font-size: 13px; }
+.drawer div { display: flex; justify-content: space-between; gap: 12px; }
+.drawer span:first-child { color: var(--ink-3); }
+.drawer a { display: inline-flex; align-items: center; gap: 4px; color: var(--green); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(61,220,151,0.4); }
+.drawer .icon { width: 13px; height: 13px; }
+
+/* Lists */
+.list { list-style: none; border: 1px solid var(--line); border-radius: var(--r); background: var(--panel); overflow: hidden; }
+.list li { display: grid; grid-template-columns: 130px 1fr auto; gap: 20px; align-items: center; padding: 16px 20px; border-top: 1px solid var(--line); }
+.list li:first-child { border-top: 0; }
+.list .when { font-weight: 600; font-variant-numeric: tabular-nums; }
+.list .when.undisc { color: var(--ink-3); font-weight: 400; font-size: 14px; }
+.list .what span { color: var(--ink-2); }
+.list a { display: inline-flex; align-items: center; gap: 6px; color: var(--green); font-weight: 500; }
+.list .icon { width: 14px; height: 14px; }
+
+.note { margin-top: 40px; color: var(--ink-3); font-size: 13px; }
+
+@media (max-width: 1280px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 1000px) {
+  .shell { grid-template-columns: 1fr; }
+  .side { position: static; height: auto; flex-direction: row; align-items: center; gap: 16px; padding: 12px 20px; border-right: 0; border-bottom: 1px solid var(--line); overflow-x: auto; }
+  .nav { display: flex; }
+  .nav a { white-space: nowrap; }
+  .nav a .icon, .side-foot { display: none; }
+  .main { padding: 0 24px 96px; }
+  .top nav { display: none; }
+  .search { width: 100%; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 680px) {
+  .switcher > span { display: none; }
+  .switcher button { padding: 8px 12px; }
+  .switcher .full { display: none; }
+  .main { padding-inline: 16px; }
+  .hero, body[data-take="c"] .hero { grid-template-columns: 1fr; }
+  .photo { min-height: 260px; }
+  body[data-take="c"] .photo { position: relative; inset: auto; }
+  body[data-take="c"] .hero-copy { grid-column: 1; }
+  .hero-copy { padding: 8px 24px 28px; }
+  .grid { grid-template-columns: 1fr; }
+  .list li { grid-template-columns: 1fr auto; }
+  .list li > :first-child { grid-column: 1 / -1; }
+  .facts { gap: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } .card:hover { transform: none; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5M6 9.5V20h12V9.5"/></symbol>
+  <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.5"/><path d="M3 20c.6-3.5 3-5.5 6-5.5s5.4 2 6 5.5M15.5 5.2a3.5 3.5 0 0 1 0 6.6M18 14.8c1.6.8 2.7 2.6 3 5.2"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><path d="M5 20V4h10v16M15 9h4v11M3 20h18M8 8h4M8 12h4M8 16h4"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></symbol>
+  <symbol id="i-news" viewBox="0 0 24 24"><path d="M4 5h13v14H6a2 2 0 0 1-2-2V5zM17 9h3v8a2 2 0 0 1-2 2M7.5 9h6M7.5 12.5h6M7.5 16h4"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+  <symbol id="i-insta" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.8"/><path d="M16.8 7.2h.01"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14l4-4M8.5 11.5l-2 2a3.2 3.2 0 0 0 4.5 4.5l2-2M15.5 12.5l2-2A3.2 3.2 0 0 0 13 6l-2 2"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 7l5 5-5 5"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M9 6h9v9M18 6L7 17"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+</svg>
+
+<div class="switcher" role="group" aria-label="Preview version">
+  <span>Version</span>
+  <button type="button" data-take="a" aria-pressed="true">A<span class="full"> · Floodlight</span></button>
+  <button type="button" data-take="b" aria-pressed="false">B<span class="full"> · Pitch</span></button>
+  <button type="button" data-take="c" aria-pressed="false">C<span class="full"> · Broadcast</span></button>
+</div>
+
+<div class="shell">
+  <aside class="side">
+    <a class="brand" href="#top"><span class="mono">TS</span><span>Talent Sheet<i>.</i></span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#top"><svg class="icon"><use href="#i-home"/></svg>Home</a>
+      <a href="#top" aria-current="page"><svg class="icon"><use href="#i-people"/></svg>Athletes</a>
+      <a href="#top"><svg class="icon"><use href="#i-chart"/></svg>Investments</a>
+      <a href="#top"><svg class="icon"><use href="#i-building"/></svg>Companies</a>
+      <a href="#top"><svg class="icon"><use href="#i-grid"/></svg>Industries</a>
+      <a href="#top"><svg class="icon"><use href="#i-news"/></svg>Stories</a>
+    </nav>
+    <div class="side-foot">
+      <b>The Sheet, weekly</b>
+      <p>Who bought into what this week, with sources. Read in four minutes.</p>
+      <a href="#top">Subscribe<svg class="icon" style="width:14px;height:14px"><use href="#i-arrow"/></svg></a>
+    </div>
+  </aside>
+
+  <main class="main" id="top">
+    <div class="inner">
+      <header class="top">
+        <nav aria-label="Sections">
+          <a href="#top">Athletes</a><a href="#top">Insights</a><a href="#top">Data</a><a href="#top">About</a>
+        </nav>
+        <label class="search" for="q"><svg class="icon"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Search Talent Sheet" autocomplete="off"></label>
+      </header>
+
+      <section class="hero" aria-label="Kevin Durant">
+        <div class="photo">
+          <canvas id="photo" role="img" aria-label="Placeholder photo, not Kevin Durant"></canvas>
+          <span class="ph">Placeholder photo</span>
+        </div>
+        <div class="hero-copy">
+          <p class="league"><span>NBA</span><span class="sep" aria-hidden="true"></span><span>Forward</span></p>
+          <div class="name-row"><h1 class="name">Kevin Durant</h1></div>
+          <p class="assoc">Co-founder of <strong>Thirty Five Ventures</strong>. Backs companies across AI, fintech and consumer, and owns stakes in two football clubs.</p>
+          <div class="facts">
+            <div><b class="g num" id="f-count">8</b><span>Companies on record</span></div>
+            <div><b class="num" id="f-sectors">6</b><span>Sectors</span></div>
+            <div><b class="num">2018</b><span>Earliest dated deal</span></div>
+          </div>
+          <div class="socials">
+            <a href="https://www.instagram.com/easymoneysniper/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="icon"><use href="#i-insta"/></svg></a>
+            <a href="https://x.com/KDTrey5" target="_blank" rel="noopener" aria-label="X"><svg class="icon"><use href="#i-x"/></svg></a>
+            <a href="https://www.thirtyfiveventures.com/" target="_blank" rel="noopener" aria-label="Thirty Five Ventures website"><svg class="icon"><use href="#i-link"/></svg></a>
+          </div>
+        </div>
+      </section>
+
+      <div class="tabs" role="tablist" aria-label="Profile sections">
+        <button type="button" role="tab" id="t-over" aria-controls="p-over" aria-selected="true">Overview</button>
+        <button type="button" role="tab" id="t-time" aria-controls="p-time" aria-selected="false" tabindex="-1">Timeline</button>
+        <button type="button" role="tab" id="t-news" aria-controls="p-news" aria-selected="false" tabindex="-1">News &amp; sources</button>
+      </div>
+
+      <section class="section" role="tabpanel" id="p-over" aria-labelledby="t-over">
+        <div class="section-head">
+          <div>
+            <h2>Investment portfolio</h2>
+            <p id="summary">Every company on record, with how he's involved and where we found it.</p>
+          </div>
+          <a class="link" href="#top">View all (8)<svg class="icon"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="chips" id="chips" aria-label="Filter by sector"></div>
+        <div class="grid" id="grid"></div>
+      </section>
+      <section class="section" role="tabpanel" id="p-time" aria-labelledby="t-time" hidden><ol class="list" id="timeline"></ol></section>
+      <section class="section" role="tabpanel" id="p-news" aria-labelledby="t-news" hidden><ul class="list" id="news"></ul></section>
+
+      <p class="note">Preview. Holdings are a snapshot of the Airtable base. Every source is secondary reporting, so every holding is marked Reported. Photo and logos are placeholders.</p>
+    </div>
+  </main>
+</div>
+
+<script>
+(() => {
+  const BZ = 'https://www.benzinga.com/m-a/26/08/61500112/kevin-durant-made-23900-profit-thanks-to-nvidia-heres-the-company-that-made-him-more-than-nba-salary';
+  const H = [
+    { co: 'Hugging Face', ini: 'HF', sector: 'AI and dev tools', desc: 'Open-source AI model hub and ML developer platform.', rel: 'Investor', round: 'Seed + Series A', amt: '$250K', yr: 2018, src: 'https://x.com/JoePompliano/status/2093016643089887357', srcName: 'X · Joe Pompliano' },
+    { co: 'Rhoback', ini: 'RB', sector: 'Apparel', desc: 'Performance apparel for golf and everyday wear.', rel: 'Investor', round: '$50M round', amt: null, yr: 2026, src: 'https://www.citybiz.co/article/860663/activewear-brand-rhoback-raises-50m-from-l-cattertons-champ-fund/', srcName: 'citybiz' },
+    { co: 'Paris Saint-Germain', ini: 'PSG', sector: 'Sports franchise', desc: 'Ligue 1 football club based in Paris.', rel: 'Franchise owner', round: 'Ownership stake', amt: null, yr: null, src: 'https://www.nba.com/news/kevin-durant-paris-saint-germain', srcName: 'NBA.com' },
+    { co: 'Philadelphia Union', ini: 'PU', sector: 'Sports franchise', desc: 'MLS club based in Chester, Pennsylvania.', rel: 'Franchise owner', round: 'Ownership stake', amt: null, yr: null, src: BZ, srcName: 'Benzinga' },
+    { co: 'Kalshi', ini: 'K', sector: 'Fintech', desc: 'Regulated event-contract exchange.', rel: 'Investor', round: null, amt: null, yr: null, src: BZ, srcName: 'Benzinga' },
+    { co: 'Acorns', ini: 'A', sector: 'Fintech', desc: 'Micro-investing and automated savings app.', rel: 'Investor', round: null, amt: null, yr: null, src: BZ, srcName: 'Benzinga' },
+    { co: 'Dapper Labs', ini: 'DL', sector: 'Web3', desc: 'The company behind NBA Top Shot and the Flow blockchain.', rel: 'Investor', round: null, amt: null, yr: null, src: BZ, srcName: 'Benzinga' },
+    { co: 'Spindrift', ini: 'S', sector: 'Consumer', desc: 'Sparkling water made with real squeezed fruit.', rel: 'Investor', round: null, amt: null, yr: null, src: BZ, srcName: 'Benzinga' },
+  ].map(h => ({ ...h, verified: false }));
+
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const tag = v => v ? '<span class="tag verified"><svg class="icon"><use href="#i-check"/></svg>Verified</span>' : '<span class="tag reported">Reported</span>';
+  const sectors = [...new Set(H.map(h => h.sector))];
+  document.getElementById('f-sectors').textContent = sectors.length;
+  document.getElementById('f-count').textContent = H.length;
+
+  let filter = 'All';
+  const open = new Set();
+  const chips = document.getElementById('chips');
+  const renderChips = () => {
+    chips.innerHTML = ['All', ...sectors].map(s => `<button type="button" class="chip" data-s="${esc(s)}" aria-pressed="${s === filter}">${esc(s)}</button>`).join('');
+  };
+  chips.addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (!b) return; filter = b.dataset.s; renderChips(); renderGrid(); });
+
+  const grid = document.getElementById('grid');
+  const renderGrid = () => {
+    grid.innerHTML = H.filter(h => filter === 'All' || h.sector === filter).map(h => {
+      const i = H.indexOf(h), on = open.has(i);
+      return `
+      <article class="card">
+        <div class="card-top">
+          <span class="logo" aria-hidden="true">${esc(h.ini)}</span>
+          <div><h3>${esc(h.co)}</h3><p class="sector">${esc(h.sector)}</p></div>
+        </div>
+        <p class="desc">${esc(h.desc)}</p>
+        <dl class="kv">
+          <dt>Relationship</dt><dt class="r">Invested</dt>
+          <dd>${esc(h.rel)}</dd><dd class="r num ${h.yr ? '' : 'undisc'}">${h.yr || 'Undisclosed'}</dd>
+        </dl>
+        <div class="drawer" id="d${i}" ${on ? '' : 'hidden'}>
+          <div><span>Round</span><span class="num">${h.round ? esc(h.round) : 'Undisclosed'}</span></div>
+          <div><span>Amount</span><span class="num">${h.amt ? esc(h.amt) : 'Undisclosed'}</span></div>
+          <div><span>Source</span><a href="${esc(h.src)}" target="_blank" rel="noopener">${esc(h.srcName)}<svg class="icon"><use href="#i-out"/></svg></a></div>
+        </div>
+        <div class="card-foot">
+          <button type="button" class="details-btn" data-i="${i}" aria-expanded="${on}" aria-controls="d${i}">View details<svg class="icon"><use href="#i-arrow"/></svg></button>
+          ${tag(h.verified)}
+        </div>
+      </article>`;
+    }).join('');
+  };
+  grid.addEventListener('click', e => {
+    const b = e.target.closest('.details-btn'); if (!b) return;
+    const i = +b.dataset.i; open.has(i) ? open.delete(i) : open.add(i);
+    b.setAttribute('aria-expanded', String(open.has(i)));
+    document.getElementById('d' + i).hidden = !open.has(i);
+  });
+
+  document.getElementById('timeline').innerHTML = H.slice().sort((a, b) => (b.yr || 0) - (a.yr || 0)).map(h => `
+    <li><span class="when${h.yr ? '' : ' undisc'}">${h.yr || 'Date undisclosed'}</span>
+    <span class="what"><strong>${esc(h.co)}</strong> <span>· ${esc(h.rel)} · ${esc(h.sector)}</span></span>${tag(h.verified)}</li>`).join('');
+  document.getElementById('news').innerHTML = H.map(h => `
+    <li><span class="what"><strong>${esc(h.co)}</strong></span><span class="what"><span>${esc(h.rel)}</span></span>
+    <a href="${esc(h.src)}" target="_blank" rel="noopener">${esc(h.srcName)}<svg class="icon"><use href="#i-out"/></svg></a></li>`).join('');
+
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  const pick = t => tabs.forEach(x => { const on = x === t; x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; });
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => pick(t));
+    t.addEventListener('keydown', e => { if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return; const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]; pick(n); n.focus(); });
+  });
+
+  // Placeholder studio portrait: a rim-lit silhouette, clearly not a real person.
+  const cv = document.getElementById('photo');
+  function drawPhoto() {
+    const dpr = Math.min(devicePixelRatio || 1, 2), w = cv.clientWidth, h = cv.clientHeight;
+    if (!w || !h) return;
+    cv.width = w * dpr; cv.height = h * dpr;
+    const c = cv.getContext('2d'); c.scale(dpr, dpr);
+    const take = document.body.dataset.take || 'a';
+    const cx = w * 0.5, s = Math.min(w / 380, h / 340) * 1.08, top = h - 330 * s;
+    // Backdrop light
+    const back = c.createRadialGradient(cx + 40 * s, top + 120 * s, 10, cx, top + 150 * s, 260 * s);
+    back.addColorStop(0, take === 'c' ? 'rgba(241,240,233,0.10)' : 'rgba(61,220,151,0.20)');
+    back.addColorStop(1, 'rgba(0,0,0,0)');
+    c.fillStyle = back; c.fillRect(0, 0, w, h);
+    // Figure: head and body filled separately so no seam appears where they overlap.
+    const head = new Path2D(); head.ellipse(cx, top + 112 * s, 50 * s, 64 * s, 0, 0, Math.PI * 2);
+    const body = new Path2D();
+    body.moveTo(cx - 28 * s, top + 150 * s);
+    body.bezierCurveTo(cx - 30 * s, top + 200 * s, cx - 62 * s, top + 220 * s, cx - 150 * s, top + 248 * s);
+    body.bezierCurveTo(cx - 192 * s, top + 262 * s, cx - 206 * s, top + 300 * s, cx - 212 * s, top + 380 * s);
+    body.lineTo(cx + 212 * s, top + 380 * s);
+    body.bezierCurveTo(cx + 206 * s, top + 300 * s, cx + 192 * s, top + 262 * s, cx + 150 * s, top + 248 * s);
+    body.bezierCurveTo(cx + 62 * s, top + 220 * s, cx + 30 * s, top + 200 * s, cx + 28 * s, top + 150 * s);
+    body.closePath();
+    const fill = c.createLinearGradient(0, top, 0, h);
+    fill.addColorStop(0, take === 'c' ? '#1A1F1D' : '#101614'); fill.addColorStop(1, '#060807');
+    const rimCol = take === 'c' ? '241,240,233' : '130,245,195';
+    const rim = c.createLinearGradient(cx - 120 * s, 0, cx + 160 * s, 0);
+    rim.addColorStop(0, `rgba(${rimCol},0)`); rim.addColorStop(0.55, `rgba(${rimCol},0.10)`); rim.addColorStop(1, `rgba(${rimCol},0.75)`);
+    // Body first, then the head on top, so the neck join never shows an outline.
+    for (const shape of [body, head]) {
+      c.fillStyle = fill; c.fill(shape);
+      c.save(); c.clip(shape);
+      c.strokeStyle = rim; c.lineWidth = 7 * s; c.shadowColor = `rgba(${rimCol},0.6)`; c.shadowBlur = 14 * s;
+      c.stroke(shape);
+      c.restore();
+    }
+    // Floor fade
+    const fade = c.createLinearGradient(0, h * 0.7, 0, h);
+    fade.addColorStop(0, 'rgba(7,11,9,0)'); fade.addColorStop(1, 'rgba(7,11,9,0.85)');
+    c.fillStyle = fade; c.fillRect(0, 0, w, h);
+  }
+
+  const btns = [...document.querySelectorAll('.switcher [data-take]')];
+  const setTake = t => {
+    document.body.dataset.take = t;
+    btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.take === t)));
+    try { localStorage.setItem('ts-take', t); } catch (e) {}
+    requestAnimationFrame(drawPhoto);
+  };
+  btns.forEach(b => b.addEventListener('click', () => setTake(b.dataset.take)));
+  let saved = 'a'; try { saved = localStorage.getItem('ts-take') || 'a'; } catch (e) {}
+  if (/^#take-[abc]$/.test(location.hash)) saved = location.hash.slice(6);
+
+  renderChips(); renderGrid(); setTake(saved);
+  let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(drawPhoto, 120); });
+})();
+</script>

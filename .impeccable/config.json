@@ -56,6 +56,15 @@
         ],
         "createdAt": "2026-09-28T05:42:52.022Z",
         "reason": "Claude: uppercase is limited to short labels (sector names, portrait caption), not body copy"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "previews/profile-v5.html"
+        ],
+        "createdAt": "2026-09-28T05:50:46.012Z",
+        "reason": "Claude: flagged pairs use #ffffff or a white-blended wash as ground, which never renders on this dark-only page; rendered check passes"
       }
     ]
   }
