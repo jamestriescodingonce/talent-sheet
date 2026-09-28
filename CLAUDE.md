@@ -4,6 +4,19 @@ Athlete-investment tracker: a database + eventual app for venture/equity
 investments, franchise ownership stakes, brand-ambassador equity deals, and
 executive stakes held by athletes and other public figures.
 
+## Design rules (read first)
+
+- **Always follow `DESIGN.md`.** It is the single source of truth for every
+  design decision: colours, fonts, spacing, radius, layout, components and
+  voice. Never override it. If this file, the artifact, or any existing code
+  disagrees with `DESIGN.md`, `DESIGN.md` wins.
+- **Impeccable is the main design skill.** Use it for designing, critiquing,
+  auditing and polishing UI.
+- **Emil Kowalski's skills handle motion.** Keep motion minimal: only animate
+  when it has a clear purpose.
+- **shadcn/ui is the component base.** Build on shadcn components, themed
+  with the `DESIGN.md` tokens.
+
 ## Current state
 
 **There is no app scaffold in this repo yet** — no `package.json`, no
@@ -18,8 +31,9 @@ Next.js/Tailwind config, nothing runnable. What exists today is:
    inert — nothing imports them, nothing builds — until the app is
    scaffolded.
 
-When scaffolding the real app, the artifact is the source of truth for
-layout/colors/fonts/copy, and the stashed components are candidate
+When scaffolding the real app, `DESIGN.md` is the source of truth for
+colours, fonts, spacing, components and voice. The artifact is a reference
+for page structure and content only. The stashed components are candidate
 building blocks (several have missing peer files/deps — noted below).
 
 ## Live preview (Claude Artifact)
@@ -37,6 +51,10 @@ Boards:
   Talent Sheet specifically (see content below).
 
 ### Design decisions baked into the artifact
+
+> **Superseded by `DESIGN.md`.** The palette, fonts and card styling below
+> record what the artifact currently uses. They are history, not the
+> current design. Follow `DESIGN.md` instead.
 
 - **Color palette** — pixel-sampled from a competitor site
   (cheaperinference.com) via Python/Pillow against user-provided
@@ -157,14 +175,47 @@ future reuse, not wired into anything yet:
 
 ## Skills installed in this repo
 
+All installed at project level only (in `.claude/skills/`), not globally.
+
+**The 5 core design skills:**
+
+1. **`impeccable`** (`.claude/skills/impeccable`, from `pbakaus/impeccable`,
+   release `skill-v4.3.1`). **The main design skill.** Use it to design,
+   critique, audit and polish UI against `DESIGN.md`. It comes with 4 helper
+   agents in `.claude/agents/impeccable-*.md`. Its hooks are in
+   `.claude/settings.json`: a quick design check after every Edit/Write on UI
+   files, and a deeper pass when Claude stops. The engine binary downloads
+   itself on first run.
+2. **Emil Kowalski's skills** (from `emilkowalski/skills`). **Motion only.
+   Keep it minimal.** Main ones: `emil-design-eng` (philosophy),
+   `animate` (build an animation), `review-animations`,
+   `improve-animations`, `find-animation-opportunities`,
+   `animation-vocabulary`. Also installed from the same pack but secondary
+   here: `apple-design`, `mobile-native`, `ask-sonner`, `pick-ui-library`,
+   `prototype`, and `animate-expo` / `write-swift` (not relevant to this
+   web project).
+3. **`shadcn`** (`.claude/skills/shadcn`, from `shadcn-ui/ui`). **The
+   component base.** Adding, composing, styling and debugging shadcn/ui
+   components.
+4. **`fixing-accessibility`** (`.claude/skills/fixing-accessibility`, from
+   `ibelick/ui-skills`). Audits and fixes accessibility: ARIA labels,
+   keyboard navigation, focus, contrast, form errors.
+5. **`playwright-cli`** (`.claude/skills/playwright-cli`, from
+   `microsoft/playwright-cli`). Drives a real browser to test pages and
+   take screenshots.
+
+**Installed earlier:**
+
 - **`better-ui`** (`.agents/skills/better-ui`, from `jakubkrehel/skills`) —
   UI polish: concentric border radius, optical alignment, surface depth,
-  contextual icons, hit areas.
-- **`emil-design-eng`** (`.agents/skills/emil-design-eng`, from
-  `emilkowalski/skills`) — Emil Kowalski's philosophy on UI polish,
-  component design, and animation decisions.
-- Both are symlinked under `.claude/skills/` and tracked in
-  `skills-lock.json` with source hashes.
+  contextual icons, hit areas. Where it suggests shadows or depth,
+  `DESIGN.md` wins: no shadows, hairlines only.
+- `better-ui` and `emil-design-eng` live in `.agents/skills/` and are
+  symlinked into `.claude/skills/`.
+
+Everything except Impeccable is tracked in `skills-lock.json` with source
+hashes. Impeccable manages its own version (`impeccable check` /
+`impeccable update`).
 
 ## Open items
 
