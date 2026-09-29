@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Talent Sheet Investments</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:"Violet Sans";src:url("../assets/fonts/violet-sans/VioletSans-Regular.woff2") format("woff2"),url("../assets/fonts/violet-sans/VioletSans-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+:root{
+  --accent:#9ae230;--accent-ink:#0a1204;
+  --bg:#05080a;--black:#000;--card:#0d1613;--surface2:#101915;
+  --text:#eaf1ec;--muted:#8b9a92;--faint:#5c6a63;
+  --line:rgba(255,255,255,.07);--line-strong:rgba(255,255,255,.12);
+  --accent-soft:rgba(154,226,48,.12);
+  --ease:cubic-bezier(.23,1,.32,1);
+  --font-head:"Bricolage Grotesque",system-ui,sans-serif;
+  --font-body:"Violet Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-body);font-weight:400;font-size:14px;line-height:1.4;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+b,strong,th,h1,h2,button,input{font-weight:400}
+button,input{font:inherit;color:inherit}
+.num{font-variant-numeric:tabular-nums}
+.app{max-width:1440px;margin:0 auto;padding:28px 24px 48px}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+h1{font-family:var(--font-head);font-weight:700;font-size:40px;letter-spacing:-.02em;line-height:1.05;margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:8px 0 0;max-width:56ch;text-wrap:pretty}
+.stats{display:flex;gap:8px}
+.stat{background:var(--card);border-radius:14px;padding:10px 14px;box-shadow:0 0 0 1px var(--line);min-width:96px}
+.stat .v{font-family:var(--font-head);font-weight:600;font-size:22px;letter-spacing:-.01em}
+.stat .l{color:var(--muted);font-size:12px}
+.toolbar{display:flex;gap:8px;align-items:center;margin-top:24px;flex-wrap:wrap}
+.search{position:relative;flex:1 1 320px;max-width:460px}
+.search input{width:100%;height:40px;border-radius:12px;border:0;background:var(--card);box-shadow:0 0 0 1px var(--line);padding:0 44px 0 38px;outline:none;transition:box-shadow 150ms ease}
+.search input::placeholder{color:var(--faint)}
+.search input:focus-visible{box-shadow:0 0 0 1px var(--accent),0 0 0 4px var(--accent-soft)}
+.search svg{position:absolute;left:12px;top:50%;translate:0 -50%;color:var(--faint)}
+.kbd{position:absolute;right:10px;top:50%;translate:0 -50%;font-size:11px;color:var(--muted);background:var(--surface2);border-radius:6px;padding:2px 6px;box-shadow:0 0 0 1px var(--line)}
+.tabs{display:flex;gap:2px;padding:3px;background:var(--card);border-radius:14px;box-shadow:0 0 0 1px var(--line);overflow-x:auto;scrollbar-width:none}
+.tab{border:0;background:transparent;color:var(--muted);height:34px;padding:0 12px;border-radius:11px;cursor:pointer;white-space:nowrap;display:flex;gap:6px;align-items:center;transition:background-color 150ms ease,color 150ms ease,scale 160ms var(--ease);touch-action:manipulation}
+.tab .n{font-size:11px;color:var(--faint)}
+.tab[aria-pressed=true]{background:var(--accent);color:var(--accent-ink)}
+.tab[aria-pressed=true] .n{color:rgba(10,18,4,.6)}
+.tab:active{scale:.96}
+@media (hover:hover) and (pointer:fine){.tab:not([aria-pressed=true]):hover{background:var(--surface2);color:var(--text)}}
+.tab:focus-visible,.chip:focus-visible,.sortbtn:focus-visible,.row:focus-visible,.src:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.spacer{flex:1}
+.toggle{display:flex;align-items:center;gap:8px;color:var(--muted);cursor:pointer;user-select:none;height:40px;padding:0 4px}
+.toggle input{accent-color:var(--accent);width:16px;height:16px}
+.count{color:var(--muted);font-size:12.5px;margin:14px 2px 10px}
+
+.table-wrap{background:var(--card);border-radius:20px;box-shadow:0 0 0 1px var(--line),0 24px 48px -24px rgba(0,0,0,.6);overflow:hidden}
+.scroller{overflow:auto;max-height:calc(100vh - 250px);min-height:420px}
+table{border-collapse:separate;border-spacing:0;width:100%;min-width:1180px}
+thead th{position:sticky;top:0;z-index:2;background:var(--surface2);text-align:left;color:var(--muted);font-size:12.5px;padding:0;height:44px;border-bottom:1px solid var(--line-strong);white-space:nowrap}
+.sortbtn{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:6px;height:44px;padding:0 14px;width:100%;cursor:pointer;transition:color 150ms ease}
+th.r .sortbtn{justify-content:flex-end}
+.sortbtn svg{opacity:0;transition:opacity 150ms ease,rotate 200ms var(--ease)}
+th[aria-sort] .sortbtn{color:var(--text)}
+th[aria-sort] .sortbtn svg{opacity:1}
+th[aria-sort=ascending] .sortbtn svg{rotate:180deg}
+@media (hover:hover) and (pointer:fine){.sortbtn:hover{color:var(--text)}}
+th.first{position:sticky;left:0;z-index:3}
+td.first{position:sticky;left:0;z-index:1;background:var(--card);transition:background-color 120ms ease}
+tbody td{padding:0 14px;height:60px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:middle}
+.row{cursor:pointer}
+.row[aria-expanded=true] td{background:var(--surface2)}
+@media (hover:hover) and (pointer:fine){.row:hover td{background:var(--surface2)}}
+td.r{text-align:right}
+.co{display:flex;align-items:center;gap:12px;min-width:250px}
+.plus{width:16px;color:var(--faint);flex:none;transition:rotate 200ms var(--ease),color 150ms ease}
+.row[aria-expanded=true] .plus{rotate:45deg;color:var(--accent)}
+.logo{width:34px;height:34px;border-radius:50%;background:#fff;flex:none;display:grid;place-items:center;overflow:hidden;position:relative;outline:1px solid oklch(1 0 0 / .1);outline-offset:-1px}
+.logo img{width:100%;height:100%;object-fit:cover;border-radius:inherit;outline:1px solid oklch(0 0 0 / .1);outline-offset:-1px}
+.logo.fb{background:#1a2420;color:var(--muted)}
+.co-name{font-family:var(--font-head);font-weight:600;font-size:15px;letter-spacing:-.005em;overflow:hidden;text-overflow:ellipsis;max-width:200px}
+.ath{display:flex;align-items:center;gap:10px;min-width:210px}
+.stack{display:flex}
+.av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:11px;color:var(--text);box-shadow:0 0 0 2px var(--card);margin-left:-8px}
+.stack .av:first-child{margin-left:0}
+.row:hover .av,.row[aria-expanded=true] .av{box-shadow:0 0 0 2px var(--surface2)}
+.av.more{background:var(--surface2);color:var(--muted);font-size:10.5px}
+.ath-name{overflow:hidden;text-overflow:ellipsis;max-width:150px}
+.ath-name small{color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface2);box-shadow:0 0 0 1px var(--line)}
+.pill i{width:6px;height:6px;border-radius:50%;background:var(--c)}
+.round{color:var(--muted)}
+.money{display:inline-flex;align-items:center;height:26px;padding:0 9px;border-radius:8px;background:var(--accent-soft);color:var(--accent)}
+.money.est::before{content:"~";margin-right:2px;opacity:.8}
+.plain{color:var(--text)}
+.dim{color:var(--faint)}
+.tag{display:inline-flex;height:24px;align-items:center;padding:0 9px;border-radius:8px;background:var(--surface2);color:var(--muted);font-size:12.5px;box-shadow:0 0 0 1px var(--line)}
+.src{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:9px;color:var(--muted);transition:background-color 150ms ease,color 150ms ease,scale 160ms var(--ease)}
+.src:active{scale:.96}
+@media (hover:hover) and (pointer:fine){.src:hover{background:var(--black);color:var(--accent)}}
+.src::after{content:"";position:absolute;inset:-8px}
+.src{position:relative}
+.detail td{padding:0;height:auto;border-bottom:1px solid var(--line);background:var(--bg);white-space:normal}
+.detail-in{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;padding:14px 14px 16px 62px;position:sticky;left:0;width:min(100vw - 48px,1180px)}
+.dcard{background:var(--card);border-radius:12px;padding:12px 14px;box-shadow:0 0 0 1px var(--line)}
+.dcard h3{margin:0 0 8px;font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);font-weight:400}
+.line{display:flex;justify-content:space-between;gap:12px;padding:3px 0;color:var(--muted)}
+.line b{color:var(--text)}
+.dcard a{color:var(--accent);text-decoration:none;overflow-wrap:anywhere}
+.empty{padding:64px 16px;text-align:center;color:var(--muted)}
+.foot{color:var(--faint);font-size:12px;margin:14px 2px 0}
+.detail-anim{animation:in 200ms var(--ease)}
+@keyframes in{from{opacity:0;translate:0 -4px}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation:none!important}}
+@media (max-width:640px){.app{padding:20px 16px 40px}h1{font-size:32px}.stats{display:none}.scroller{max-height:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div>
+      <h1>Investments</h1>
+      <p class="sub">Every tracked deal across athletes and public figures, by company. Equity, franchise stakes, ambassador deals and executive roles.</p>
+    </div>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <div class="toolbar">
+    <label class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Search company, athlete or round" autocomplete="off" aria-label="Search investments">
+      <span class="kbd" aria-hidden="true">⌘ K</span>
+    </label>
+    <div class="tabs" id="tabs" role="group" aria-label="Deal type"></div>
+    <div class="spacer"></div>
+    <label class="toggle"><input type="checkbox" id="disc"> Disclosed amounts only</label>
+  </div>
+  <div class="count num" id="count" aria-live="polite"></div>
+
+  <div class="table-wrap">
+    <div class="scroller">
+      <table>
+        <thead><tr id="head"></tr></thead>
+        <tbody id="body"></tbody>
+      </table>
+    </div>
+  </div>
+  <p class="foot">Amounts marked ~ are estimated or implied. Athlete stake is the athlete's own amount; round size and valuation are for the company round. Source: Talent Sheet Airtable base.</p>
+</div>
+
+<script>
+const DATA={"rows":[["Karen Wazen","WHOOP","2026-03-31","Capital Investment",null,575000000,10100000000,null,"Series G","https://www.businesswire.com/news/home/20260331399622/en/WHOOP-Raises-$575-Million-at-$10.1-Billion-Valuation-to-Advance-Global-Health-Platform"],["Kevin Durant","Hugging Face","2018-01-01","Capital Investment",100000,null,null,"Estimated / Implied","Seed","https://x.com/alexfmac/status/2092931132236931417"],["Cristiano Ronaldo","UD Almer\u00eda","2026-02-26","Franchise Ownership",null,null,null,"Undisclosed",null,"https://www.espn.com/soccer/story/_/id/48041207/cristiano-ronaldo-purchases-25-stake-spanish-club-almeria"],["Devin Booker","Coco5",null,null,null,null,null,null,null,null],["LeBron James","SpringHill Company","2020-06-25","Executive Stake",null,null,null,"Undisclosed",null,"https://en.wikipedia.org/wiki/SpringHill_Company"],["Ashton Jeanty","Nukleus","2026-08-17","Capital Investment",null,null,null,"Undisclosed",null,"https://www.prnewswire.com/news-releases/nukleus-names-raiders-running-back-ashton-jeanty-as-investor-and-face-of-the-business-of-sports-platform-302853079.html"],["Courtney Lawes","The Players Fund",null,"Executive Stake",null,null,null,"Undisclosed",null,"https://www.playersfund.vc/"],["Cameron Brink","Rhoback","2026-06-15","Capital Investment",null,50000000,null,"Estimated / Implied","Growth/Strategic Round","https://www.citybiz.co/article/860663/activewear-brand-rhoback-raises-50m-from-l-cattertons-champ-fund/"],["Cristiano Ronaldo","CR7 Sports Investments",null,"Executive Stake",null,null,null,"Undisclosed",null,"https://www.espn.com/soccer/story/_/id/48041207/cristiano-ronaldo-purchases-25-stake-spanish-club-almeria"],["Mikaela Shiffrin","Denver Summit FC","2025-05-01","Capital Investment",null,null,null,"Undisclosed",null,"https://sports.yahoo.com/nfl/article/bears-qb-caleb-williams-announced-as-investor-in-nwsl-expansion-team-boston-legacy-fc-151038564.html"],["Diana Taurasi","Kalshi",null,"Capital Investment",null,4700000,null,"Estimated / Implied","Series E","https://www.dakota.com/resources/blog/top-10-family-offices-and-private-wealth-investors-backing-sports-deals-in-2026"],["Aaron Judge","CardVault (by Tom Brady)","2026-08-13","Capital Investment",null,null,null,"Undisclosed",null,"https://www.sportico.com/business/commerce/2026/tom-brady-cardvault-investment-aaron-judge-dana-white-1234941762/"],["Virgil van Dijk","WHOOP","2026-03-31","Capital Investment",null,575000000,10100000000,null,"Series G","https://www.businesswire.com/news/home/20260331399622/en/WHOOP-Raises-$575-Million-at-$10.1-Billion-Valuation-to-Advance-Global-Health-Platform"],["LeBron James","Fantasy Life","2025-07-07","Capital Investment",null,7000000,null,"Exact / Disclosed",null,"https://www.sportico.com/business/tech/2025/lebron-james-matthew-berry-fantasy-life-funding-guillotine-1234859320/"],["Elizabeth Banks","Boston Legacy FC",null,"Capital Investment",null,null,null,"Undisclosed",null,"https://www.espn.com/soccer/story/_/id/46542404/chicago-bears-caleb-williams-invests-nwsl-side-boston-legacy"],["Rory McIlroy","WHOOP","2026-03-31","Capital Investment",null,575000000,10100000000,null,"Series G","https://www.businesswire.com/news/home/20260331399622/en/WHOOP-Raises-$575-Million-at-$10.1-Billion-Valuation-to-Advance-Global-Health-Platform"],["Cristiano Ronaldo","WHOOP","2026-03-31","Capital Investment",null,575000000,10100000000,null,"Series G","https://www.businesswire.com/news/home/20260331399622/en/WHOOP-Raises-$575-Million-at-$10.1-Billion-Valuation-to-Advance-Global-Health-Platform"],["Chris Smalling","The Players Fund",null,"Executive Stake",null,null,null,"Undisclosed",null,"https://www.playersfund.vc/"],["Jameis Winston","Rhoback","2026-06-15","Capital Investment",null,50000000,null,"Estimated / Implied","Growth/Strategic Round","https://www.citybiz.co/article/860663/activewear-brand-rhoback-raises-50m-from-l-cattertons-champ-fund/"],["Kevin Durant","Rhoback","2026-06-15","Capital Investment",null,50000000,null,"Estimated / Implied","Growth/Strategic Round","https://www.citybiz.co/article/860663/activewear-brand-rhoback-raises-50m-from-l-cattertons-champ-fund/"],["Sophie Cunningham","Rhoback","2026-06-15","Capital Investment",null,50000000,null,"Estimated / Implied","Growth/Strategic Round","https://www.citybiz.co/article/860663/activewear-brand-rhoback-raises-50m-from-l-cattertons-champ-fund/"],["Mathieu van der Poel","WHOOP","2026-03-31","Capital Investment",null,575000000,10100000000,null,"Series G","https://www.businesswire.com/news/home/20260331399622/en/WHOOP-Raises-$575-Million-at-$10.1-Billion-Valuation-to-Advance-Global-Health-Platform"],["Chan Ho Park","Las Vegas Athletics (MLB)","2026-07-27","Franchise Ownership",70000000,70000000,null,null,"Franchise Investment","https://www.fox5vegas.com/2026/07/27/first-korean-player-mlb-invests-70m-las-vegas-athletics/"],["Hardik Pandya","LightFury Games","2026-04-23","Capital Investment",null,null,null,"Undisclosed","Pre-Series A","https://www.prnewswire.com/news-releases/lightfury-games-raises-11mn-in-pre-series-a-indian-cricketers-back-ecricket-as-strategic-investors-302752052.html"],["Ben Stokes","The Players Fund",null,"Executive Stake",null,null,null,"Undisclosed",null,"https://www.playersfund.vc/"],["Kevin Durant","Thirty Five Ventures (35V)","2016-01-01","Executive Stake",null,null,null,"Undisclosed",null,"https://www.benzinga.com/m-a/26/08/61500112/kevin-durant-made-23900-profit-thanks-to-nvidia-heres-the-company-that-made-him-more-than-nba-salary"],["Tom Brady","CardVault (by Tom Brady)","2025-02-01","Executive Stake",null,null,null,"Undisclosed",null,"https://www.sportico.com/business/commerce/2026/tom-brady-cardvault-investment-aaron-judge-dana-white-1234941762/"],["Brad Stevens","Boston Legacy FC",null,"Executive Stake",null,null,null,"Undisclosed",null,"https://www.espn.com/soccer/story/_/id/46542404/chicago-bears-caleb-williams-invests-nwsl-side-boston-legacy"],["LeBron James","WHOOP","2026-03-31","Capital Investment",null,575000000,10100000000,null,"Series G","https://www.businesswire.com/news/home/20260331399622/en/WHOOP-Raises-$575-Million-at-$10.1-Billion-Valuation-to-Advance-Global-Health-Platform"],["Kevin Durant","Paris Saint-Germain (PSG)",null,"Franchise Ownership",null,null,null,"Undisclosed",null,"https://www.nba.com/news/kevin-durant-paris-saint-germain"],["Caleb Williams","Boston Legacy FC","2025-10-09","Capital Investment",null,null,null,"Undisclosed",null,"https://www.espn.com/soccer/story/_/id/46542404/chicago-bears-caleb-williams-invests-nwsl-side-boston-legacy"],["Yao Ming","Asian University Basketball League (AUBL)","2026-04-09","Capital Investment",null,null,null,null,"Series A","https://www.businesswire.com/news/home/20260409719377/en"],["Aliyah Boston","Sequel","2026-08-14","Brand Ambassador/Equity",null,null,null,"Undisclosed",null,"https://www.forbes.com/sites/alexyork/2026/08/14/wnba-star-aliyah-boston-joins-under-30-company-sequel-as-co-owner/"],["LeBron James","Hana Kuma",null,"Capital Investment",null,null,null,"Undisclosed",null,"https://www.sportspromedia.com/news/the-players-fund-naomi-osaka-lebron-james-hana-kuma-investment/"],["Ja'Marr Chase","Rhoback","2026-06-15","Capital Investment",null,50000000,null,"Estimated / Implied","Growth/Strategic Round","https://www.citybiz.co/article/860663/activewear-brand-rhoback-raises-50m-from-l-cattertons-champ-fund/"],["Jessie Bates III","SpaceX","2022-01-01","Capital Investment",150000,null,127000000000,"Exact / Disclosed","Series J","https://www.sportico.com/leagues/football/2025/spacex-investments-jessie-bates-elon-musk-politics-1234846848/"],["Derek Jeter","ALUM","2026-08-04","Brand Ambassador/Equity",null,null,null,"Undisclosed",null,"https://boardroom.tv/derek-jeter-alum-college-towns-luxury-hospitality/"],["Jayden Daniels","Rhoback","2026-06-15","Capital Investment",null,50000000,null,"Estimated / Implied","Growth/Strategic Round","https://www.citybiz.co/article/860663/activewear-brand-rhoback-raises-50m-from-l-cattertons-champ-fund/"],["Torah Bright","NORTH Performance","2026-08-10","Brand Ambassador/Equity",null,null,null,"Undisclosed",null,"https://www.prnewswire.com/news-releases/north-performance-launches-globally-with-pre-sales-site-and-founding-athlete-co-owner-roster-302847774.html"],["Kevin Durant","Hugging Face",null,"Capital Investment",150000,null,null,"Estimated / Implied","Series A","https://x.com/JoePompliano/status/2093016643089887357"],["Aly Raisman","Boston Legacy FC",null,"Capital Investment",null,null,null,"Undisclosed",null,"https://www.espn.com/soccer/story/_/id/46542404/chicago-bears-caleb-williams-invests-nwsl-side-boston-legacy"],["Casey Brown","NORTH Performance","2026-08-10","Brand Ambassador/Equity",null,null,null,"Undisclosed",null,"https://www.prnewswire.com/news-releases/north-performance-launches-globally-with-pre-sales-site-and-founding-athlete-co-owner-roster-302847774.html"],["Kevin Durant","Spindrift",null,"Capital Investment",null,null,null,"Undisclosed",null,"https://www.benzinga.com/m-a/26/08/61500112/kevin-durant-made-23900-profit-thanks-to-nvidia-heres-the-company-that-made-him-more-than-nba-salary"],["Connor McDavid","Kalshi",null,"Capital Investment",null,4700000,null,"Estimated / Implied","Series E","https://www.dakota.com/resources/blog/top-10-family-offices-and-private-wealth-investors-backing-sports-deals-in-2026"],["Ryan Williams","NORTH Performance","2026-08-10","Brand Ambassador/Equity",null,null,null,"Undisclosed",null,"https://www.prnewswire.com/news-releases/north-performance-launches-globally-with-pre-sales-site-and-founding-athlete-co-owner-roster-302847774.html"],["Dak Prescott","Rhoback","2026-06-15","Capital Investment",null,50000000,null,"Estimated / Implied","Growth/Strategic Round","https://www.citybiz.co/article/860663/activewear-brand-rhoback-raises-50m-from-l-cattertons-champ-fund/"],["Reggie Miller","WHOOP","2026-03-31","Capital Investment",null,575000000,10100000000,null,"Series G","https://www.businesswire.com/news/home/20260331399622/en/WHOOP-Raises-$575-Million-at-$10.1-Billion-Valuation-to-Advance-Global-Health-Platform"],["Peyton Manning","Denver Summit FC",null,"Capital Investment",null,null,null,"Undisclosed",null,"https://sports.yahoo.com/nfl/article/bears-qb-caleb-williams-announced-as-investor-in-nwsl-expansion-team-boston-legacy-fc-151038564.html"],["Kylian Mbapp\u00e9","Alan","2026-03-01","Capital Investment",null,108000000,5400000000,null,"Growth/Strategic Round","https://fundmomentum.vc/blog/world-cup-2026-investors-footballers-who-back-startups"],["Sai Sudharsan","LightFury Games","2026-04-23","Capital Investment",null,null,null,"Undisclosed","Pre-Series A","https://www.prnewswire.com/news-releases/lightfury-games-raises-11mn-in-pre-series-a-indian-cricketers-back-ecricket-as-strategic-investors-302752052.html"],["Tiger Woods","TMRW Sports","2022-08-01","Executive Stake",null,null,null,"Undisclosed",null,"https://www.hollywoodreporter.com/business/business-news/tiger-woods-tmrw-sports-investment-justin-timberlake-serena-williams-1235253851"],["Brock Bowers","Hydrosport Max",null,"Executive Stake",null,null,null,"Undisclosed",null,null],["Brandon Semenuk","NORTH Performance","2026-08-10","Brand Ambassador/Equity",null,null,null,"Undisclosed",null,"https://www.prnewswire.com/news-releases/north-performance-launches-globally-with-pre-sales-site-and-founding-athlete-co-owner-roster-302847774.html"],["Ruari Bell","The Players Fund",null,"Executive Stake",null,null,null,"Undisclosed",null,"https://www.playersfund.vc/"],["Arthur Fils","Tiva","2026-08-03","Brand Ambassador,Equity",null,null,null,null,null,"https://beautymatter.com/articles/tennis-pro-arthur-fils-joins-tiva-as-an-investor"],["Mark Cuban","Harbinger Sports Partners",null,"Executive Stake",null,null,null,"Undisclosed",null,"https://www.dakota.com/reports-blog/may-2026-sports-investing-report"],["Andre Iguodala","Zoom","2018-01-01","Capital Investment",null,null,null,"Undisclosed",null,"https://www.cnbc.com/2020/02/14/nba-champion-andre-iguodala-counts-zoom-as-best-investment-yet.html"],["Mike Trout","Rhoback","2026-06-15","Capital Investment",null,50000000,null,"Estimated / Implied","Growth/Strategic Round","https://www.citybiz.co/article/860663/activewear-brand-rhoback-raises-50m-from-l-cattertons-champ-fund/"],["Jasprit Bumrah","LightFury Games","2026-04-23","Capital Investment",null,11000000,null,null,"Pre-Series A","https://www.prnewswire.com/news-releases/lightfury-games-raises-11mn-in-pre-series-a-indian-cricketers-back-ecricket-as-strategic-investors-302752052.html"],["LeBron James","Mike's Red Tacos","2026-09-15","Capital Investment",null,null,null,"Undisclosed",null,"https://www.globenewswire.com/news-release/2026/09/15/3361985/0/en/lebron-james-invests-in-mike-s-red-tacos-as-fast-growing-birria-brand-enters-its-next-chapter.html"],["LeBron James","Liverpool FC (Fenway Sports Group)","2011-01-01","Franchise Ownership",6500000,null,325000000,"Exact / Disclosed",null,"https://www.celebritynetworth.com/articles/sports-news/lebron-james-liverpool-investment/"],["Justin Jefferson","Rhoback","2026-06-15","Capital Investment",null,50000000,null,"Estimated / Implied","Growth/Strategic Round","https://www.citybiz.co/article/860663/activewear-brand-rhoback-raises-50m-from-l-cattertons-champ-fund/"],["Ravindra Jadeja","LightFury Games","2026-04-23","Capital Investment",null,null,null,"Undisclosed","Pre-Series A","https://www.prnewswire.com/news-releases/lightfury-games-raises-11mn-in-pre-series-a-indian-cricketers-back-ecricket-as-strategic-investors-302752052.html"],["Shaquille O'Neal","Google","1999-01-01","Capital Investment",null,null,100000000,"Estimated / Implied","Series A","https://www.essentiallysports.com/nba-legends-basketball-news-how-much-did-shaquille-oneal-make-from-google-all-details-of-the-accidental-investment/"],["Kevin Durant","Philadelphia Union",null,"Franchise Ownership",null,null,null,"Undisclosed",null,"https://www.benzinga.com/m-a/26/08/61500112/kevin-durant-made-23900-profit-thanks-to-nvidia-heres-the-company-that-made-him-more-than-nba-salary"],["Geno Auriemma","Unrivaled","2026-08-26","Capital Investment",null,100000000,650000000,"Minimum Disclosed (Oversubscribed)","Series C","https://variety.com/2026/tv/news/unrivaled-raises-more-than-100-million-carmelo-anthony-ashton-kutcher-alex-morgan-uc-investments-1236843699/"],["Tony Hawk","Coker MMA League (Unnamed)","2026-05-21","Capital Investment",null,60000000,null,null,"Growth/Strategic Round","https://www.hollywoodreporter.com/business/business-news/new-mma-league-scott-coker-tony-hawk-2027-launch-1236600979/"],["Harry Kane","Seat Unique",null,"Capital Investment",null,null,null,"Undisclosed",null,"https://www.ft.com/content/21646e06-3f69-43f1-b4d5-3a827eadf7fa"],["Bryson DeChambeau","Sportsbox AI",null,"Executive Stake",null,null,null,"Estimated / Implied",null,"https://www.dakota.com/reports-blog/may-2026-sports-investing-report"],["Ashton Kutcher","Unrivaled","2026-08-26","Capital Investment",null,100000000,650000000,"Minimum Disclosed (Oversubscribed)","Series C","https://variety.com/2026/tv/news/unrivaled-raises-more-than-100-million-carmelo-anthony-ashton-kutcher-alex-morgan-uc-investments-1236843699/"],["Trevoh Chalobah","Track Titan","2025-12-01","Capital Investment",null,5000000,null,null,"Seed","https://www.sportspro.com/features/technology/sports-technology-investment-ideas-2026-list-startups/"],["Jay-Z","CardVault (by Tom Brady)","2026-08-13","Capital Investment",null,null,null,"Undisclosed",null,"https://www.sportico.com/business/commerce/2026/tom-brady-cardvault-investment-aaron-judge-dana-white-1234941762/"],["Mario G\u00f6tze ","Flatpay",null,null,null,null,null,null,null,null],["Travis Kelce","Sleep Number",null,null,null,null,null,null,null,null],["Shreyas Iyer","LightFury Games","2026-04-23","Capital Investment",null,null,null,"Undisclosed","Pre-Series A","https://www.prnewswire.com/news-releases/lightfury-games-raises-11mn-in-pre-series-a-indian-cricketers-back-ecricket-as-strategic-investors-302752052.html"],["Alex Morgan","Unrivaled","2026-08-26","Capital Investment",null,100000000,650000000,"Minimum Disclosed (Oversubscribed)","Series C","https://variety.com/2026/tv/news/unrivaled-raises-more-than-100-million-carmelo-anthony-ashton-kutcher-alex-morgan-uc-investments-1236843699/"],["MS Dhoni","LightFury Games","2026-04-23","Capital Investment",null,null,null,"Undisclosed","Pre-Series A","https://www.prnewswire.com/news-releases/lightfury-games-raises-11mn-in-pre-series-a-indian-cricketers-back-ecricket-as-strategic-investors-302752052.html"],["Ben Stokes","Unravel",null,"Capital Investment",null,7000000,null,"Estimated / Implied",null,"https://news.sky.com/story/stokes-backed-travel-platform-unravel-takes-off-with-5m-funding-13340357"],["Rohit Sharma","LightFury Games","2026-08-24","Capital Investment",null,null,null,"Undisclosed","Pre-Series A","https://startuptalky.com/news/rohit-sharma-invests-in-lightfury-games/"],["Omri Casspi","Swish Ventures (fka Sheva)","2022-01-01","Executive Stake",null,null,null,null,null,"https://www.forbes.com/sites/hanktucker/2026/09/03/how-nba-journeyman-omri-casspi-built-an-800-million-venture-capital-firm/"],["Carmelo Anthony","Unrivaled","2026-08-26","Capital Investment",null,100000000,650000000,"Minimum Disclosed (Oversubscribed)","Series C","https://variety.com/2026/tv/news/unrivaled-raises-more-than-100-million-carmelo-anthony-ashton-kutcher-alex-morgan-uc-investments-1236843699/"],["John Terry","The Players Fund",null,"Executive Stake",null,null,null,"Undisclosed",null,"https://www.playersfund.vc/"],["Cristiano Ronaldo","Perplexity",null,"Capital Investment",null,null,null,"Undisclosed",null,"https://www.insideworldsoccer.com/2026/02/cristiano-ronaldo-buys-25pct-ud-almeria.html"],["Tilak Varma","LightFury Games","2026-04-23","Capital Investment",null,null,null,"Undisclosed","Pre-Series A","https://www.prnewswire.com/news-releases/lightfury-games-raises-11mn-in-pre-series-a-indian-cricketers-back-ecricket-as-strategic-investors-302752052.html"],["Nneka Ogwumike","Kalshi",null,"Capital Investment",null,4700000,null,"Estimated / Implied","Series E","https://www.dakota.com/resources/blog/top-10-family-offices-and-private-wealth-investors-backing-sports-deals-in-2026"],["Niall Horan","WHOOP","2026-03-31","Capital Investment",null,575000000,10100000000,null,"Series G","https://www.businesswire.com/news/home/20260331399622/en/WHOOP-Raises-$575-Million-at-$10.1-Billion-Valuation-to-Advance-Global-Health-Platform"],["Ja'Kobi Lane","Caddix","2026-08-26","Capital Investment",null,null,null,"Undisclosed",null,"https://www.thebanner.com/sports/ravens-nfl/baltimore-ravens-jakobi-lane-caddix-cleats-PUPELTNEMNCKDN7UHHTPKZ6NLI/"],["Tony Stewart","Kalshi",null,"Capital Investment",null,4700000,null,"Estimated / Implied","Series E","https://www.dakota.com/resources/blog/top-10-family-offices-and-private-wealth-investors-backing-sports-deals-in-2026"],["Oscar Delp","Hydrosport Max",null,"Executive Stake",null,null,null,"Undisclosed",null,null],["Shane Lowry","WHOOP","2026-03-31","Capital Investment",null,575000000,10100000000,null,"Series G","https://www.businesswire.com/news/home/20260331399622/en/WHOOP-Raises-$575-Million-at-$10.1-Billion-Valuation-to-Advance-Global-Health-Platform"],["Julia Mancuso","NORTH Performance","2026-08-10","Brand Ambassador/Equity",null,null,null,"Undisclosed",null,"https://www.prnewswire.com/news-releases/north-performance-launches-globally-with-pre-sales-site-and-founding-athlete-co-owner-roster-302847774.html"],["Coby White","Ballislife","2026-07-09","Brand Ambassador,Equity",null,null,null,null,null,"https://www.proactiveinvestors.com/companies/news/1095204/varon-corp-s-ballislife-adds-nba-player-coby-white-as-brand-ambassador-and-equity-partner-1095204.html"],["Nikita Parris","The Players Fund",null,"Executive Stake",null,null,null,"Undisclosed",null,"https://www.playersfund.vc/"],["Luke Donald","OptimallyMe",null,"Capital Investment",null,null,null,"Undisclosed",null,"https://www.cityam.com/cricket-rugby-and-football-stars-invest-in-health-start-up/"],["Rory McIlroy","TMRW Sports","2022-08-01","Executive Stake",null,null,null,"Undisclosed",null,"https://www.hollywoodreporter.com/business/business-news/tiger-woods-tmrw-sports-investment-justin-timberlake-serena-williams-1235253851"],["Aliyah Boston","Boston Legacy FC",null,"Franchise Ownership",null,null,53000000,null,"Franchise Investment","https://www.espn.com/soccer/story/_/id/45739835/indiana-fever-aliyah-boston-invests-nwsl-boston-legacy"],["Trae Young","Unrivaled","2026-08-26","Capital Investment",null,100000000,650000000,"Minimum Disclosed (Oversubscribed)","Series C","https://variety.com/2026/tv/news/unrivaled-raises-more-than-100-million-carmelo-anthony-ashton-kutcher-alex-morgan-uc-investments-1236843699/"],["Jessica Ennis-Hill","The Players Fund",null,"Executive Stake",null,null,null,"Undisclosed",null,"https://www.playersfund.vc/"],["Kevin Durant","Kalshi",null,"Capital Investment",null,null,null,"Undisclosed",null,"https://www.benzinga.com/m-a/26/08/61500112/kevin-durant-made-23900-profit-thanks-to-nvidia-heres-the-company-that-made-him-more-than-nba-salary"],["MS Dhoni","SolarSquare","2026-07-20","Capital Investment",null,53000000,null,null,"Series C","https://startuptalky.com/news/daily-indian-funding-roundup-key-news-21-july-2026-ather-solarsquare-bluestone/"],["Patrick Cantlay","Rhoback","2026-06-15","Capital Investment",null,50000000,null,"Estimated / Implied","Growth/Strategic Round","https://www.citybiz.co/article/860663/activewear-brand-rhoback-raises-50m-from-l-cattertons-champ-fund/"],["Cristiano Ronaldo","HBL Pro2col","2026-02-01","Capital Investment",7500000,null,75000000,"Estimated / Implied",null,"https://fundmomentum.vc/blog/world-cup-2026-investors-footballers-who-back-startups"],["Connor McDavid","CardVault (by Tom Brady)","2026-08-13","Capital Investment",null,null,null,"Undisclosed",null,"https://www.sportico.com/business/commerce/2026/tom-brady-cardvault-investment-aaron-judge-dana-white-1234941762/"],["Kevin Durant","Dapper Labs",null,"Capital Investment",null,null,null,"Undisclosed",null,"https://www.benzinga.com/m-a/26/08/61500112/kevin-durant-made-23900-profit-thanks-to-nvidia-heres-the-company-that-made-him-more-than-nba-salary"],["Kobe Bryant","BodyArmor","2014-03-01","Capital Investment",6000000,null,60000000,"Estimated / Implied",null,"https://www.espn.com/espn/print?id=24384862"],["Danny MacAskill","NORTH Performance","2026-08-10","Brand Ambassador/Equity",null,null,null,"Undisclosed",null,"https://www.prnewswire.com/news-releases/north-performance-launches-globally-with-pre-sales-site-and-founding-athlete-co-owner-roster-302847774.html"],["Tyrese Haliburton","Rhoback","2026-06-15","Capital Investment",null,50000000,null,"Estimated / Implied","Growth/Strategic Round","https://www.citybiz.co/article/860663/activewear-brand-rhoback-raises-50m-from-l-cattertons-champ-fund/"],["Elina Svitolina","Tiva",null,null,null,600000,4000000,null,null,null],["Dana White","CardVault (by Tom Brady)","2026-08-13","Capital Investment",null,null,null,"Undisclosed",null,"https://www.sportico.com/business/commerce/2026/tom-brady-cardvault-investment-aaron-judge-dana-white-1234941762/"],["Kevin Durant","Acorns",null,"Capital Investment",null,null,null,"Undisclosed",null,"https://www.benzinga.com/m-a/26/08/61500112/kevin-durant-made-23900-profit-thanks-to-nvidia-heres-the-company-that-made-him-more-than-nba-salary"]],"dom":{"Flatpay":"flatpay.com","Nukleus":"nukleus.co","Track Titan":"tracktitan.io","Seat Unique":"seatunique.com","UD Almer\u00eda":"udalmeriasad.com","SpringHill Company":"thespringhill.com","Unrivaled":"unrivaled.basketball","Sleep Number":"sleepnumber.com","Unravel":"unravelapp.com","Philadelphia Union":"philadelphiaunion.com","Kalshi":"kalshi.com","Sequel":"trysequel.com","Hana Kuma":"hanakumaco.com","WHOOP":"whoop.com","Zoom":"zoom.us","Paris Saint-Germain (PSG)":"psg.fr","NORTH Performance":"northperformance.com","Acorns":"acorns.com","LightFury Games":"lightfurygames.com","Spindrift":"spindriftfresh.com","Google":"google.com","Mike's Red Tacos":"mikesredtacos.com","Las Vegas Athletics (MLB)":"athletics.com","SolarSquare":"solarsquare.in","OptimallyMe":"optimallyme.com","feedz":"feedz.club","Tiva":"tiva-performance.com","HBL Pro2col":"herbalife.com","Thirty Five Ventures (35V)":"thirtyfiveventures.com","TMRW Sports":"tmrwsports.com","Liverpool FC (Fenway Sports Group)":"liverpoolfc.com","CR7 Sports Investments":"cr7.com","Denver Summit FC":"denversummitfc.com","Sportsbox AI":"sportsbox.ai","The Players Fund":"playersfund.vc","Asian University Basketball League (AUBL)":"aubl.com","Venezia FC":"veneziafc.it","BodyArmor":"drinkbodyarmor.com","Swish Ventures (fka Sheva)":"swish.vc","Alan":"alan.com","Hugging Face":"huggingface.co","Fantasy Life":"fantasylife.com","CardVault (by Tom Brady)":"cardvaultbytombrady.com","ALUM":"stayalum.com","Boston Legacy FC":"bostonlegacyfc.com","Rhoback":"rhoback.com","Caddix":"caddix.com","Coco5":"coco5.com","SpaceX":"spacex.com","Dapper Labs":"dapperlabs.com","Harbinger Sports Partners":"harbingersportspartners.com","Perplexity":"perplexity.ai","Ballislife":"ballislife.com"},"ind":{"Tiva":"CPG","Coco5":"F&B","Ballislife":"F&B"}};
+const TYPE={
+  "Capital Investment":"Investment","Equity":"Investment",
+  "Franchise Ownership":"Ownership",
+  "Brand Ambassador":"Ambassador","Brand Ambassador/Equity":"Ambassador",
+  "Executive Stake":"Executive"
+};
+const TYPE_COLOR={Investment:"#9ae230",Ownership:"#5ab0ff",Ambassador:"#f5a25d",Executive:"#c68bff",Unclassified:"#5c6a63"};
+const TYPES=["Investment","Ownership","Ambassador","Executive"];
+const AV=["#1f3a2c","#243447","#3b2d1f","#33244a","#2b3a2b","#40262e"];
+
+// rows: [athlete, company, date, types, stake, roundSize, valuation, confidence, round, source]
+const groups=new Map();
+DATA.rows.forEach(r=>{
+  const [ath,co,date,types,stake,size,val,conf,round,src]=r;
+  const cls=(types||"").split(",").map(t=>TYPE[t]).filter(Boolean);
+  const key=[co,date,round,cls[0]||""].join("|");
+  let g=groups.get(key);
+  if(!g){g=groups.set(key,{co,date,round,type:cls[0]||"Unclassified",size,val,conf,ath:[],stake:null,srcs:[]}).get(key)}
+  g.ath.push({name:ath,stake});
+  if(src&&!g.srcs.includes(src)) g.srcs.push(src);
+  if(stake) g.stake=(g.stake||0)+stake;
+  if(size&&!g.size) g.size=size; if(val&&!g.val) g.val=val;
+  if(conf&&conf!=="Undisclosed") g.conf=conf;
+});
+const ALL=[...groups.values()].map((g,i)=>({...g,id:i,industry:DATA.ind[g.co]||null,domain:DATA.dom[g.co]||null,
+  disclosed:!!(g.stake||g.size||g.val)}));
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt=n=>{if(n==null)return null;const a=Math.abs(n);
+  if(a>=1e9)return "$"+(n/1e9).toFixed(a>=1e10?1:2).replace(/\.?0+$/,"")+"B";
+  if(a>=1e6)return "$"+(n/1e6).toFixed(a>=1e8?0:1).replace(/\.0$/,"")+"M";
+  if(a>=1e3)return "$"+Math.round(n/1e3)+"K";return "$"+n};
+const fmtDate=d=>d?new Date(d+"T12:00:00").toLocaleDateString("en-US",{month:"short",year:"numeric"}):null;
+const initials=n=>n.replace(/\(.*\)/,"").trim().split(/\s+/).map(w=>w[0]).slice(0,2).join("").toUpperCase();
+const hash=s=>[...s].reduce((a,c)=>a*31+c.charCodeAt(0)|0,7);
+
+const state={type:"All",q:"",disc:false,sort:{key:"date",dir:"desc"},open:new Set()};
+const COLS=[
+  {k:"co",l:"Company",first:true},
+  {k:"ath",l:"Athlete(s)"},
+  {k:"type",l:"Deal type"},
+  {k:"round",l:"Round"},
+  {k:"stake",l:"Athlete stake",r:true},
+  {k:"size",l:"Round size",r:true},
+  {k:"val",l:"Valuation",r:true},
+  {k:"industry",l:"Industry"},
+  {k:"date",l:"Date",r:true},
+  {k:"src",l:"",nosort:true}
+];
+const chev='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+const arrow='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>';
+const plus='<svg class="plus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
+const globe='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg>';
+
+function sortVal(g,k){
+  switch(k){
+    case "co":return g.co.toLowerCase();
+    case "ath":return g.ath[0].name.toLowerCase();
+    case "date":return g.date||"";
+    case "industry":return g.industry||"";
+    case "round":return g.round||"";
+    default:return g[k]==null?null:g[k];
+  }
+}
+function view(){
+  const q=state.q.trim().toLowerCase();
+  let rows=ALL.filter(g=>(state.type==="All"||g.type===state.type)
+    &&(!state.disc||g.disclosed)
+    &&(!q||g.co.toLowerCase().includes(q)||(g.round||"").toLowerCase().includes(q)||g.ath.some(a=>a.name.toLowerCase().includes(q))));
+  const {key,dir}=state.sort,m=dir==="asc"?1:-1;
+  rows.sort((a,b)=>{const x=sortVal(a,key),y=sortVal(b,key);
+    if(x==null&&y==null)return a.co.localeCompare(b.co);
+    if(x==null)return 1;if(y==null)return -1; // empties always last
+    return (x<y?-1:x>y?1:a.co.localeCompare(b.co))*m});
+  return rows;
+}
+
+function logo(g){
+  const url=g.domain?`https://img.logo.dev/${g.domain}?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404`:null;
+  return url?`<span class="logo"><img src="${url}" alt="" loading="lazy"></span>`:`<span class="logo fb">${globe}</span>`;
+}
+function money(v,g,cls=""){
+  if(v!=null){const est=g.conf&&g.conf.startsWith("Estimated");return `<span class="num ${cls} ${est?"est":""}">${fmt(v)}</span>`}
+  return "";
+}
+function amountCell(v,g,accent){
+  if(v!=null){const est=g.conf&&g.conf.startsWith("Estimated");
+    return accent?`<span class="money num ${est?"est":""}">${fmt(v)}</span>`:`<span class="plain num ${est?"est":""}">${est?"~":""}${fmt(v)}</span>`}
+  return `<span class="dim">—</span>`;
+}
+function athCell(g){
+  const s=g.ath.slice(0,3),extra=g.ath.length-s.length;
+  const av=s.map(a=>`<span class="av" style="background:${AV[Math.abs(hash(a.name))%AV.length]}">${initials(a.name)}</span>`).join("")+(extra>0?`<span class="av more">+${extra}</span>`:"");
+  const label=g.ath.length===1?esc(g.ath[0].name):`${esc(g.ath[0].name)} <small>+${g.ath.length-1}</small>`;
+  return `<div class="ath"><div class="stack">${av}</div><span class="ath-name">${label}</span></div>`;
+}
+function detail(g){
+  const c=TYPE_COLOR[g.type];
+  return `<tr class="detail" data-for="${g.id}"><td colspan="${COLS.length}"><div class="detail-in detail-anim">
+    <div class="dcard"><h3>Athletes</h3>${g.ath.map(a=>`<div class="line"><b>${esc(a.name)}</b><span class="num">${a.stake?fmt(a.stake):"—"}</span></div>`).join("")}</div>
+    <div class="dcard"><h3>Deal</h3>
+      <div class="line"><span>Type</span><b>${g.type}</b></div>
+      <div class="line"><span>Round</span><b>${g.round?esc(g.round):"—"}</b></div>
+      <div class="line"><span>Date</span><b>${fmtDate(g.date)||"—"}</b></div></div>
+    <div class="dcard"><h3>Numbers</h3>
+      <div class="line"><span>Round size</span><b class="num">${fmt(g.size)||"—"}</b></div>
+      <div class="line"><span>Valuation</span><b class="num">${fmt(g.val)||"—"}</b></div>
+      <div class="line"><span>Confidence</span><b>${g.conf||"Undisclosed"}</b></div></div>
+    ${g.srcs.length?`<div class="dcard"><h3>Sources</h3>${g.srcs.map(s=>`<div class="line"><a href="${esc(s)}" target="_blank" rel="noopener">${esc(new URL(s).hostname.replace(/^www\./,""))}</a></div>`).join("")}</div>`:""}
+    ${g.domain?`<div class="dcard"><h3>Company</h3><a href="https://${g.domain}" target="_blank" rel="noopener">${g.domain}</a></div>`:""}
+  </div></td></tr>`;
+}
+function render(){
+  const rows=view();
+  $("#head").innerHTML=COLS.map(c=>{
+    const on=state.sort.key===c.k;
+    const inner=c.nosort?`<span class="sortbtn" style="cursor:default"></span>`
+      :`<button class="sortbtn" data-k="${c.k}">${c.l}${chev}</button>`;
+    return `<th scope="col" class="${c.r?"r ":""}${c.first?"first":""}" ${on?`aria-sort="${state.sort.dir==="asc"?"ascending":"descending"}"`:""}>${inner}</th>`}).join("");
+  $("#count").textContent=`${rows.length} deal${rows.length===1?"":"s"}`;
+  if(!rows.length){$("#body").innerHTML=`<tr><td colspan="${COLS.length}" class="empty">No deals match. Try clearing the search or filters.</td></tr>`;return}
+  $("#body").innerHTML=rows.map(g=>{
+    const open=state.open.has(g.id),c=TYPE_COLOR[g.type];
+    const undisc=!g.disclosed&&g.conf==="Undisclosed"?`<span class="dim">Undisclosed</span>`:`<span class="dim">—</span>`;
+    return `<tr class="row" tabindex="0" data-id="${g.id}" aria-expanded="${open}">
+      <td class="first"><div class="co">${plus}${logo(g)}<span class="co-name">${esc(g.co)}</span></div></td>
+      <td>${athCell(g)}</td>
+      <td><span class="pill"><i style="--c:${c}"></i>${g.type}</span></td>
+      <td class="round">${g.round?esc(g.round):`<span class="dim">—</span>`}</td>
+      <td class="r">${g.stake!=null?amountCell(g.stake,g,true):undisc}</td>
+      <td class="r">${g.size!=null?amountCell(g.size,g,false):`<span class="dim">—</span>`}</td>
+      <td class="r">${g.val!=null?amountCell(g.val,g,false):`<span class="dim">—</span>`}</td>
+      <td>${g.industry?`<span class="tag">${esc(g.industry)}</span>`:`<span class="dim">—</span>`}</td>
+      <td class="r round num">${fmtDate(g.date)||`<span class="dim">—</span>`}</td>
+      <td class="r">${g.srcs[0]?`<a class="src" href="${esc(g.srcs[0])}" target="_blank" rel="noopener" aria-label="Open source for ${esc(g.co)}" title="Source">${arrow}</a>`:""}</td>
+    </tr>${open?detail(g):""}`}).join("");
+}
+function renderTabs(){
+  const base=ALL.filter(g=>(!state.disc||g.disclosed));
+  const cnt=t=>t==="All"?base.length:base.filter(g=>g.type===t).length;
+  $("#tabs").innerHTML=["All",...TYPES].map(t=>`<button class="tab" data-t="${t}" aria-pressed="${state.type===t}">${t}<span class="n num">${cnt(t)}</span></button>`).join("");
+}
+function renderStats(){
+  const co=new Set(ALL.map(g=>g.co)).size,ath=new Set(ALL.flatMap(g=>g.ath.map(a=>a.name))).size;
+  $("#stats").innerHTML=[[ALL.length,"Deals"],[co,"Companies"],[ath,"Athletes"]].map(([v,l])=>`<div class="stat"><div class="v num">${v}</div><div class="l">${l}</div></div>`).join("");
+}
+$("#tabs").addEventListener("click",e=>{const b=e.target.closest(".tab");if(!b)return;state.type=b.dataset.t;renderTabs();render()});
+$("#q").addEventListener("input",e=>{state.q=e.target.value;render()});
+$("#disc").addEventListener("change",e=>{state.disc=e.target.checked;renderTabs();render()});
+$("#head").addEventListener("click",e=>{const b=e.target.closest(".sortbtn[data-k]");if(!b)return;
+  const k=b.dataset.k;state.sort=state.sort.key===k?{key:k,dir:state.sort.dir==="asc"?"desc":"asc"}:{key:k,dir:(k==="co"||k==="ath"||k==="type"||k==="round"||k==="industry")?"asc":"desc"};render()});
+function toggle(tr){const id=+tr.dataset.id;state.open.has(id)?state.open.delete(id):state.open.add(id);render();const n=document.querySelector(`.row[data-id="${id}"]`);n&&n.focus({preventScroll:true})}
+$("#body").addEventListener("click",e=>{if(e.target.closest("a"))return;const tr=e.target.closest(".row");if(tr)toggle(tr)});
+$("#body").addEventListener("keydown",e=>{const tr=e.target.closest(".row");if(tr&&(e.key==="Enter"||e.key===" ")){e.preventDefault();toggle(tr)}});
+addEventListener("keydown",e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();$("#q").focus()}});
+// logo.dev 404 -> grey-globe placeholder (same pattern as CompanyLogo)
+document.addEventListener("error",e=>{const im=e.target;if(im.tagName!=="IMG")return;const w=im.parentNode;w.classList.add("fb");w.innerHTML=globe},true);
+renderStats();renderTabs();render();
+</script>
+</body>
+</html>
