@@ -232,7 +232,13 @@ hashes. Impeccable manages its own version (`impeccable check` /
   never provided.
 - `shiny-button.tsx` needs `components/ui/button.tsx`; `center-split-reveal.tsx`
   needs the `gsap` package.
-- Unconfirmed: whether hotlinked Logo.dev images actually render inside
-  the artifact's sandboxed iframe.
+- Resolved: hotlinked Logo.dev images do not render in Claude Artifact
+  previews (the artifact CSP blocks external images). `img.logo.dev` is now
+  on this environment's allowed network domains, so previews download logos
+  from Logo.dev (token from the Airtable `Logo URL` formula) and embed them as
+  data URIs (see `previews/experiment-2.html`). The real app can hotlink.
+- Current favourite direction: `previews/experiment-2.html` (clean
+  "Athlete Portfolio" layout, Airtable data, cool green accent). Not yet
+  folded into `DESIGN.md`, which still describes v5.
 - Deferred by user, to revisit: re-add "Portfolio by category" and
   "Recent activity" panels to the Profile Overview tab in some new form.
