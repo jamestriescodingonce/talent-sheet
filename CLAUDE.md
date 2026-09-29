@@ -22,7 +22,7 @@ executive stakes held by athletes and other public figures.
 **There is no app scaffold in this repo yet** — no `package.json`, no
 Next.js/Tailwind config, nothing runnable. What exists today is:
 
-1. A real Airtable base that holds the actual data (see **Data source**).
+1. A real Supabase database that holds the actual data (see **Data source**).
 2. A live, interactive UI mockup built as a Claude Artifact (see **Live
    preview**) — this is where all visual design/UX decisions have actually
    been made and validated so far.
@@ -129,25 +129,51 @@ Boards:
 
 ## Data source
 
-Real Airtable base: `appAXXfdCTRzc2PuA`.
+**Supabase (Postgres)**, project `uuvevybaeiscpmprfpgw` ("talent-sheet"). This
+replaced Airtable in September 2026; the old Airtable base
+(`appAXXfdCTRzc2PuA`) is now history and must not be edited. Every row carries
+an `airtable_id` column, which is how old and new records line up.
 
-Tables:
-- **`Talent`** (`tblwM9JBGOubeavKA`) — athletes/public figures.
-- **`Companies`** (`tbl2Y410YVkNjRVGw`) — includes the `Logo URL` formula
-  field described above.
-- **`Investments`** (`tblKid9dFDGw079xt`) — junction table linking Talent
-  ↔ Companies with deal details (junction-table pattern with formula-based
-  Name field and cross-table link mirroring — see the `collate` skill
-  below for the exact schema rules).
+Tables (schema `public`):
+- **`talent`** — athletes/public figures. `category_id` → `categories`
+  (Athlete, Coach, Entertainer/Celebrity, Executive, Financial Investor,
+  Other). `sport_id` → **`sports`**, which holds the **league or tour**
+  (NBA, WNBA, NFL, MLB, NHL, Premier League, La Liga, Bundesliga, Saudi Pro
+  League, NWSL, PGA Tour, LIV Golf, ATP, WTA, IPL, UFC, Olympics, NASCAR).
+  The Investments page calls this "League".
+- **`companies`** — `name`, `description` (one line), `website_url`,
+  `logo_url` (Logo.dev), `favicon_url`. Industries via **`company_industries`**
+  (many-to-many) → **`industries`**.
+- **`investments`** — the junction: `talent_id`, `company_id`, `round_id` →
+  `rounds`, `amount_invested`, `investment_date`, `deal_type` (one of Capital
+  Investment, Brand Ambassador/Equity, Executive Stake, Franchise Ownership),
+  `amount_precision`, `round_total_raised`, `post_money_valuation`,
+  `source_url`, and **`verification`** (Verified, Reported, Unverified).
+- `cities` and `company_cities` exist but are empty.
 
-Two separate skills (not stored in this repo — installed as plugin
-skills) drive the Airtable workflow:
-- **`research`** — finds and verifies candidate athlete-investment deals
-  from public sources (news search, Sportico transactions roundups,
-  X/Twitter, LinkedIn).
-- **`collate`** — enters verified deals into the base, enforcing its
-  junction-table/formula/mirroring schema rules.
+Relationships are real foreign keys, so the old manual link-mirroring rules no
+longer apply.
+
+Two skills (installed as plugin skills, not stored here) drive the workflow:
+- **`research`** — finds and verifies candidate athlete-investment deals from
+  public sources (news search, Sportico roundups, X/Twitter, LinkedIn).
+- **`collate`** — enters verified deals into the Supabase database.
 Use `research` before `collate` when adding new deals.
+
+**Known gaps and cautions (checked 2026-09-29):**
+- **Row Level Security is off on all 10 tables**, so anyone holding the anon
+  key can read and change every row. Enable RLS and add read policies before
+  any public app uses this project.
+- **9 deals exist in the old Airtable data but not in Supabase** (101 rows vs
+  110): Devin Booker → Coco5, Kevin Durant → Paris Saint-Germain, LeBron James
+  → Hana Kuma, Tony Hawk → Coker MMA League, Harry Kane → Seat Unique, Trevoh
+  Chalobah → Track Titan, Mario Götze → Flatpay, Travis Kelce → Sleep Number,
+  Ja'Kobi Lane → Caddix. Decide whether to add them before treating Supabase as
+  complete.
+- League, verification, industry and description values were entered from
+  public knowledge or by source domain (see DESIGN.md sections 8 and 10) and
+  need review. `design/Investments.html` is still a static snapshot of the
+  Airtable export and does not read from Supabase yet.
 
 ## Stashed components
 
@@ -237,7 +263,7 @@ hashes. Impeccable manages its own version (`impeccable check` /
 - Resolved: hotlinked Logo.dev images do not render in Claude Artifact
   previews (the artifact CSP blocks external images). `img.logo.dev` is now
   on this environment's allowed network domains, so previews download logos
-  from Logo.dev (token from the Airtable `Logo URL` formula) and embed them as
+  from Logo.dev (token from the company `logo_url`) and embed them as
   data URIs (see `previews/experiment-2.html`). The real app can hotlink.
 - Current direction: `previews/experiment-2.html`, recorded in `DESIGN.md`
   v6.1. The wordmark is decided: Talent Sheet (the sidebar section is "Talent").

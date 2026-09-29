@@ -134,7 +134,7 @@ Use `tabular-nums` for figures. **Open item:** the 8–10px sizes and the dimmes
 - Bottom row: year on the left ("Undisclosed" when unknown, never a dash); relationship label on the right with a 5px green dot.
 - Hover (150ms ease): background `card-hover`, border `accent-line`, company name `accent`. No lift, no shadow, no glow.
 
-**Relationship labels** — derived from the Airtable `Deal Type`:
+**Relationship labels** — derived from `investments.deal_type`:
 | Deal Type | Label |
 |---|---|
 | Capital Investment, Equity | INVESTED |
@@ -147,7 +147,7 @@ Use `tabular-nums` for figures. **Open item:** the 8–10px sizes and the dimmes
 - Contents: logo + company name (18px / 500) + category; one-line description; rows for Relationship, Year, Round, Amount ("Undisclosed" in `muted` when not public) and Source (green link to the source domain); then **"Also backed by"**: other athletes on record for the company. Athletes with a profile are green links that open their profile; others are plain text.
 
 **Company logos**
-- Real logos from Logo.dev, using the Airtable `Logo URL` field (`https://img.logo.dev/{domain}?token=…`). Logos keep their own colours on their own tiles; never recolour. On load failure, fall back to initials on a light tile.
+- Real logos from Logo.dev, built from `companies.website_url` (`https://img.logo.dev/{domain}?token=…`, also stored in `companies.logo_url`). Logos keep their own colours on their own tiles; never recolour. On load failure, fall back to initials on a light tile.
 - In Claude Artifact previews, logos must be downloaded (the environment allows `img.logo.dev`) and embedded as data URIs, because previews can't load external images. The real app hotlinks.
 
 **Icons:** line icons, ~1.5px stroke, 14–15px, `muted` at rest.
@@ -182,7 +182,7 @@ Every deal should carry a verification status and a source.
 - **Reported:** credible secondary source; source link required.
 - **Unverified:** internal only; never public.
 
-The data now has a `Verification` field (Verified, Reported, Unverified) on every deal. Until each deal is reviewed by hand it is set by source domain: press-wire releases (PR Newswire, Business Wire, GlobeNewswire) and the investor's or talent's own site are Verified; any other sourced deal is Reported; a deal with no source is Unverified. Show the status as a small label with a dot (section 10), never as a badge. Unverified deals are internal only by this document's rule; the Investments preview still shows them, labelled, until the user decides whether to hide them.
+The database has `investments.verification` (Verified, Reported, Unverified) on every deal. Until each deal is reviewed by hand it is set by source domain: press-wire releases (PR Newswire, Business Wire, GlobeNewswire) and the investor's or talent's own site are Verified; any other sourced deal is Reported; a deal with no source is Unverified. Show the status as a small label with a dot (section 10), never as a badge. Unverified deals are internal only by this document's rule; the Investments preview still shows them, labelled, until the user decides whether to hide them.
 
 ---
 
@@ -229,7 +229,7 @@ Theme shadcn components (Sheet for the company sheet, Tabs, Input for search) wi
 
 ### Data
 
-Profiles render from the athlete's Airtable data (Talent, Companies, Investments). Components are reusable across athletes; never hardcode one athlete. Fields the base now has beyond the original three tables: Talent `League`, Investments `Verification`, Companies `Industries` (linked) and `Description`. Fields not yet in the base (sport, photo, team) are either added to the base or omitted; they are never invented in the UI. League, industry and description values entered so far come from public knowledge and are blank where unclear; treat them as needing review.
+Profiles render from the athlete's data in Supabase (`talent`, `companies`, `investments`; see CLAUDE.md for the schema). Components are reusable across athletes; never hardcode one athlete. Field mapping: a talent's league is `talent.sport_id` → `sports.name`; verification is `investments.verification`; industries are `company_industries` → `industries`; the one-line description is `companies.description`; the logo is Logo.dev from `companies.website_url`. Fields not yet in the database (photo, team) are either added or omitted; they are never invented in the UI. League, industry and description values entered so far come from public knowledge and are blank where unclear; treat them as needing review.
 
 ---
 
@@ -256,4 +256,4 @@ A dense but quiet directory of every deal, company first. Same tokens as everywh
 
 **Keyboard.** The table is one Tab stop (roving tabindex). Up / Down move between rows; Home, End, PageUp, PageDown jump; Right opens a row, Left or Esc closes it; Enter and Space toggle. Left / Right switch the Deals and By talent tabs. "/" and Cmd-K focus search; Esc clears it. The focused row shows a 1.5px `focus` outline and the `card-hover` background. No animation on keyboard-driven actions.
 
-**Data shown.** Company, talent, relationship, round, dates, amounts, source, verification, league, industry and description all come from the base. Nothing is computed or estimated on the page, except that a row's amounts are labelled "~" when the base marks the precision as estimated. There is no trend line, activity chart or total, because the base has no series to draw one from.
+**Data shown.** Company, talent, relationship, round, dates, amounts, source, verification, league, industry and description all come from the database. Nothing is computed or estimated on the page; the current preview is a static snapshot of the data, not a live read, except that a row's amounts are labelled "~" when `amount_precision` marks them as estimated. There is no trend line, activity chart or total, because the database has no series to draw one from.

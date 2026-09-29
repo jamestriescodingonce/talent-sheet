@@ -4,7 +4,7 @@
 
 > Users, positioning and evidence were confirmed by the user in the init
 > round (2026-09-28). Other sections are inferred from project material
-> (CLAUDE.md, the FAQ copy, the Airtable schema) and open to correction.
+> (CLAUDE.md, the FAQ copy, the database schema) and open to correction.
 
 ## Platform
 
@@ -33,7 +33,7 @@ Confirmed: Talent Sheet should win on all four of these at once:
 4. **Looks the best.** The most polished, premium-feeling product in the space.
 
 ## Operating Context
-Data lives in an Airtable base (Talent, Companies, Investments junction table). Deals are found by the `research` skill from news, Sportico roundups, X and LinkedIn, then entered by `collate`. No sport or industry boundary.
+Data lives in a Supabase Postgres database (talent, companies, investments junction table; migrated from Airtable in September 2026). Deals are found by the `research` skill from news, Sportico roundups, X and LinkedIn, then entered by `collate`. No sport or industry boundary.
 
 ## Capabilities and Constraints
 - Profiles per talent, company pages, directory search and filters (planned).
