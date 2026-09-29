@@ -98,9 +98,6 @@ h1,h2,h3,h4,p{margin:0}
 .fc button{position:relative;width:18px;height:18px;border:0;border-radius:4px;background:none;color:var(--muted);display:grid;place-items:center}
 .fc button::after{content:"";position:absolute;inset:-6px}
 .fc button:hover{color:var(--text)}
-.act{margin-left:auto;display:flex;align-items:center;gap:12px}
-.act .lbl{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.act svg{display:block;overflow:visible}
 .ghost{height:26px;padding:0 4px;border:0;background:none;font-size:10px;color:var(--muted);transition:color 150ms ease}
 .ghost:hover{color:var(--text)}
 
@@ -130,12 +127,17 @@ td{padding:0 10px;height:56px;white-space:nowrap;vertical-align:middle;font-size
 .rel{display:inline-flex;align-items:center;gap:6px;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:#7D8A93}
 .rel::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent)}
 .rel.none::before{background:var(--very-muted)}
-.av{width:20px;height:20px;flex:none;border-radius:50%;display:grid;place-items:center;background:#1A252D;color:var(--text-2);font-size:8px;font-weight:500;letter-spacing:.02em;box-shadow:0 0 0 1.5px var(--bg);transition:box-shadow 150ms ease}
+.av{width:26px;height:26px;flex:none;border-radius:50%;display:grid;place-items:center;background:#1A252D;color:var(--text-2);font-size:8px;font-weight:500;letter-spacing:.02em;box-shadow:0 0 0 1.5px var(--bg);transition:box-shadow 150ms ease}
 .row:hover .av,.row[aria-expanded=true] .av{box-shadow:0 0 0 1.5px var(--card-hover)}
-.av.lg{width:24px;height:24px;font-size:9px}
+.av.lg{width:30px;height:30px;font-size:10px}
 .stack{display:flex;flex:none}
-.stack .av+.av{margin-left:-3px}
-.names{display:flex;align-items:center;gap:6px;align-items:baseline;min-width:0}
+.stack .av+.av{margin-left:6px}
+.av{position:relative}
+.lgb{position:absolute;right:-5px;bottom:-5px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 0 0 1.5px var(--bg);display:grid;place-items:center;overflow:hidden}
+.av.lg .lgb{width:16px;height:16px}
+.lgb img{display:block;width:100%;height:100%;object-fit:cover}
+.row:hover .lgb,.row[aria-expanded=true] .lgb{box-shadow:0 0 0 1.5px var(--card-hover)}
+.names{display:flex;align-items:center;gap:10px;gap:6px;align-items:baseline;min-width:0}
 .names .nm{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .names .more{color:var(--muted)}
 .site{max-width:100%;display:inline-flex;align-items:center;gap:6px;color:var(--text-2);transition:color 150ms ease}
@@ -248,7 +250,7 @@ td{padding:0 10px;height:56px;white-space:nowrap;vertical-align:middle;font-size
     <div class="chips" id="chips"></div>
 
     <div class="tw"><table id="tbl"><thead><tr id="head"></tr></thead><tbody id="body"></tbody></table></div>
-    <p class="foot">Amounts marked ~ are estimated or implied. Round size and valuation are for the company round. Industry comes from Airtable where set and is inferred from the company name otherwise. Logos from Logo.dev.</p>
+    <p class="foot">Amounts marked ~ are estimated or implied. Round size and valuation are for the company round. Industry comes from Airtable where set and is inferred from the company name otherwise. League badges are added from public knowledge and are not in Airtable yet. Logos from Logo.dev.</p>
   </div>
 </div>
 
@@ -344,8 +346,16 @@ function byAthlete(rows){
 const rel=t=>`<span class="rel${t==="Unclassified"?" none":""}">${t}</span>`;
 const un=t=>`<span class="un">${t}</span>`;
 function amount(v,g){if(v==null)return un("Undisclosed");const est=g.conf&&g.conf.startsWith("Estimated");return `<span class="amt num">${est?"~":""}${fmt(v)}</span>`}
+// League per talent: added from public knowledge (not yet a field in Airtable); talent without a clear league get no badge
+const LEAGUE={"LeBron James":"NBA","Kevin Durant":"NBA","Kobe Bryant":"NBA","Carmelo Anthony":"NBA","Andre Iguodala":"NBA","Coby White":"NBA","Devin Booker":"NBA","Trae Young":"NBA","Tyrese Haliburton":"NBA","Reggie Miller":"NBA","Shaquille O'Neal":"NBA","Yao Ming":"NBA","Omri Casspi":"NBA","Brad Stevens":"NBA","Mark Cuban":"NBA","Aliyah Boston":"WNBA","Cameron Brink":"WNBA","Diana Taurasi":"WNBA","Nneka Ogwumike":"WNBA","Sophie Cunningham":"WNBA","Ashton Jeanty":"NFL","Brock Bowers":"NFL","Caleb Williams":"NFL","Dak Prescott":"NFL","Ja'Marr Chase":"NFL","Jameis Winston":"NFL","Jayden Daniels":"NFL","Jessie Bates III":"NFL","Justin Jefferson":"NFL","Peyton Manning":"NFL","Tom Brady":"NFL","Travis Kelce":"NFL","Oscar Delp":"NFL","Aaron Judge":"MLB","Derek Jeter":"MLB","Mike Trout":"MLB","Chan Ho Park":"MLB","Connor McDavid":"NHL","Virgil van Dijk":"Premier League","Trevoh Chalobah":"Premier League","John Terry":"Premier League","Harry Kane":"Bundesliga","Mario Götze":"Bundesliga","Kylian Mbappé":"La Liga","Cristiano Ronaldo":"Saudi Pro League","Alex Morgan":"NWSL","Patrick Cantlay":"PGA Tour","Rory McIlroy":"PGA Tour","Shane Lowry":"PGA Tour","Tiger Woods":"PGA Tour","Bryson DeChambeau":"LIV Golf","Arthur Fils":"ATP","Elina Svitolina":"WTA","Rohit Sharma":"IPL","MS Dhoni":"IPL","Hardik Pandya":"IPL","Jasprit Bumrah":"IPL","Ravindra Jadeja":"IPL","Sai Sudharsan":"IPL","Shreyas Iyer":"IPL","Tilak Varma":"IPL","Dana White":"UFC","Aly Raisman":"Olympics","Jessica Ennis-Hill":"Olympics","Julia Mancuso":"Olympics","Torah Bright":"Olympics","Mikaela Shiffrin":"Olympics","Tony Stewart":"NASCAR"};
+const LGLOGOS={"NBA":"https://img.logo.dev/nba.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","WNBA":"https://img.logo.dev/wnba.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","NFL":"https://img.logo.dev/nfl.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","MLB":"https://img.logo.dev/mlb.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","NHL":"https://img.logo.dev/nhl.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","Premier League":"https://img.logo.dev/premierleague.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","La Liga":"https://img.logo.dev/laliga.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","Bundesliga":"https://img.logo.dev/bundesliga.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","NWSL":"https://img.logo.dev/nwslsoccer.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","PGA Tour":"https://img.logo.dev/pgatour.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","LIV Golf":"https://img.logo.dev/livgolf.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","ATP":"https://img.logo.dev/atptour.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","WTA":"https://img.logo.dev/wtatennis.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","IPL":"https://img.logo.dev/iplt20.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","UFC":"https://img.logo.dev/ufc.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","Olympics":"https://img.logo.dev/olympics.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","NASCAR":"https://img.logo.dev/nascar.com?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true","Saudi Pro League":"https://img.logo.dev/spl.com.sa?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404&size=48&format=png&retina=true"};
+const lgOf=n=>LEAGUE[n.trim()]||null;
 const person=n=>{const w=n.trim().split(/\s+/);return (w[0][0]+(w.length>1?w[w.length-1][0]:"")).toUpperCase()};
-function names(g){const s=g.ath.slice(0,2),ex=g.ath.length-2;return `<div class="names"><span class="stack">${s.map(a=>`<span class="av" aria-hidden="true">${esc(person(a.name))}</span>`).join("")}</span><span class="nm">${s.map(a=>esc(a.name)).join(", ")}</span>${ex>0?`<span class="more num">+${ex}</span>`:""}</div>`}
+function avatar(n,lg){
+  const l=lgOf(n),u=l&&LGLOGOS[l];
+  return `<span class="av${lg?" lg":""}" aria-hidden="true">${esc(person(n))}${u?`<span class="lgb"><img src="${u}" alt="" data-lg="1"></span>`:""}</span>`;
+}
+function names(g){const s=g.ath.slice(0,2),ex=g.ath.length-2;return `<div class="names"><span class="stack">${s.map(a=>avatar(a.name)).join("")}</span><span class="nm" title="${esc(g.ath.map(a=>a.name+(lgOf(a.name)?" · "+lgOf(a.name):"")).join(", "))}">${s.map(a=>esc(a.name)).join(", ")}</span>${ex>0?`<span class="more num">+${ex}</span>`:""}</div>`}
 function facts(g){
   return `<div class="dc"><h4>Deal</h4><div class="ln"><span>Relationship</span>${rel(g.type)}</div><div class="ln"><span>Year</span><b>${g.year||un("Undisclosed")}</b></div><div class="ln"><span>Round</span><b>${g.round?esc(g.round):un("Undisclosed")}</b></div></div>
    <div class="dc"><h4>Round numbers</h4><div class="ln"><span>Round size</span><b>${fmt(g.size)||un("Undisclosed")}</b></div><div class="ln"><span>Valuation</span><b>${fmt(g.val)||un("Undisclosed")}</b></div><div class="ln"><span>Confidence</span><b>${g.conf||un("Undisclosed")}</b></div></div>`;
@@ -353,7 +363,7 @@ function facts(g){
 function detail(g,cols){
   return `<tr class="detail"><td colspan="${cols}"><div class="din">
    <div class="dc"><div class="top2">${mark(g.co,g.domain)}<span><span class="co">${esc(g.co)}</span><span class="catl">${g.ind.length?esc(g.ind.join(", ")):"Industry not set"}</span></span></div>
-     <div style="margin-top:12px">${g.ath.map(a=>`<div class="ln"><span>${esc(a.name)}</span><b>${a.stake?fmt(a.stake):un("Undisclosed")}</b></div>`).join("")}</div></div>
+     <div style="margin-top:12px">${g.ath.map(a=>`<div class="ln"><span>${esc(a.name)}${lgOf(a.name)?` <span class="dim">· ${esc(lgOf(a.name))}</span>`:""}</span><b>${a.stake?fmt(a.stake):un("Undisclosed")}</b></div>`).join("")}</div></div>
    ${facts(g)}
    ${g.srcs.length?`<div class="dc"><h4>Source</h4>${g.srcs.map(s=>`<div class="ln"><a href="${esc(s)}" target="_blank" rel="noopener">${esc(new URL(s).hostname.replace(/^www\./,""))}</a></div>`).join("")}</div>`:""}
   </div></td></tr>`;
@@ -382,7 +392,7 @@ function renderTable(rows){
   if(!list.length){body.innerHTML=`<tr><td colspan="${cols.length}" class="empty">No talent match. Clear a filter or change the search.</td></tr>`;return 0}
   body.innerHTML=list.map(e=>{const o=state.open.has("a"+e.name),types=REL_ORDER.filter(t=>e.deals.some(d=>d.g.type===t)),cos=[...new Set(e.deals.map(d=>d.g.co))];
     return `<tr class="row" tabindex="0" data-k="a${esc(e.name)}" aria-expanded="${o}">
-      <td><div class="cell-co">${plus}<span class="av lg" aria-hidden="true">${esc(person(e.name))}</span><span class="co">${esc(e.name)}</span></div></td>
+      <td><div class="cell-co">${plus}${avatar(e.name,true)}<span class="co">${esc(e.name)}</span></div></td>
       <td class="num">${e.deals.length}</td>
       <td><div class="names">${cos.slice(0,2).map(c=>`<span style="display:inline-flex;align-items:center;gap:8px">${mark(c,DATA.dom[c],true)}${esc(c)}</span>`).join("")}${cos.length>2?`<span class="more num">+${cos.length-2}</span>`:""}</div></td>
       <td><div style="display:flex;gap:14px">${types.map(rel).join("")}</div></td>
@@ -399,23 +409,11 @@ function activeChips(){
   F.text.forEach((t,i)=>c.push(["text:"+i,"Matches",t]));
   return c;
 }
-// Activity: deals by month over the 12 months ending at the latest dated deal (real record dates; undated deals excluded)
-const LAST=ALL.reduce((m,g)=>g.date&&g.date.slice(0,7)>m?g.date.slice(0,7):m,"");
-function activity(rows){
-  const [ly,lm]=LAST.split("-").map(Number),keys=[];
-  for(let i=11;i>=0;i--){const d=new Date(ly,lm-1-i,1);keys.push(d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"))}
-  const cnt=keys.map(k=>rows.filter(g=>g.date&&g.date.startsWith(k)).length),max=Math.max(...cnt,1),W=120,H=24;
-  const pts=cnt.map((v,i)=>[+(i*(W/11)).toFixed(1),+(H-2-(v/max)*(H-6)).toFixed(1)]);
-  const total=cnt.reduce((a,b)=>a+b,0),last=pts[11];
-  const f=k=>new Date(k+"-01T12:00:00").toLocaleDateString("en-US",{month:"short",year:"numeric"});
-  const label=f(keys[0])+" to "+f(keys[11]);
-  return `<span class="act" title="Deals by month, ${label}: ${total} dated deals" role="img" aria-label="Deals by month, ${label}: ${total} dated deals"><span class="lbl">Activity</span><svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true"><path d="M${pts.map(p=>p.join(",")).join(" L")}" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${last[0]}" cy="${last[1]}" r="2" fill="var(--accent)"/></svg></span>`;
-}
 function renderChips(n){
   const c=activeChips(),noun=state.view==="deals"?"deal":"talent";
   $("#chips").innerHTML=`<span class="summary num"><b>${n}</b> ${noun}${noun==="deal"&&n!==1?"s":""}</span>`+
     (state.showChips?c.map(([k,l,v])=>`<span class="fc">${l}: <b>${esc(v)}</b><button data-rm="${k}" aria-label="Remove ${l} filter">${ic("i-x","icon")}</button></span>`).join(""):"")+
-    (c.length?`<button class="ghost" id="clear">Clear all</button><button class="ghost" id="hide">${state.showChips?"Hide filters":"Show filters"}</button>`:"")+activity(filtered());
+    (c.length?`<button class="ghost" id="clear">Clear all</button><button class="ghost" id="hide">${state.showChips?"Hide filters":"Show filters"}</button>`:"");
   $("#chips .fc .icon")&&document.querySelectorAll("#chips .fc .icon").forEach(i=>{i.style.width=i.style.height="11px"});
 }
 function filterPanel(){
@@ -471,7 +469,7 @@ document.addEventListener("keydown",e=>{
   const r=e.target.closest&&e.target.closest(".row");if(r&&(e.key==="Enter"||e.key===" ")){e.preventDefault();r.click()}
 });
 // Logo load failure -> initials on a light tile
-document.addEventListener("error",e=>{const im=e.target;if(im.tagName!=="IMG"||!im.dataset.co)return;const w=im.parentNode;w.classList.remove("has-logo");w.textContent=ini(im.dataset.co)},true);
+document.addEventListener("error",e=>{const im=e.target;if(im.tagName==="IMG"&&im.dataset.lg){im.parentNode.remove();return}if(im.tagName!=="IMG"||!im.dataset.co)return;const w=im.parentNode;w.classList.remove("has-logo");w.textContent=ini(im.dataset.co)},true);
 function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1800)}
 function copyCsv(){
   const rows=sortDeals(filtered().slice()),q=v=>'"'+String(v==null?"":v).replace(/"/g,'""')+'"';
