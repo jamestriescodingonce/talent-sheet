@@ -1,0 +1,125 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "previews/talent-sheet-v2.html"
+        ],
+        "createdAt": "2026-09-28T05:21:25.629Z",
+        "reason": "Claude: static scan pairs dark-theme ink tokens with light-theme surfaces; rendered check in both themes shows DESIGN.md pairings pass"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "previews/talent-sheet-v2.html"
+        ],
+        "createdAt": "2026-09-28T05:21:25.639Z",
+        "reason": "Claude: flagged wrappers (table frame, FAQ list) hold cells/summaries that carry their own 12-16px padding"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "previews/profile-v3.html"
+        ],
+        "createdAt": "2026-09-28T05:30:44.184Z",
+        "reason": "Claude: #000 is the default fill of the hidden SVG icon sprite, not rendered text; rendered check shows DESIGN.md dark pairings pass"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "previews/profile-v3.html"
+        ],
+        "createdAt": "2026-09-28T05:30:44.195Z",
+        "reason": "Claude: photo placeholder is full-bleed by design; its only text label is inset 16px"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "previews/profile-v4.html"
+        ],
+        "createdAt": "2026-09-28T05:42:52.011Z",
+        "reason": "Claude: flagged pairs are cross-theme static guesses (#ffffff ground never rendered) and SVG seal/sprite text whose fill is a CSS var; rendered check passes"
+      },
+      {
+        "rule": "all-caps-body",
+        "value": "*",
+        "files": [
+          "previews/profile-v4.html"
+        ],
+        "createdAt": "2026-09-28T05:42:52.022Z",
+        "reason": "Claude: uppercase is limited to short labels (sector names, portrait caption), not body copy"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "previews/profile-v5.html"
+        ],
+        "createdAt": "2026-09-28T05:50:46.012Z",
+        "reason": "Claude: flagged pairs use #ffffff or a white-blended wash as ground, which never renders on this dark-only page; rendered check passes"
+      },
+      {
+        "rule": "undersized-ui-text",
+        "value": "*",
+        "files": [
+          "previews/experiment-1.html"
+        ],
+        "createdAt": "2026-09-28T06:00:38.694Z",
+        "reason": "User spec for this experiment sets the wordmark at 10px and metadata at 8-10px; flagged to the user"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "previews/experiment-1.html"
+        ],
+        "createdAt": "2026-09-28T06:00:38.706Z",
+        "reason": "Claude: static scan pairs text with #ffffff, which never renders on this dark-only page"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "previews/experiment-1.html"
+        ],
+        "createdAt": "2026-09-28T06:00:38.718Z",
+        "reason": "Claude: tab band is a fixed 42px bar with vertically centred labels, per spec"
+      },
+      {
+        "rule": "undersized-ui-text",
+        "value": "*",
+        "files": [
+          "previews/experiment-2.html"
+        ],
+        "createdAt": "2026-09-29T01:43:20.794Z",
+        "reason": "User spec for this experiment sets the wordmark and metadata at 8-10px; preview toggle buttons are preview chrome"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "previews/experiment-2.html"
+        ],
+        "createdAt": "2026-09-29T01:43:20.805Z",
+        "reason": "Claude: static scan pairs text with #ffffff, which never renders on this dark-only page"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "previews/experiment-2.html"
+        ],
+        "createdAt": "2026-09-29T01:43:20.816Z",
+        "reason": "Claude: tab band is a fixed 42px bar with vertically centred labels, per spec"
+      }
+    ]
+  }
+}

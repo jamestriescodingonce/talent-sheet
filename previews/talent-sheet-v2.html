@@ -1,0 +1,593 @@
+<title>Talent Sheet v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
+<style>
+/* Tokens: copied from DESIGN.md §10. Light (Paper) is the default. */
+:root {
+  --surface: #F7F6F1; --surface-raised: #FFFFFF; --surface-sunk: #EEEDE6; --surface-hover: #F0EFE8;
+  --hairline: #DCDAD0; --control-border: #8C897D;
+  --ink: #0C1510; --ink-muted: #545D57; --ink-disabled: #A3A69F;
+  --brand: #0F5B38; --on-brand: #FFFFFF; --brand-wash: #E3EFE7;
+  --pitch: #0B3B27; --on-pitch: #F4F1E6; --highlight: #B8E986;
+  --fresh: #8A5300; --fresh-wash: #FBEBD2; --negative: #A1392B;
+  --focus-ring: #2F6FDB; --locked: #EEEDE6;
+  --cat-athlete: #2C5AA0; --cat-coach: #7B3F86; --cat-entertainer: #A8522B;
+  --cat-executive: #1D6E73; --cat-investor: #7F6512; --cat-other: #4F5B67;
+
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-6: 24px; --space-10: 40px; --space-16: 64px;
+  --radius-sm: 3px; --radius-md: 8px; --radius-pill: 999px;
+  --content-max: 1200px; --reading-max: 680px; --row-height: 56px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --surface: #0B120E; --surface-raised: #131C17; --surface-sunk: #080D0A; --surface-hover: #18231D;
+    --hairline: #25332B; --control-border: #607268;
+    --ink: #F1F0E9; --ink-muted: #9CA79F; --ink-disabled: #56615A;
+    --brand: #5FCB92; --on-brand: #0B120E; --brand-wash: #12261B;
+    --pitch: #12432D; --on-pitch: #F4F1E6; --highlight: #B8E986;
+    --fresh: #F0B25A; --fresh-wash: #2C2010; --negative: #F08C7C;
+    --focus-ring: #8FB4FF; --locked: #1A2520;
+    --cat-athlete: #8DB0EE; --cat-coach: #D29BDC; --cat-entertainer: #F0A27F;
+    --cat-executive: #6FC6CB; --cat-investor: #DDBF5C; --cat-other: #AAB6C2;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface: #0B120E; --surface-raised: #131C17; --surface-sunk: #080D0A; --surface-hover: #18231D;
+  --hairline: #25332B; --control-border: #607268;
+  --ink: #F1F0E9; --ink-muted: #9CA79F; --ink-disabled: #56615A;
+  --brand: #5FCB92; --on-brand: #0B120E; --brand-wash: #12261B;
+  --pitch: #12432D; --on-pitch: #F4F1E6; --highlight: #B8E986;
+  --fresh: #F0B25A; --fresh-wash: #2C2010; --negative: #F08C7C;
+  --focus-ring: #8FB4FF; --locked: #1A2520;
+  --cat-athlete: #8DB0EE; --cat-coach: #D29BDC; --cat-entertainer: #F0A27F;
+  --cat-executive: #6FC6CB; --cat-investor: #DDBF5C; --cat-other: #AAB6C2;
+}
+
+/* Base */
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  background: var(--surface); color: var(--ink);
+  font: 400 16px/26px var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding-inline: var(--space-6);
+}
+::selection { background: var(--brand-wash); color: var(--ink); }
+a { color: var(--brand); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+.wrap { max-width: var(--content-max); margin-inline: auto; }
+.reading { max-width: var(--reading-max); }
+
+/* Type styles (DESIGN.md §3) */
+.t-display { font: 500 64px/64px var(--font-display); letter-spacing: -0.02em; }
+.t-headline { font: 500 36px/40px var(--font-display); letter-spacing: -0.01em; }
+.t-deck { font: italic 400 20px/28px var(--font-display); color: var(--ink-muted); }
+.t-title { font: 600 18px/24px var(--font-sans); }
+.t-small { font-size: 14px; line-height: 20px; }
+.t-figure { font: 500 15px/20px var(--font-sans); font-variant-numeric: tabular-nums; }
+.t-label { font: 500 11px/16px var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; }
+.muted { color: var(--ink-muted); }
+
+/* Icons: line, 1.5px, square caps */
+.icon { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: square; stroke-linejoin: miter; }
+
+/* Header */
+.site-header { border-bottom: 1px solid var(--hairline); margin-inline: calc(var(--space-6) * -1); padding-inline: var(--space-6); }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); min-height: 64px; flex-wrap: wrap; }
+.wordmark { font: 600 22px/1 var(--font-display); color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+.wordmark .dot { color: var(--brand); }
+.nav { display: flex; gap: var(--space-1); }
+.nav button {
+  border: 0; background: none; cursor: pointer; padding: 10px var(--space-3); min-height: 44px;
+  font-size: 15px; font-weight: 500; color: var(--ink-muted); border-radius: var(--radius-md);
+  transition: color 120ms ease-out, background-color 120ms ease-out;
+}
+.nav button:hover { color: var(--ink); background: var(--surface-hover); }
+.nav button[aria-current="page"] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--brand); border-radius: 0; }
+
+/* Pitch hero: the page's one pitch field and one lime moment */
+.hero {
+  background: var(--pitch); color: var(--on-pitch);
+  margin-inline: calc(var(--space-6) * -1); padding: var(--space-16) var(--space-6);
+}
+.hero .wrap { display: grid; gap: var(--space-4); }
+.hero .t-display .stop { color: var(--highlight); }
+.hero .t-deck { color: var(--on-pitch); opacity: 0.86; max-width: 34em; }
+.hero-meta { display: flex; gap: var(--space-6); flex-wrap: wrap; padding-top: var(--space-4); margin-top: var(--space-2); border-top: 1px solid color-mix(in srgb, var(--on-pitch) 35%, transparent); }
+
+/* Toolbar */
+.toolbar { display: grid; gap: var(--space-4); padding-block: var(--space-10) var(--space-6); }
+.search { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.field {
+  flex: 1 1 280px; display: flex; align-items: center; gap: var(--space-2);
+  background: var(--surface-sunk); border: 1px solid var(--control-border); border-radius: var(--radius-sm);
+  padding-inline: var(--space-3); min-height: 44px; color: var(--ink-muted);
+}
+.field:focus-within { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.field input { border: 0; background: none; outline: none; flex: 1; min-width: 0; color: var(--ink); font-size: 16px; }
+.field input::placeholder { color: var(--ink-muted); }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  padding: var(--space-3) var(--space-4); min-height: 44px; border-radius: var(--radius-md);
+  font: 600 15px/20px var(--font-sans); cursor: pointer; border: 1px solid transparent;
+  transition: background-color 120ms ease-out, border-color 120ms ease-out;
+}
+.btn-primary { background: var(--brand); color: var(--on-brand); }
+.btn-primary:hover { background: color-mix(in srgb, var(--brand) 88%, var(--ink)); }
+.btn-secondary { background: transparent; border-color: var(--control-border); color: var(--ink); }
+.btn-secondary:hover { background: var(--surface-hover); }
+.filters { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+.chips { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.chip {
+  display: inline-flex; align-items: center; gap: var(--space-2); min-height: 36px;
+  padding: 6px 14px; border-radius: var(--radius-pill); border: 1px solid var(--control-border);
+  background: transparent; font-size: 14px; font-weight: 500; cursor: pointer; color: var(--ink);
+  transition: background-color 120ms ease-out;
+}
+.chip:hover { background: var(--surface-hover); }
+.chip[aria-pressed="true"] { background: var(--brand-wash); border-color: var(--brand); color: var(--brand); }
+.viewing { display: flex; align-items: center; gap: var(--space-2); }
+
+/* Tags */
+.tag { display: inline-flex; align-items: center; gap: 6px; border-radius: var(--radius-sm); padding: 2px 6px; white-space: nowrap; }
+.tag.verified { background: var(--brand-wash); color: var(--brand); }
+.tag.reported { border: 1px solid var(--control-border); color: var(--ink); padding: 1px 5px; }
+.tag.new { background: var(--fresh-wash); color: var(--fresh); }
+.tag .icon { width: 12px; height: 12px; stroke-width: 2; }
+.cat { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-muted); }
+.cat::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c); flex: none; }
+
+/* Deal table (DESIGN.md §7 Deal row) */
+.table-wrap { border: 1px solid var(--hairline); border-radius: var(--radius-md); overflow: hidden; background: var(--surface-raised); }
+table.deals { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 20px; }
+.deals thead th {
+  background: var(--surface-sunk); color: var(--ink-muted); text-align: left;
+  font: 500 11px/16px var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em;
+  padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--hairline); white-space: nowrap;
+}
+.deals td { padding: var(--space-3) var(--space-4); border-top: 1px solid var(--hairline); vertical-align: middle; height: var(--row-height); }
+.deals tbody tr:first-child td { border-top: 0; }
+.deals tbody tr { transition: background-color 120ms ease-out; }
+.deals tbody tr:hover { background: var(--surface-hover); }
+.deals .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.deals th.num { text-align: right; }
+.who { display: grid; gap: 2px; }
+.who strong { font-weight: 600; font-size: 15px; }
+.co { display: flex; align-items: center; gap: var(--space-3); }
+.co-name { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
+.logo-tile {
+  width: 32px; height: 32px; border-radius: var(--radius-md); border: 1px solid var(--hairline); background: var(--surface-raised);
+  display: grid; place-items: center; font: 600 11px/1 var(--font-sans); color: var(--ink-muted); flex: none; letter-spacing: 0.02em;
+}
+.fig { display: grid; gap: 2px; justify-items: end; }
+.fig .t-figure { color: var(--ink); }
+.undisclosed { color: var(--ink-muted); font-weight: 400; }
+.locked {
+  display: inline-flex; align-items: center; gap: 6px; background: var(--locked); color: var(--ink-muted);
+  border-radius: var(--radius-sm); padding: 4px 8px; font-size: 13px; white-space: nowrap;
+}
+.locked button { border: 0; background: none; padding: 0; color: var(--brand); font-weight: 600; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.locked .icon { width: 12px; height: 12px; }
+.empty { padding: var(--space-10) var(--space-4); text-align: center; color: var(--ink-muted); }
+.result-line { color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+
+/* Stacked deal cards below bp-sm */
+@media (max-width: 640px) {
+  .t-display { font-size: 44px; line-height: 46px; }
+  .t-headline { font-size: 30px; line-height: 34px; }
+  .deals thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .deals, .deals tbody { display: block; }
+  .deals tbody tr {
+    display: grid; grid-template-columns: 1fr auto; gap: var(--space-2) var(--space-4);
+    padding: var(--space-4); border-top: 1px solid var(--hairline);
+  }
+  .deals tbody tr:first-child { border-top: 0; }
+  .deals td { display: block; padding: 0; border: 0; height: auto; }
+  .deals td[data-col="talent"], .deals td[data-col="company"] { grid-column: 1 / -1; }
+  .deals td[data-col="rel"] { grid-column: 1; }
+  .deals td[data-col="round"] { grid-column: 2; grid-row: span 2; }
+  .deals td[data-col="date"] { grid-column: 1; text-align: left; }
+  .deals td[data-col="status"] { grid-column: 2; justify-self: end; }
+  .deals td[data-col="date"]::before, .deals td[data-col="sector"]::before { content: attr(data-label) " · "; color: var(--ink-muted); font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .deals td[data-col="sector"] { grid-column: 1 / -1; }
+}
+
+/* Profile header (DESIGN.md §7) */
+.crumbs { padding-top: var(--space-6); font-size: 14px; color: var(--ink-muted); display: flex; gap: var(--space-2); align-items: center; }
+.crumbs button { border: 0; background: none; padding: 0; color: var(--brand); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; font-size: 14px; }
+.profile-head { display: grid; grid-template-columns: 144px 1fr; gap: var(--space-6); padding-block: var(--space-6) var(--space-10); align-items: start; }
+.photo {
+  width: 144px; aspect-ratio: 1; max-width: 100%; border-radius: var(--radius-md); border: 1px solid var(--hairline); background: var(--surface-sunk);
+  display: grid; place-items: center; color: var(--ink-muted); font: 500 40px/1 var(--font-display);
+}
+.profile-copy { display: grid; gap: var(--space-2); }
+.profile-copy .t-deck { max-width: 36em; }
+.assoc { font-size: 14px; color: var(--ink-muted); margin-top: var(--space-1); }
+.assoc strong { color: var(--ink); font-weight: 500; }
+.stat-strip { display: flex; flex-wrap: wrap; gap: var(--space-10); padding-top: var(--space-4); margin-top: var(--space-4); border-top: 1px solid var(--hairline); }
+.stat { display: grid; gap: 2px; }
+.stat b { font: 600 28px/32px var(--font-sans); font-variant-numeric: tabular-nums; }
+.stat span { font-size: 14px; color: var(--ink-muted); }
+@media (max-width: 640px) { .profile-head { grid-template-columns: 1fr; } .photo { width: 96px; font-size: 28px; } .stat-strip { gap: var(--space-6); } }
+
+/* Tabs */
+.tabs { display: flex; gap: var(--space-6); border-bottom: 1px solid var(--hairline); margin-bottom: var(--space-6); overflow-x: auto; }
+.tabs button {
+  border: 0; background: none; cursor: pointer; padding: var(--space-3) 0; min-height: 44px; margin-bottom: -1px;
+  font-size: 15px; font-weight: 500; color: var(--ink-muted); border-bottom: 2px solid transparent; white-space: nowrap;
+  transition: color 120ms ease-out;
+}
+.tabs button:hover { color: var(--ink); }
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--brand); }
+
+/* Timeline */
+.timeline { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hairline); }
+.timeline li { display: grid; grid-template-columns: 120px 1fr auto; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--hairline); align-items: baseline; }
+.timeline .when { font: 500 15px/20px var(--font-sans); font-variant-numeric: tabular-nums; }
+.timeline .when.undisclosed { color: var(--ink-muted); font-weight: 400; font-size: 14px; }
+@media (max-width: 640px) { .timeline li { grid-template-columns: 1fr auto; } .timeline .when { grid-column: 1 / -1; } }
+
+/* Sources */
+.sources { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid var(--hairline); }
+.sources li { display: flex; justify-content: space-between; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--hairline); align-items: center; flex-wrap: wrap; }
+.sources a { display: inline-flex; align-items: center; gap: var(--space-1); font-size: 14px; }
+
+/* FAQ */
+.faq-wrap { padding-block: var(--space-10) var(--space-16); }
+.faq-wrap .t-deck { margin-top: var(--space-3); }
+.faq { margin-top: var(--space-10); border-top: 1px solid var(--hairline); }
+.faq details { border-bottom: 1px solid var(--hairline); }
+.faq summary {
+  list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: var(--space-4);
+  padding: var(--space-4) 0; min-height: var(--row-height); font: 600 18px/24px var(--font-sans);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { color: var(--ink-muted); transition: transform 160ms ease-out; }
+.faq summary:hover .icon { color: var(--ink); }
+.faq details[open] summary .icon { transform: rotate(180deg); }
+.faq details p { padding-bottom: var(--space-6); color: var(--ink); max-width: 62ch; }
+
+/* Footer */
+.site-footer { border-top: 1px solid var(--hairline); margin-top: var(--space-16); margin-inline: calc(var(--space-6) * -1); padding: var(--space-6); }
+.site-footer .wrap { display: flex; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; font-size: 14px; color: var(--ink-muted); }
+.site-footer .wordmark { font-size: 18px; }
+
+@media (max-width: 640px) {
+  body { padding-inline: var(--space-4); }
+  .site-header, .hero, .site-footer { margin-inline: calc(var(--space-4) * -1); padding-inline: var(--space-4); }
+  .hero { padding-block: var(--space-10); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M6 9.5l6 6 6-6"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M9 6h9v9M18 6L7 17"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="#directory" data-view="directory">Talent Sheet<span class="dot">.</span></a>
+    <nav class="nav" aria-label="Preview pages">
+      <button type="button" data-view="directory">Directory</button>
+      <button type="button" data-view="profile">Profile</button>
+      <button type="button" data-view="faq">FAQ</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- DIRECTORY -->
+  <section id="view-directory" data-page="directory">
+    <div class="hero">
+      <div class="wrap">
+        <h1 class="t-display">Who owns what<span class="stop">.</span></h1>
+        <p class="t-deck">The public record of equity between athletes, other public figures and the companies they back. Every deal shows how we know it.</p>
+        <div class="hero-meta t-label">
+          <span>Directory</span><span>Updated weekly</span><span>Example data</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <form class="toolbar" id="search-form" role="search">
+        <div class="search">
+          <label class="field" for="q">
+            <svg class="icon"><use href="#i-search"/></svg>
+            <input id="q" name="q" type="search" placeholder="Search talent, company or relationship" autocomplete="off">
+          </label>
+          <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+        <div class="filters">
+          <div class="chips" id="cat-chips" aria-label="Filter by talent type"></div>
+          <div class="viewing">
+            <span class="t-label muted">Viewing as</span>
+            <div class="chips" id="gate-chips">
+              <button type="button" class="chip" data-gate="member" aria-pressed="true">Member</button>
+              <button type="button" class="chip" data-gate="visitor" aria-pressed="false">Visitor</button>
+            </div>
+          </div>
+        </div>
+        <p class="result-line t-small" id="result-line" aria-live="polite"></p>
+      </form>
+
+      <div class="table-wrap">
+        <table class="deals">
+          <thead>
+            <tr><th>Talent</th><th>Company</th><th>Relationship</th><th class="num">Round</th><th class="num">Date</th><th>Status</th></tr>
+          </thead>
+          <tbody id="dir-rows"></tbody>
+        </table>
+        <div class="empty" id="dir-empty" hidden>No deals match that search. Try a company name or clear the filter.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFILE -->
+  <section id="view-profile" data-page="profile" hidden>
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><button type="button" data-view="directory">Directory</button><span aria-hidden="true">/</span><span>Kevin Durant</span></nav>
+
+      <div class="profile-head">
+        <div class="photo" aria-label="No photo yet">KD</div>
+        <div class="profile-copy">
+          <p class="t-label"><span class="cat" style="--c: var(--cat-athlete)">Athlete</span> <span class="muted">· NBA · Forward</span></p>
+          <h1 class="t-headline">Kevin Durant</h1>
+          <p class="t-deck">Co-founded Thirty Five Ventures in 2016. Backs AI, fintech and two football clubs.</p>
+          <p class="assoc">Associated company: <strong>Thirty Five Ventures</strong> (co-founder)</p>
+          <div class="stat-strip" id="stat-strip"></div>
+        </div>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Profile sections">
+        <button type="button" role="tab" id="tab-portfolio" aria-controls="panel-portfolio" aria-selected="true">Portfolio</button>
+        <button type="button" role="tab" id="tab-timeline" aria-controls="panel-timeline" aria-selected="false" tabindex="-1">Timeline</button>
+        <button type="button" role="tab" id="tab-sources" aria-controls="panel-sources" aria-selected="false" tabindex="-1">Sources</button>
+      </div>
+
+      <div role="tabpanel" id="panel-portfolio" aria-labelledby="tab-portfolio">
+        <div class="table-wrap">
+          <table class="deals">
+            <thead>
+              <tr><th>Company</th><th>Sector</th><th>Relationship</th><th class="num">Round</th><th class="num">Year</th><th>Status</th></tr>
+            </thead>
+            <tbody id="kd-rows"></tbody>
+          </table>
+        </div>
+      </div>
+      <div role="tabpanel" id="panel-timeline" aria-labelledby="tab-timeline" hidden>
+        <ol class="timeline" id="kd-timeline"></ol>
+      </div>
+      <div role="tabpanel" id="panel-sources" aria-labelledby="tab-sources" hidden>
+        <ul class="sources" id="kd-sources"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="view-faq" data-page="faq" hidden>
+    <div class="wrap">
+      <div class="reading faq-wrap">
+        <h1 class="t-headline">Frequently asked questions</h1>
+        <p class="t-deck">How the record is kept, and what makes it in.</p>
+        <div class="faq">
+          <details open>
+            <summary>Who uses Talent Sheet? <svg class="icon"><use href="#i-chevron"/></svg></summary>
+            <p>Agents and reps tracking their clients' portfolios. Brands scouting athletes for cap-table or ambassador-equity deals. Athletes and business managers benchmarking terms against peers. Journalists and researchers following the space.</p>
+          </details>
+          <details>
+            <summary>Where does the data come from? <svg class="icon"><use href="#i-chevron"/></svg></summary>
+            <p>Public deal announcements, regulatory filings, the talent's own posts and sports-business press. Every deal carries a status and a source. Verified means a primary source confirms it. Reported means a credible secondary source does, and we link it.</p>
+          </details>
+          <details>
+            <summary>How up to date is it? <svg class="icon"><use href="#i-chevron"/></svg></summary>
+            <p>Deals are researched and added as they're announced, usually within days of public reporting. Anything added in the last seven days carries a New marker.</p>
+          </details>
+          <details>
+            <summary>What counts as an investment? <svg class="icon"><use href="#i-chevron"/></svg></summary>
+            <p>Venture and equity investments, franchise ownership stakes, ambassador deals that include equity, executive stakes, advisory roles and funds the talent founded or runs. If a public figure holds a real piece of the company, it counts.</p>
+          </details>
+          <details>
+            <summary>Do you only cover certain sports? <svg class="icon"><use href="#i-chevron"/></svg></summary>
+            <p>No. Traditional and action sports, coaches, entertainers and executives, across any industry. The boundary is the relationship, not the sport.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span class="wordmark">Talent Sheet<span class="dot" style="color: var(--brand)">.</span></span>
+    <span>Design preview v2 · Directory rows are fictional examples · Profile data is a snapshot from the Airtable base</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const CATS = {
+    athlete: { label: 'Athlete', v: '--cat-athlete' },
+    coach: { label: 'Coach', v: '--cat-coach' },
+    entertainer: { label: 'Entertainer', v: '--cat-entertainer' },
+    executive: { label: 'Executive', v: '--cat-executive' },
+    investor: { label: 'Financial investor', v: '--cat-investor' },
+  };
+
+  // Fictional example deals (DESIGN.md: all example names are fictional).
+  const DEALS = [
+    { talent: 'Maya Okafor', role: 'WNBA · Guard', cat: 'athlete', company: 'Tidewell', rel: 'Investor + ambassador', round: 'Seed', amount: '$4.5M', date: 'Sep 2026', status: 'verified', isNew: true },
+    { talent: 'Theo Lindqvist', role: 'NHL · Center', cat: 'athlete', company: 'Northpaw', rel: 'Investor', round: 'Series A', amount: '$12M', date: 'Sep 2026', status: 'reported' },
+    { talent: 'Dana Whitfield', role: 'NFL · Head coach', cat: 'coach', company: 'Gridline Analytics', rel: 'Advisor', round: 'Seed', amount: null, date: 'Aug 2026', status: 'verified' },
+    { talent: 'Rafa Monteiro', role: 'Musician', cat: 'entertainer', company: 'Casa Solera', rel: 'Ambassador + equity', round: null, amount: null, date: 'Aug 2026', status: 'reported' },
+    { talent: 'Priya Anand', role: 'Former league COO', cat: 'executive', company: 'Lakeshore FC', rel: 'Franchise owner', round: 'Minority stake', amount: null, date: 'Jul 2026', status: 'verified' },
+    { talent: 'Elena Cruz', role: 'Pro skateboarder', cat: 'athlete', company: 'Drift Board Co.', rel: 'Investor', round: 'Seed', amount: '$2.2M', date: 'Jun 2026', status: 'verified' },
+    { talent: 'Hollis Grant', role: 'Fund manager', cat: 'investor', company: 'Bench Capital', rel: 'Fund founder', round: 'Fund I', amount: '$40M', date: 'May 2026', status: 'reported' },
+    { talent: 'Jordan Reyes', role: 'NFL · Wide receiver', cat: 'athlete', company: 'Aura Skin', rel: 'Ambassador + equity', round: 'Series B', amount: '$28M', date: 'Apr 2026', status: 'verified' },
+  ];
+
+  // Kevin Durant snapshot, carried over from the existing Profile board.
+  // Thirty Five Ventures is shown as an associated company, not a portfolio row.
+  const KD = [
+    { company: 'Hugging Face', initials: 'HF', sector: 'AI and dev tools', rel: 'Investor', round: 'Seed + Series A', amount: '$250K', year: 2018, source: 'https://x.com/JoePompliano/status/2093016643089887357', sourceName: 'X · Joe Pompliano' },
+    { company: 'Rhoback', initials: 'RB', sector: 'Apparel', rel: 'Investor', round: '$50M round', amount: null, year: 2026, source: 'https://www.citybiz.co/article/860663/activewear-brand-rhoback-raises-50m-from-l-cattertons-champ-fund/', sourceName: 'citybiz' },
+    { company: 'Paris Saint-Germain', initials: 'PSG', sector: 'Sports franchise', rel: 'Franchise owner', round: 'Ownership stake', amount: null, year: null, source: 'https://www.nba.com/news/kevin-durant-paris-saint-germain', sourceName: 'NBA.com' },
+    { company: 'Philadelphia Union', initials: 'PU', sector: 'Sports franchise', rel: 'Franchise owner', round: 'Ownership stake', amount: null, year: null, source: BZ(), sourceName: 'Benzinga' },
+    { company: 'Kalshi', initials: 'K', sector: 'Fintech', rel: 'Investor', round: null, amount: null, year: null, source: BZ(), sourceName: 'Benzinga' },
+    { company: 'Acorns', initials: 'A', sector: 'Fintech', rel: 'Investor', round: null, amount: null, year: null, source: BZ(), sourceName: 'Benzinga' },
+    { company: 'Dapper Labs', initials: 'DL', sector: 'Web3', rel: 'Investor', round: null, amount: null, year: null, source: BZ(), sourceName: 'Benzinga' },
+    { company: 'Spindrift', initials: 'S', sector: 'Consumer', rel: 'Investor', round: null, amount: null, year: null, source: BZ(), sourceName: 'Benzinga' },
+  ].map(d => ({ ...d, status: 'reported' }));
+  function BZ() { return 'https://www.benzinga.com/m-a/26/08/61500112/kevin-durant-made-23900-profit-thanks-to-nvidia-heres-the-company-that-made-him-more-than-nba-salary'; }
+
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const initials = name => name.replace(/[^A-Za-z ]/g, '').split(' ').filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+
+  const statusTag = s => s === 'verified'
+    ? '<span class="tag verified t-label"><svg class="icon"><use href="#i-check"/></svg>Verified</span>'
+    : '<span class="tag reported t-label">Reported</span>';
+  const lockedField = () => '<span class="locked"><svg class="icon"><use href="#i-lock"/></svg><button type="button" data-unlock>Unlock</button></span>';
+  const figure = (amount, sub) => amount
+    ? `<div class="fig"><span class="t-figure">${esc(amount)}</span>${sub ? `<span class="t-small muted">${esc(sub)}</span>` : ''}</div>`
+    : `<div class="fig"><span class="t-figure undisclosed">Undisclosed</span>${sub ? `<span class="t-small muted">${esc(sub)}</span>` : ''}</div>`;
+
+  // State
+  const state = { cat: 'all', q: '', gate: 'member' };
+  try { const g = localStorage.getItem('ts-gate'); if (g === 'visitor' || g === 'member') state.gate = g; } catch (e) {}
+
+  // Category chips
+  const chipsEl = document.getElementById('cat-chips');
+  const chipDefs = [['all', 'All']].concat(Object.entries(CATS).map(([k, v]) => [k, v.label]));
+  chipsEl.innerHTML = chipDefs.map(([k, label]) => `<button type="button" class="chip" data-cat="${k}" aria-pressed="${k === 'all'}">${esc(label)}</button>`).join('');
+  chipsEl.addEventListener('click', e => {
+    const b = e.target.closest('[data-cat]'); if (!b) return;
+    state.cat = b.dataset.cat;
+    chipsEl.querySelectorAll('[data-cat]').forEach(c => c.setAttribute('aria-pressed', String(c === b)));
+    renderDirectory();
+  });
+
+  const gateEl = document.getElementById('gate-chips');
+  const syncGate = () => gateEl.querySelectorAll('[data-gate]').forEach(c => c.setAttribute('aria-pressed', String(c.dataset.gate === state.gate)));
+  gateEl.addEventListener('click', e => {
+    const b = e.target.closest('[data-gate]'); if (!b) return;
+    state.gate = b.dataset.gate; syncGate();
+    try { localStorage.setItem('ts-gate', state.gate); } catch (e) {}
+    renderDirectory();
+  });
+
+  const form = document.getElementById('search-form');
+  const qInput = document.getElementById('q');
+  form.addEventListener('submit', e => { e.preventDefault(); state.q = qInput.value.trim().toLowerCase(); renderDirectory(); });
+  qInput.addEventListener('input', () => { state.q = qInput.value.trim().toLowerCase(); renderDirectory(); });
+
+  document.addEventListener('click', e => {
+    if (e.target.closest('[data-unlock]')) {
+      state.gate = 'member'; syncGate();
+      try { localStorage.setItem('ts-gate', 'member'); } catch (err) {}
+      renderDirectory();
+    }
+  });
+
+  function renderDirectory() {
+    const rows = DEALS.filter(d =>
+      (state.cat === 'all' || d.cat === state.cat) &&
+      (!state.q || [d.talent, d.company, d.rel, d.role].join(' ').toLowerCase().includes(state.q))
+    );
+    const gated = state.gate === 'visitor';
+    document.getElementById('dir-rows').innerHTML = rows.map(d => `
+      <tr>
+        <td data-col="talent"><div class="who"><strong>${esc(d.talent)}</strong><span class="t-small"><span class="cat" style="--c: var(${CATS[d.cat].v})">${esc(CATS[d.cat].label)}</span> <span class="muted">· ${esc(d.role)}</span></span></div></td>
+        <td data-col="company"><div class="co"><span class="logo-tile" aria-hidden="true">${esc(initials(d.company))}</span><span class="co-name"><a href="#directory">${esc(d.company)}</a>${d.isNew ? '<span class="tag new t-label">New</span>' : ''}</span></div></td>
+        <td data-col="rel">${esc(d.rel)}</td>
+        <td data-col="round" class="num">${gated ? lockedField() : figure(d.amount, d.round)}</td>
+        <td data-col="date" data-label="Date" class="num">${gated ? lockedField() : `<span class="t-figure">${esc(d.date)}</span>`}</td>
+        <td data-col="status">${statusTag(d.status)}</td>
+      </tr>`).join('');
+    document.getElementById('dir-empty').hidden = rows.length > 0;
+    const companies = new Set(rows.map(r => r.company)).size;
+    document.getElementById('result-line').textContent = `${rows.length} ${rows.length === 1 ? 'deal' : 'deals'} · ${companies} ${companies === 1 ? 'company' : 'companies'}${gated ? ' · Rounds and dates need a free account' : ''}`;
+  }
+
+  function renderProfile() {
+    const sectors = new Set(KD.map(d => d.sector)).size;
+    const verified = KD.filter(d => d.status === 'verified').length;
+    const reported = KD.length - verified;
+    document.getElementById('stat-strip').innerHTML = [
+      [verified, 'Verified deals'], [reported, 'Reported deals'], [sectors, 'Sectors'],
+    ].map(([n, l]) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('');
+
+    document.getElementById('kd-rows').innerHTML = KD.map(d => `
+      <tr>
+        <td data-col="company"><div class="co"><span class="logo-tile" aria-hidden="true">${esc(d.initials)}</span><a href="${esc(d.source)}" target="_blank" rel="noopener">${esc(d.company)}</a></div></td>
+        <td data-col="sector" data-label="Sector" class="t-small muted">${esc(d.sector)}</td>
+        <td data-col="rel">${esc(d.rel)}</td>
+        <td data-col="round" class="num">${figure(d.amount, d.round)}</td>
+        <td data-col="date" data-label="Year" class="num">${d.year ? `<span class="t-figure">${d.year}</span>` : '<span class="t-figure undisclosed">Undisclosed</span>'}</td>
+        <td data-col="status">${statusTag(d.status)}</td>
+      </tr>`).join('');
+
+    const sorted = KD.slice().sort((a, b) => (b.year || 0) - (a.year || 0));
+    document.getElementById('kd-timeline').innerHTML = sorted.map(d => `
+      <li>
+        <span class="when${d.year ? '' : ' undisclosed'}">${d.year || 'Date undisclosed'}</span>
+        <span>${esc(d.rel)} in <strong>${esc(d.company)}</strong><span class="muted t-small"> · ${esc(d.sector)}</span></span>
+        ${statusTag(d.status)}
+      </li>`).join('');
+
+    document.getElementById('kd-sources').innerHTML = KD.map(d => `
+      <li>
+        <span><strong>${esc(d.company)}</strong> <span class="muted t-small">· ${esc(d.rel)}</span></span>
+        <a href="${esc(d.source)}" target="_blank" rel="noopener">${esc(d.sourceName)}<svg class="icon"><use href="#i-out"/></svg></a>
+      </li>`).join('');
+  }
+
+  // Profile tabs with arrow-key support
+  const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+  function selectTab(t) {
+    tabs.forEach(x => {
+      const on = x === t;
+      x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1;
+      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+    });
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => selectTab(t));
+    t.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      selectTab(n); n.focus();
+    });
+  });
+
+  // Page switching
+  const pages = Array.from(document.querySelectorAll('[data-page]'));
+  function show(view) {
+    if (!pages.some(p => p.dataset.page === view)) view = 'directory';
+    pages.forEach(p => { p.hidden = p.dataset.page !== view; });
+    document.querySelectorAll('.nav [data-view]').forEach(b => { if (b.dataset.view === view) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+  }
+  document.addEventListener('click', e => {
+    const v = e.target.closest('[data-view]'); if (!v) return;
+    e.preventDefault(); show(v.dataset.view); window.scrollTo(0, 0);
+  });
+
+  syncGate();
+  renderDirectory();
+  renderProfile();
+  show((location.hash || '').slice(1) || 'directory');
+})();
+</script>
