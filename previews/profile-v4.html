@@ -1,0 +1,485 @@
+<title>Kevin Durant Register</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  color-scheme: dark;
+  --ground: #0A110D;
+  --ground-2: #0F1813;
+  --ground-3: #14201A;
+  --rule: #24332A;
+  --rule-strong: #3A4D41;
+  --control: #607268;
+  --ink: #EDEBE0;
+  --ink-2: #A3AEA6;
+  --green: #3DDC97;
+  --green-wash: #10281D;
+  --focus: #8FB4FF;
+
+  --serif: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --sans: "Schibsted Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 20px; --s6: 24px; --s8: 32px; --s10: 40px; --s14: 56px; --s20: 80px;
+  --r: 6px;
+  --max: 1240px;
+
+  /* Guilloche band: three phase-shifted waves, tiled. */
+  --band: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='12' viewBox='0 0 36 12'%3E%3Cg fill='none' stroke='%233DDC97' stroke-width='.7'%3E%3Cpath d='M0 6C9 0 9 0 18 6S27 12 36 6'/%3E%3Cpath d='M0 6C9 12 9 12 18 6S27 0 36 6'/%3E%3Cpath d='M0 3C9 9 9 9 18 3S27-3 36 3' opacity='.55'/%3E%3Cpath d='M0 9C9 3 9 3 18 9S27 15 36 9' opacity='.55'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--ground); }
+body {
+  margin: 0; background: var(--ground); color: var(--ink);
+  font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  padding-inline: var(--s8);
+}
+::selection { background: var(--green); color: var(--ground); }
+a { color: inherit; }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
+h1, h2, h3, p, ol, ul, dl, dd { margin: 0; padding: 0; }
+.wrap { max-width: var(--max); margin-inline: auto; }
+.icon { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: square; }
+.caps { font: 600 11px/16px var(--sans); letter-spacing: 0.14em; text-transform: uppercase; }
+.num { font-variant-numeric: tabular-nums lining-nums; }
+.quiet { color: var(--ink-2); }
+
+/* Top bar */
+.bar { display: flex; align-items: center; gap: var(--s8); min-height: 72px; border-bottom: 1px solid var(--rule); }
+.mark { font: 600 24px/1 var(--serif); text-decoration: none; letter-spacing: -0.01em; white-space: nowrap; }
+.mark i { color: var(--green); font-style: normal; }
+.bar nav { display: flex; gap: var(--s6); margin-right: auto; }
+.bar nav a { text-decoration: none; color: var(--ink-2); font-size: 15px; font-weight: 500; padding-block: var(--s3); transition: color 140ms ease-out; }
+.bar nav a:hover, .bar nav a[aria-current] { color: var(--ink); }
+.find {
+  display: flex; align-items: center; gap: var(--s2); width: 300px; height: 40px; padding-inline: var(--s3);
+  border: 1px solid var(--control); border-radius: var(--r); color: var(--ink-2); transition: border-color 140ms ease-out;
+}
+.find:hover { border-color: var(--ink-2); }
+.find:focus-within { outline: 2px solid var(--focus); outline-offset: 2px; }
+.find input { flex: 1; min-width: 0; border: 0; background: none; outline: none; font-size: 15px; color: var(--ink); }
+.find input::placeholder { color: var(--ink-2); }
+.find kbd { font: 500 12px/1 var(--sans); border: 1px solid var(--rule-strong); border-radius: 4px; padding: 3px 6px; color: var(--ink-2); }
+.find .icon { width: 16px; height: 16px; }
+
+/* Certificate hero */
+.cert {
+  position: relative; margin-top: var(--s8); border: 1px solid var(--rule-strong); border-radius: var(--r);
+  overflow: hidden; isolation: isolate; background: var(--ground-2);
+}
+.cert::before {
+  content: ""; position: absolute; inset: 7px; border: 1px solid color-mix(in srgb, var(--green) 38%, transparent);
+  border-radius: 2px; pointer-events: none; z-index: 2;
+}
+.cert .band { position: absolute; left: 7px; right: 7px; height: 12px; background: var(--band) repeat-x; opacity: 0.5; z-index: 2; }
+.cert .band.top { top: 14px; }
+.cert .band.bottom { bottom: 14px; }
+#rosette { position: absolute; top: 50%; right: -14%; width: min(760px, 64%); aspect-ratio: 1; transform: translateY(-50%); z-index: 0; pointer-events: none; }
+.cert-body {
+  position: relative; z-index: 1; display: grid; grid-template-columns: auto 1fr; align-items: center;
+  gap: var(--s14); padding: var(--s20) var(--s14);
+}
+.vignette {
+  position: relative; width: 232px; aspect-ratio: 4 / 5; border-radius: 50%; overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--green) 55%, transparent);
+  box-shadow: 0 0 0 6px var(--ground-2), 0 0 0 7px color-mix(in srgb, var(--green) 30%, transparent);
+  background: var(--ground);
+}
+.vignette canvas { width: 100%; height: 100%; display: block; }
+.vignette-note { display: block; margin-top: var(--s4); text-align: center; color: var(--ink-2); }
+.holder { display: grid; gap: var(--s4); max-width: 640px; }
+.name { font: 500 clamp(52px, 7.2vw, 104px)/0.92 var(--serif); letter-spacing: -0.025em; text-wrap: balance; font-optical-sizing: auto; }
+.name em { font-style: italic; font-weight: 400; }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s4); color: var(--ink-2); font-size: 15px; }
+.meta strong { color: var(--ink); font-weight: 500; }
+.meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--rule-strong); }
+.socials { display: flex; gap: var(--s2); margin-left: -12px; }
+.socials a {
+  width: 44px; height: 44px; display: grid; place-items: center; color: var(--ink-2); border-radius: var(--r);
+  transition: color 140ms ease-out, background-color 140ms ease-out;
+}
+.socials a:hover { color: var(--ink); background: var(--ground-3); }
+.register {
+  display: flex; flex-wrap: wrap; gap: var(--s10); padding-top: var(--s5); margin-top: var(--s2);
+  border-top: 1px solid var(--rule);
+}
+.register div { display: grid; gap: 2px; }
+.register b { font: 500 34px/1 var(--serif); font-variant-numeric: lining-nums; }
+.register span { color: var(--ink-2); font-size: 14px; }
+
+/* Section chrome */
+.section { margin-top: var(--s14); display: grid; gap: var(--s6); }
+.tabs { display: flex; gap: var(--s8); border-bottom: 1px solid var(--rule); overflow-x: auto; }
+.tabs button {
+  border: 0; background: none; cursor: pointer; padding: var(--s4) 0; min-height: 44px; margin-bottom: -1px;
+  color: var(--ink-2); border-bottom: 1px solid transparent; white-space: nowrap; transition: color 140ms ease-out;
+}
+.tabs button:hover { color: var(--ink); }
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--green); }
+.tabs button .n { color: var(--green); margin-left: 6px; }
+
+.index { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s6); }
+.index button {
+  border: 0; background: none; cursor: pointer; padding: var(--s2) 0; min-height: 40px;
+  font-size: 15px; color: var(--ink-2); text-decoration: underline; text-decoration-color: transparent;
+  text-underline-offset: 7px; text-decoration-thickness: 1px; transition: color 140ms ease-out, text-decoration-color 140ms ease-out;
+}
+.index button:hover { color: var(--ink); text-decoration-color: var(--rule-strong); }
+.index button[aria-pressed="true"] { color: var(--ink); text-decoration-color: var(--green); }
+.index sup { font-size: 11px; margin-left: 3px; color: var(--green); font-variant-numeric: tabular-nums; }
+
+/* Holdings: certificate stubs */
+.stubs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s6); }
+.stub {
+  position: relative; display: flex; flex-direction: column; background: var(--ground-2);
+  border: 1px solid var(--rule); border-radius: var(--r); padding: var(--s8) var(--s6) var(--s5);
+  transition: border-color 160ms ease-out, background-color 160ms ease-out;
+}
+.stub::before { content: ""; position: absolute; inset: 5px; border: 1px solid var(--rule); border-radius: 2px; pointer-events: none; transition: border-color 160ms ease-out; }
+.stub::after { content: ""; position: absolute; top: 11px; left: 11px; right: 11px; height: 12px; background: var(--band) repeat-x; opacity: 0.22; transition: opacity 160ms ease-out; }
+.stub:hover { background: var(--ground-3); border-color: var(--rule-strong); }
+.stub:hover::before { border-color: color-mix(in srgb, var(--green) 30%, transparent); }
+.stub:hover::after { opacity: 0.5; }
+.stub-head { display: flex; align-items: center; gap: var(--s4); padding-right: 72px; margin-top: var(--s3); }
+.logo {
+  width: 48px; height: 48px; flex: none; display: grid; place-items: center; border-radius: var(--r);
+  border: 1px solid var(--rule-strong); background: var(--ground); font: 600 13px/1 var(--sans); letter-spacing: 0.04em; color: var(--ink-2);
+}
+.stub h3 { font: 500 26px/1.05 var(--serif); letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.stub .sector { color: var(--ink-2); margin-top: 6px; }
+.seal { position: absolute; top: 34px; right: 20px; width: 64px; height: 64px; }
+.clause { margin-top: var(--s6); font: italic 400 19px/1.35 var(--serif); color: var(--ink-2); }
+.clause strong { font-style: normal; font-weight: 500; color: var(--ink); font-family: var(--sans); font-size: 16px; }
+.clause .undisc { font-style: normal; font-family: var(--sans); font-size: 15px; }
+.desc { margin-top: var(--s3); color: var(--ink-2); font-size: 15px; line-height: 1.5; }
+.stub-foot {
+  display: flex; justify-content: space-between; align-items: center; gap: var(--s3);
+  margin-top: auto; padding-top: var(--s5);
+}
+.stub-foot::before { content: ""; position: absolute; }
+.stub .rule { height: 1px; background: var(--rule); margin-top: var(--s6); }
+.open {
+  display: inline-flex; align-items: center; gap: var(--s2); min-height: 44px; margin-block: -8px; padding: 0;
+  border: 0; background: none; cursor: pointer; color: var(--green); font-weight: 600; font-size: 15px;
+}
+.open .icon { width: 15px; height: 15px; transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1); }
+.open[aria-expanded="true"] .icon { transform: rotate(90deg); }
+.round { text-align: right; font-size: 15px; }
+.round .undisc { color: var(--ink-2); }
+.detail { display: grid; gap: var(--s2); margin-top: var(--s4); padding: var(--s4); background: var(--ground); border: 1px solid var(--rule); border-radius: 4px; font-size: 14px; }
+.detail div { display: flex; justify-content: space-between; gap: var(--s4); }
+.detail a { display: inline-flex; align-items: center; gap: 6px; color: var(--green); text-underline-offset: 4px; }
+.detail .icon { width: 14px; height: 14px; }
+
+/* Ledger (timeline) and sources */
+.ledger { list-style: none; border-top: 1px solid var(--rule); }
+.ledger li { display: grid; grid-template-columns: 140px 1fr auto; gap: var(--s6); align-items: baseline; padding: var(--s5) 0; border-bottom: 1px solid var(--rule); }
+.ledger .yr { font: 500 32px/1 var(--serif); font-variant-numeric: lining-nums; }
+.ledger .yr.undisc { font: 400 14px/1.4 var(--sans); color: var(--ink-2); }
+.ledger .what { font-size: 17px; }
+.ledger .what span { color: var(--ink-2); }
+.ledger a { display: inline-flex; align-items: center; gap: 6px; color: var(--green); font-size: 15px; text-underline-offset: 4px; }
+.ledger .icon { width: 14px; height: 14px; }
+.status { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); }
+.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; border: 1px solid currentColor; }
+.status.ok { color: var(--green); }
+.status.ok::before { background: currentColor; }
+
+.foot { margin-top: var(--s20); padding-block: var(--s8); border-top: 1px solid var(--rule); display: flex; justify-content: space-between; gap: var(--s4); flex-wrap: wrap; color: var(--ink-2); font-size: 14px; }
+.foot .mark { font-size: 18px; color: var(--ink); }
+
+@media (max-width: 1100px) {
+  .stubs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cert-body { gap: var(--s10); padding: var(--s14) var(--s10); }
+  .vignette { width: 190px; }
+}
+@media (max-width: 800px) {
+  body { padding-inline: var(--s5); }
+  .bar { flex-wrap: wrap; gap: var(--s3) var(--s6); padding-block: var(--s3); }
+  .bar nav { order: 3; width: 100%; margin-right: 0; }
+  .find { width: auto; flex: 1; }
+  .cert-body { grid-template-columns: 1fr; justify-items: start; padding: var(--s14) var(--s6) var(--s10); }
+  #rosette { top: 22%; right: -38%; width: 110%; }
+  .vignette { width: 150px; }
+  .stubs { grid-template-columns: 1fr; }
+  .ledger li { grid-template-columns: 1fr auto; }
+  .ledger li > :first-child { grid-column: 1 / -1; }
+}
+@media (max-width: 440px) {
+  body { padding-inline: var(--s4); }
+  .find kbd { display: none; }
+  .register { gap: var(--s6); }
+  .register b { font-size: 28px; }
+  .meta .dot { display: none; }
+  .meta { flex-direction: column; align-items: start; gap: 2px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+  <symbol id="i-insta" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.8"/><path d="M16.8 7.2h.01"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14l4-4M8.5 11.5l-2 2a3.2 3.2 0 0 0 4.5 4.5l2-2M15.5 12.5l2-2A3.2 3.2 0 0 0 13 6l-2 2"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 7l5 5-5 5"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M9 6h9v9M18 6L7 17"/></symbol>
+</svg>
+
+<header class="wrap bar">
+  <a class="mark" href="#top">Talent Sheet<i>.</i></a>
+  <nav aria-label="Main">
+    <a href="#top" aria-current="page">Talent</a>
+    <a href="#top">Companies</a>
+    <a href="#top">Deals</a>
+    <a href="#top">Newsletter</a>
+  </nav>
+  <label class="find" for="q"><svg class="icon"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Search talent or companies" autocomplete="off"><kbd>/</kbd></label>
+</header>
+
+<main class="wrap" id="top">
+  <section class="cert" aria-label="Kevin Durant">
+    <span class="band top" aria-hidden="true"></span>
+    <span class="band bottom" aria-hidden="true"></span>
+    <canvas id="rosette" aria-hidden="true"></canvas>
+    <div class="cert-body">
+      <figure style="margin:0">
+        <div class="vignette"><canvas id="portrait" role="img" aria-label="Placeholder portrait: an engraved silhouette, not a photo of Kevin Durant"></canvas></div>
+        <figcaption class="vignette-note caps">Placeholder portrait</figcaption>
+      </figure>
+      <div class="holder">
+        <h1 class="name">Kevin <em>Durant</em></h1>
+        <p class="meta"><span><strong>NBA</strong> · Forward</span><span class="dot" aria-hidden="true"></span><span>Co-founder of <strong>Thirty Five Ventures</strong></span></p>
+        <div class="register" id="register"></div>
+        <div class="socials">
+          <a href="https://www.instagram.com/easymoneysniper/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="icon"><use href="#i-insta"/></svg></a>
+          <a href="https://x.com/KDTrey5" target="_blank" rel="noopener" aria-label="X"><svg class="icon"><use href="#i-x"/></svg></a>
+          <a href="https://www.thirtyfiveventures.com/" target="_blank" rel="noopener" aria-label="Thirty Five Ventures website"><svg class="icon"><use href="#i-link"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="tabs" role="tablist" aria-label="Profile sections">
+      <button type="button" role="tab" id="t-hold" aria-controls="p-hold" aria-selected="true">Holdings<span class="n num">8</span></button>
+      <button type="button" role="tab" id="t-ledger" aria-controls="p-ledger" aria-selected="false" tabindex="-1">Ledger</button>
+      <button type="button" role="tab" id="t-src" aria-controls="p-src" aria-selected="false" tabindex="-1">Sources</button>
+    </div>
+
+    <div role="tabpanel" id="p-hold" aria-labelledby="t-hold" style="display:grid; gap: var(--s6);">
+      <div class="index" id="index" aria-label="Filter by sector"></div>
+      <div class="stubs" id="stubs"></div>
+    </div>
+    <div role="tabpanel" id="p-ledger" aria-labelledby="t-ledger" hidden><ol class="ledger" id="ledger"></ol></div>
+    <div role="tabpanel" id="p-src" aria-labelledby="t-src" hidden><ul class="ledger" id="sources"></ul></div>
+  </section>
+
+  <footer class="foot">
+    <span class="mark">Talent Sheet<i style="color:var(--green);font-style:normal">.</i></span>
+    <span>Preview. Holdings are a snapshot of the Airtable base; every source is secondary reporting, so every holding is marked Reported.</span>
+  </footer>
+</main>
+
+<script>
+(() => {
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const GREEN = css('--green'), INK = css('--ink'), GROUND = css('--ground');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const BZ = 'https://www.benzinga.com/m-a/26/08/61500112/kevin-durant-made-23900-profit-thanks-to-nvidia-heres-the-company-that-made-him-more-than-nba-salary';
+  const H = [
+    { co: 'Hugging Face', ini: 'HF', sector: 'AI and dev tools', desc: 'Open-source AI model hub and ML developer platform.', rel: 'investor', round: 'Seed + Series A', amt: '$250K', yr: 2018, src: 'https://x.com/JoePompliano/status/2093016643089887357', srcName: 'X · Joe Pompliano' },
+    { co: 'Rhoback', ini: 'RB', sector: 'Apparel', desc: 'Performance apparel for golf and everyday wear.', rel: 'investor', round: '$50M round', amt: null, yr: 2026, src: 'https://www.citybiz.co/article/860663/activewear-brand-rhoback-raises-50m-from-l-cattertons-champ-fund/', srcName: 'citybiz' },
+    { co: 'Paris Saint-Germain', ini: 'PSG', sector: 'Sports franchise', desc: 'Ligue 1 football club based in Paris.', rel: 'franchise owner', round: 'Ownership stake', amt: null, yr: null, src: 'https://www.nba.com/news/kevin-durant-paris-saint-germain', srcName: 'NBA.com' },
+    { co: 'Philadelphia Union', ini: 'PU', sector: 'Sports franchise', desc: 'MLS club based in Chester, Pennsylvania.', rel: 'franchise owner', round: 'Ownership stake', amt: null, yr: null, src: BZ, srcName: 'Benzinga' },
+    { co: 'Kalshi', ini: 'K', sector: 'Fintech', desc: 'Regulated event-contract exchange.', rel: 'investor', round: null, amt: null, yr: null, src: BZ, srcName: 'Benzinga' },
+    { co: 'Acorns', ini: 'A', sector: 'Fintech', desc: 'Micro-investing and automated savings app.', rel: 'investor', round: null, amt: null, yr: null, src: BZ, srcName: 'Benzinga' },
+    { co: 'Dapper Labs', ini: 'DL', sector: 'Web3', desc: 'Blockchain company behind NBA Top Shot and Flow.', rel: 'investor', round: null, amt: null, yr: null, src: BZ, srcName: 'Benzinga' },
+    { co: 'Spindrift', ini: 'S', sector: 'Consumer', desc: 'Sparkling water made with real squeezed fruit.', rel: 'investor', round: null, amt: null, yr: null, src: BZ, srcName: 'Benzinga' },
+  ].map(h => ({ ...h, verified: false }));
+
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const cap = s => s[0].toUpperCase() + s.slice(1);
+
+  // Register summary
+  const sectors = [...new Set(H.map(h => h.sector))];
+  const franchises = H.filter(h => h.rel === 'franchise owner').length;
+  document.getElementById('register').innerHTML = [
+    [H.length, 'holdings on record'], [sectors.length, 'sectors'], [franchises, 'club stakes'],
+  ].map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join('');
+
+  // Verification seal: lettering set on the ring, like a notary stamp.
+  let sealId = 0;
+  function seal(verified) {
+    const id = 'ring' + (sealId++);
+    const word = verified ? 'VERIFIED · PRIMARY SOURCE · ' : 'REPORTED · SECONDARY SOURCE · ';
+    const c = verified ? 'var(--green)' : 'var(--ink-2)';
+    return `<svg class="seal" viewBox="0 0 64 64" role="img" aria-label="${verified ? 'Verified: primary source' : 'Reported: secondary source'}">
+      <defs><path id="${id}" d="M32 32m-23 0a23 23 0 1 1 46 0a23 23 0 1 1-46 0"/></defs>
+      <circle cx="32" cy="32" r="30.5" fill="${verified ? 'var(--green-wash)' : 'none'}" stroke="${c}" stroke-width="1"/>
+      <circle cx="32" cy="32" r="16" fill="none" stroke="${c}" stroke-width="1" ${verified ? '' : 'stroke-dasharray="1.5 2.5"'}/>
+      <text fill="${c}" font-family="Schibsted Grotesk, sans-serif" font-size="6.3" font-weight="600" letter-spacing="1.05"><textPath href="#${id}">${word}</textPath></text>
+      ${verified
+        ? `<path d="M25 32.5l4.5 4.5L39 27.5" fill="none" stroke="${c}" stroke-width="1.8"/>`
+        : `<text x="32" y="36" text-anchor="middle" fill="${c}" font-family="Bodoni Moda, serif" font-size="12" font-style="italic">Rep.</text>`}
+    </svg>`;
+  }
+
+  // Holdings
+  let filter = 'All';
+  const open = new Set();
+  const indexEl = document.getElementById('index');
+  function renderIndex() {
+    const defs = [['All', H.length]].concat(sectors.map(s => [s, H.filter(h => h.sector === s).length]));
+    indexEl.innerHTML = defs.map(([s, n]) => `<button type="button" data-s="${esc(s)}" aria-pressed="${s === filter}">${esc(s)}<sup>${n}</sup></button>`).join('');
+  }
+  indexEl.addEventListener('click', e => {
+    const b = e.target.closest('[data-s]'); if (!b) return;
+    filter = b.dataset.s; renderIndex(); renderStubs();
+  });
+
+  const stubsEl = document.getElementById('stubs');
+  function renderStubs() {
+    stubsEl.innerHTML = H.filter(h => filter === 'All' || h.sector === filter).map(h => {
+      const i = H.indexOf(h), on = open.has(i);
+      const since = h.yr ? `since <strong class="num">${h.yr}</strong>` : `<span class="undisc">· date undisclosed</span>`;
+      return `
+      <article class="stub">
+        ${seal(h.verified)}
+        <div class="stub-head">
+          <span class="logo" aria-hidden="true">${esc(h.ini)}</span>
+          <div><h3>${esc(h.co)}</h3><p class="sector caps">${esc(h.sector)}</p></div>
+        </div>
+        <p class="clause">Held as <strong>${esc(h.rel)}</strong> ${since}</p>
+        <p class="desc">${esc(h.desc)}</p>
+        <div class="rule"></div>
+        <div class="stub-foot">
+          <button type="button" class="open" data-i="${i}" aria-expanded="${on}" aria-controls="d${i}">View details<svg class="icon"><use href="#i-arrow"/></svg></button>
+          <span class="round num">${h.amt ? esc(h.amt) : '<span class="undisc">Undisclosed</span>'}</span>
+        </div>
+        <div class="detail" id="d${i}" ${on ? '' : 'hidden'}>
+          <div><span class="quiet">Round</span><span class="num">${h.round ? esc(h.round) : '<span class="quiet">Undisclosed</span>'}</span></div>
+          <div><span class="quiet">Amount</span><span class="num">${h.amt ? esc(h.amt) : '<span class="quiet">Undisclosed</span>'}</span></div>
+          <div><span class="quiet">Source</span><a href="${esc(h.src)}" target="_blank" rel="noopener">${esc(h.srcName)}<svg class="icon"><use href="#i-out"/></svg></a></div>
+        </div>
+      </article>`;
+    }).join('');
+  }
+  stubsEl.addEventListener('click', e => {
+    const b = e.target.closest('.open'); if (!b) return;
+    const i = +b.dataset.i;
+    open.has(i) ? open.delete(i) : open.add(i);
+    b.setAttribute('aria-expanded', String(open.has(i)));
+    document.getElementById('d' + i).hidden = !open.has(i);
+  });
+
+  // Ledger + sources
+  document.getElementById('ledger').innerHTML = H.slice().sort((a, b) => (b.yr || 0) - (a.yr || 0)).map(h => `
+    <li>
+      <span class="yr${h.yr ? '' : ' undisc'}">${h.yr || 'Date undisclosed'}</span>
+      <span class="what">${esc(cap(h.rel))} in <strong>${esc(h.co)}</strong> <span>· ${esc(h.sector)}</span></span>
+      <span class="status${h.verified ? ' ok' : ''}">${h.verified ? 'Verified' : 'Reported'}</span>
+    </li>`).join('');
+  document.getElementById('sources').innerHTML = H.map(h => `
+    <li>
+      <span class="what"><strong>${esc(h.co)}</strong></span>
+      <span class="what"><span>${esc(cap(h.rel))}</span></span>
+      <a href="${esc(h.src)}" target="_blank" rel="noopener">${esc(h.srcName)}<svg class="icon"><use href="#i-out"/></svg></a>
+    </li>`).join('');
+
+  // Tabs
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  const pick = t => tabs.forEach(x => {
+    const on = x === t;
+    x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1;
+    document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+  });
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => pick(t));
+    t.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]; pick(n); n.focus();
+    });
+  });
+  const q = document.getElementById('q');
+  addEventListener('keydown', e => { if (e.key === '/' && document.activeElement !== q) { e.preventDefault(); q.focus(); } });
+
+  // Guilloche rosette: layered rose curves, drawn once on load.
+  const ros = document.getElementById('rosette');
+  function drawRosette(p) {
+    const dpr = Math.min(devicePixelRatio || 1, 2), size = ros.clientWidth;
+    if (!size) return;
+    ros.width = ros.height = size * dpr;
+    const c = ros.getContext('2d');
+    c.scale(dpr, dpr); c.translate(size / 2, size / 2);
+    c.strokeStyle = GREEN; c.lineWidth = 0.6;
+    const R = size / 2 * 0.96;
+    // Woven rings: many shallow sine loops, each phase-shifted a little, so the
+    // strands cross like the engraved border of a share certificate.
+    const rings = [
+      { a: 0.90, b: 0.030, m: 56, n: 22 },
+      { a: 0.70, b: 0.045, m: 40, n: 22 },
+      { a: 0.50, b: 0.040, m: 28, n: 20 },
+      { a: 0.32, b: 0.035, m: 18, n: 18 },
+    ];
+    const steps = 3600, end = Math.floor(steps * p);
+    c.globalAlpha = 0.16;
+    for (const g of rings) {
+      for (let k = 0; k < g.n; k++) {
+        const ph = (k / g.n) * Math.PI * 2;
+        c.beginPath();
+        for (let s = 0; s <= end; s++) {
+          const t = (s / steps) * Math.PI * 2;
+          const r = R * (g.a + g.b * Math.sin(g.m * t + ph));
+          const x = Math.cos(t) * r, y = Math.sin(t) * r;
+          s ? c.lineTo(x, y) : c.moveTo(x, y);
+        }
+        c.stroke();
+      }
+    }
+    c.globalAlpha = 0.28;
+    for (const f of [0.99, 0.985]) { c.beginPath(); c.arc(0, 0, R * f, 0, Math.PI * 2); c.stroke(); }
+  }
+
+  // Engraved placeholder portrait: horizontal hatching whose weight follows light.
+  const por = document.getElementById('portrait');
+  function drawPortrait() {
+    const dpr = Math.min(devicePixelRatio || 1, 2), w = por.clientWidth, h = por.clientHeight;
+    if (!w) return;
+    por.width = w * dpr; por.height = h * dpr;
+    const c = por.getContext('2d'); c.scale(dpr, dpr);
+    const sx = w / 240, sy = h / 300;
+    const fig = new Path2D();
+    fig.ellipse(120 * sx, 122 * sy, 52 * sx, 66 * sy, 0, 0, Math.PI * 2);
+    fig.rect(100 * sx, 172 * sy, 40 * sx, 42 * sy);
+    fig.ellipse(120 * sx, 318 * sy, 150 * sx, 108 * sy, 0, 0, Math.PI * 2);
+    c.fillStyle = GROUND; c.fillRect(0, 0, w, h);
+    c.strokeStyle = GREEN; c.lineCap = 'round';
+    const gap = 3.1 * sy;
+    for (let y = 0; y < h; y += gap) {
+      for (let x = 0; x < w; x += 2) {
+        const bend = Math.sin((x / w - 0.5) * Math.PI) * 2.2 * sy;
+        const inside = c.isPointInPath(fig, x * dpr, y * dpr);
+        const lx = x / w - 0.3, ly = y / h - 0.22;
+        const shade = Math.min(1, Math.hypot(lx, ly) * 1.35);
+        if (inside) { c.globalAlpha = 0.28 + 0.4 * shade; c.lineWidth = 0.3 + 1.3 * shade; }
+        else { c.globalAlpha = 0.14; c.lineWidth = 0.4; }
+        c.beginPath(); c.moveTo(x, y + (inside ? bend : 0)); c.lineTo(x + 2, y + (inside ? bend : 0)); c.stroke();
+      }
+    }
+  }
+
+  renderIndex(); renderStubs(); drawPortrait();
+  if (reduce) drawRosette(1);
+  else {
+    const t0 = performance.now(), dur = 1600;
+    const tick = now => { const k = Math.min(1, (now - t0) / dur); drawRosette(1 - Math.pow(1 - k, 3)); if (k < 1) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  }
+  let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { drawRosette(1); drawPortrait(); }, 120); });
+  document.fonts && document.fonts.ready.then(() => drawPortrait());
+})();
+</script>

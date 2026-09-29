@@ -1,0 +1,510 @@
+<title>Talent Sheet Investments</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap">
+<style>
+/* DESIGN.md v6 tokens. Layout: 170px sidebar, quiet top-right search, heading, tab band with tools, hairline table. */
+:root{
+  color-scheme:dark;
+  --bg:#090C0F;--surface:#0B1014;--card:#0D1419;--card-hover:#10181E;
+  --border:#1A252D;--border-hover:#26343D;--rule:#172127;
+  --text:#F1F4F6;--text-2:#98A5AE;--muted:#687680;--very-muted:#4F5D66;
+  --accent:#3DDC97;--accent-hover:#6BE7B1;--accent-wash:rgba(61,220,151,.10);--accent-line:rgba(61,220,151,.30);
+  --nav-on:#10231A;--focus:#8FB4FF;
+  --sans:"Geist","Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --ease:cubic-bezier(.23,1,.32,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--text);font:400 12px/1.55 var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+::selection{background:rgba(61,220,151,.28);color:var(--text)}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,h3,h4,p{margin:0}
+:focus-visible{outline:1.5px solid var(--focus);outline-offset:2px;border-radius:4px}
+.icon{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.num{font-variant-numeric:tabular-nums}
+
+/* Sidebar */
+.side{position:fixed;inset:0 auto 0 0;width:170px;background:var(--bg);border-right:1px solid var(--rule);padding:24px 12px}
+.logo{display:flex;align-items:center;gap:10px;padding-inline:6px;color:var(--accent)}
+.logo svg{width:24px;height:24px;flex:none}
+.logo i{font-style:normal;color:var(--accent)}
+.logo span{font-size:10px;font-weight:600;letter-spacing:.18em;line-height:1.25;color:#E8EDF0}
+.nav{display:grid;gap:2px;margin-top:42px}
+.nav a{display:flex;align-items:center;gap:10px;height:38px;padding:0 10px;border-radius:6px;font-size:11px;color:#7F8B94;transition:color 150ms ease,background-color 150ms ease}
+.nav a:hover{color:var(--text)}
+.nav a[aria-current]{background:var(--nav-on);color:var(--text)}
+.nav a[aria-current] .icon{color:var(--accent)}
+
+/* Main */
+.main{margin-left:170px;overflow-x:clip}
+.inner{max-width:1120px;margin:0 auto;padding:24px 40px 72px}
+.top{display:flex;justify-content:flex-end}
+.search{display:flex;align-items:center;gap:8px;width:270px;height:32px;padding:0 12px;background:var(--card);border:1px solid var(--border);border-radius:16px;color:var(--muted);transition:border-color 150ms ease}
+.search:hover{border-color:var(--border-hover)}
+.search:focus-within{border-color:var(--border-hover);outline:1.5px solid var(--focus);outline-offset:2px}
+.search input{flex:1;min-width:0;border:0;background:none;outline:none;font-size:10px;color:var(--text)}
+.search input::placeholder{color:var(--muted)}
+.search .icon{width:14px;height:14px}
+.head{margin-top:20px}
+.head h1{font-size:18px;font-weight:500;letter-spacing:-.02em;color:#EFF3F5}
+.head .sub{margin-top:6px;font-size:11px;color:#75828C}
+
+/* Tab band + tools */
+.tabs{display:flex;align-items:center;gap:28px;height:42px;margin-top:20px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.tabs .tab{position:relative;height:100%;border:0;background:none;padding:0;font-size:11px;color:#71808A;transition:color 150ms ease}
+.tabs .tab:hover{color:var(--text-2)}
+.tabs .tab[aria-selected=true]{color:var(--accent);cursor:default}
+.tabs .tab[aria-selected=true]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent)}
+.grow{flex:1}
+.tools{display:flex;align-items:center;gap:20px}
+.pop{position:relative;height:100%;display:flex;align-items:center}
+.tool{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0;border:0;background:none;font-size:11px;color:#71808A;transition:color 150ms ease}
+.tool .icon{width:14px;height:14px}
+.tool:hover,.tool[aria-expanded=true]{color:var(--text)}
+.tool .cnt{color:var(--accent)}
+.tool .of{color:var(--muted)}
+.menu{position:absolute;z-index:20;top:calc(100% + 1px);right:0;min-width:220px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px;animation:fade 150ms ease}
+@keyframes fade{from{opacity:0}}
+.mi{display:flex;align-items:center;gap:10px;width:100%;height:32px;padding:0 10px;border:0;border-radius:6px;background:transparent;text-align:left;font-size:11px;color:var(--text-2)}
+.mi .chk{margin-left:auto;color:var(--accent);opacity:0}
+.mi[aria-checked=true]{color:var(--text)}
+.mi[aria-checked=true] .chk{opacity:1}
+.mi:hover{background:var(--accent-wash)}
+.fp{width:min(320px,86vw);padding:16px;display:grid;gap:16px}
+.fp h4{margin-bottom:8px;font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt{height:26px;padding:0 10px;border-radius:6px;border:1px solid var(--border);background:none;font-size:10px;color:var(--text-2);transition:color 150ms ease,border-color 150ms ease}
+.opt:hover{border-color:var(--border-hover);color:var(--text)}
+.opt[aria-pressed=true]{color:var(--accent);border-color:var(--accent-line)}
+.opts.inds{max-height:120px;overflow:auto}
+.fp .row2{display:flex;justify-content:space-between;align-items:center}
+.link{border:0;background:none;padding:0;font-size:10px;color:var(--muted)}
+.link:hover{color:var(--text)}
+
+/* Active filters (quiet, not pills) */
+.chips{display:flex;gap:8px;align-items:center;flex-wrap:wrap;min-height:26px;margin-top:16px}
+.summary{margin-right:8px;font-size:11px;color:var(--text-2)}
+.summary b{font-weight:500;color:var(--text)}
+.fc{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 4px 0 10px;border:1px solid var(--border);border-radius:8px;font-size:10px;color:var(--muted)}
+.fc b{font-weight:400;color:var(--text)}
+.fc button{position:relative;width:18px;height:18px;border:0;border-radius:4px;background:none;color:var(--muted);display:grid;place-items:center}
+.fc button::after{content:"";position:absolute;inset:-6px}
+.fc button:hover{color:var(--text)}
+.ghost{height:26px;padding:0 4px;border:0;background:none;font-size:10px;color:var(--muted);transition:color 150ms ease}
+.ghost:hover{color:var(--text)}
+
+/* Table: hairlines and spacing, no boxes */
+.tw{margin-top:8px;overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:900px;table-layout:fixed}
+td{overflow:hidden;text-overflow:ellipsis}
+.w-co{width:24%}.w-ind{width:14%}.w-rel{width:13%}.w-rnd{width:13%}.w-tal{width:26%}.w-yr{width:8%}.w-web{width:15%}
+.w-a1{width:24%}.w-a2{width:8%}.w-a3{width:32%}.w-a4{width:22%}.w-a5{width:14%}.t-ath th:nth-child(6){width:12%}
+th{padding:0 10px;height:36px;text-align:left;white-space:nowrap;font-size:9px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--rule)}
+th:first-child,td:first-child{padding-left:4px}
+td{padding:0 10px;height:56px;white-space:nowrap;vertical-align:middle;font-size:11px;color:var(--text-2);border-bottom:1px solid var(--rule);transition:background-color 150ms ease}
+.row{cursor:pointer}
+.row:hover td,.row[aria-expanded=true] td,.row:focus-visible td{background:var(--card-hover)}
+.row:focus-visible{outline:1.5px solid var(--focus);outline-offset:-1.5px;border-radius:0}
+.row:hover .co,.row[aria-expanded=true] .co,.row:focus-visible .co{color:var(--accent)}
+.cell-co{display:flex;align-items:center;gap:10px;min-width:0}
+.plus{width:12px;height:12px;flex:none;color:var(--very-muted);transition:rotate 200ms var(--ease),color 150ms ease}
+.row[aria-expanded=true] .plus{rotate:45deg;color:var(--accent)}
+.mark{width:32px;height:32px;flex:none;border-radius:8px;display:grid;place-items:center;background:#E7ECEF;color:#0B1014;font-size:10px;font-weight:600;letter-spacing:-.01em;overflow:hidden}
+.mark.has-logo{background:#fff}
+.mark img{display:block;width:100%;height:100%;object-fit:cover}
+.mark.sm{width:20px;height:20px;border-radius:5px;font-size:8px}
+.co{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:12px;font-weight:500;color:#E7ECEF;transition:color 150ms ease}
+.cat{color:var(--text-2)}
+.un,.dim{color:var(--very-muted)}
+.rel{display:inline-flex;align-items:center;gap:6px;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:#7D8A93}
+.rel::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.rel.none::before{background:var(--very-muted)}
+.rel.v-reported::before{background:var(--muted)}
+.rel.v-unverified::before{background:var(--very-muted)}
+.dc .desc{margin-top:8px;font-size:10px;line-height:1.5;color:#87949D}
+.av{width:26px;height:26px;flex:none;border-radius:50%;display:grid;place-items:center;background:#1A252D;color:var(--text-2);font-size:8px;font-weight:500;letter-spacing:.02em;box-shadow:0 0 0 1.5px var(--bg);transition:box-shadow 150ms ease}
+.row:hover .av,.row[aria-expanded=true] .av{box-shadow:0 0 0 1.5px var(--card-hover)}
+.av.lg{width:30px;height:30px;font-size:10px}
+.stack{display:flex;flex:none}
+.stack .av+.av{margin-left:6px}
+.av{position:relative}
+.lgb{position:absolute;right:-5px;bottom:-5px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 0 0 1.5px var(--bg);display:grid;place-items:center;overflow:hidden}
+.av.lg .lgb{width:16px;height:16px}
+.lgb img{display:block;width:100%;height:100%;object-fit:cover}
+.row:hover .lgb,.row[aria-expanded=true] .lgb{box-shadow:0 0 0 1.5px var(--card-hover)}
+.names{display:flex;align-items:center;gap:10px;gap:6px;align-items:baseline;min-width:0}
+.pl{color:var(--accent);transition:color 150ms ease}
+.pl:hover{color:var(--accent-hover)}
+.co.pl{font-weight:500}
+.names .nm{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.names .more{color:var(--muted)}
+.site{max-width:100%;display:inline-flex;align-items:center;gap:6px;color:var(--text-2);transition:color 150ms ease}
+.site .icon{width:11px;height:11px;color:var(--very-muted)}
+.site:hover{color:var(--accent)}
+.site:hover .icon{color:var(--accent)}
+.amt{color:var(--text)}
+
+/* Expanded row: compact 8px cards, logo beside name */
+.detail td{padding:0;height:auto;border-bottom:1px solid var(--rule);white-space:normal}
+.detail .din{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;padding:16px 4px 20px;animation:fade 200ms ease}
+.dc{min-width:0;padding:15px;background:var(--card);border:1px solid var(--border);border-radius:8px}
+.dc h4{margin-bottom:6px;font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.dc .top2{display:flex;align-items:center;gap:10px}
+.dc .top2 .co{max-width:none;color:#E7ECEF}
+.dc .top2 .catl{display:block;margin-top:1px;font-size:9px;color:var(--muted)}
+.ln{display:flex;justify-content:space-between;gap:16px;padding:7px 0;border-bottom:1px solid var(--rule);font-size:11px}
+.ln:last-child{border-bottom:0;padding-bottom:0}
+.ln span{color:var(--muted)}
+.ln b{font-weight:400;color:var(--text);text-align:right;font-variant-numeric:tabular-nums}
+.ln a{color:var(--accent);overflow-wrap:anywhere}
+.ln a:hover{color:var(--accent-hover)}
+.ln .un{color:var(--muted)}
+.empty{padding:64px 16px;text-align:center;color:var(--muted);border-bottom:0}
+.foot{margin-top:20px;font-size:10px;line-height:1.6;color:var(--very-muted);max-width:720px}
+.toast{position:fixed;left:50%;bottom:24px;translate:-50% 0;z-index:50;padding:8px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:11px;color:var(--text);animation:fade 200ms ease}
+
+/* Mobile top bar */
+.mbar{display:none}
+@media (max-width:1100px){.inner{padding-inline:32px}}
+@media (max-width:850px){
+  .side{display:none}
+  .main{margin-left:0}
+  .mbar{display:flex;align-items:center;justify-content:space-between;height:54px;padding:0 20px;border-bottom:1px solid var(--rule);position:relative}
+  .mbar .menu-btn{width:32px;height:32px;display:grid;place-items:center;border:0;background:none;color:var(--text-2)}
+  .mbar nav{position:absolute;top:54px;left:0;right:0;z-index:20;padding:8px 12px 12px;background:var(--bg);border-bottom:1px solid var(--rule);display:grid;gap:2px}
+  .inner{padding:20px 24px 64px}
+  .top{justify-content:stretch}
+  .search{width:100%}
+}
+@media (max-width:600px){
+  .inner{padding:16px 16px 64px}
+  .tabs{gap:20px}
+  .tools{gap:14px}
+  .tool .lbl{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-a" viewBox="0 0 22 20"><path d="M1 19L11 1l10 18M5.5 11h6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="miter"/><path d="M7 19l4-7.2 4 7.2" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.5"/><path d="M3 20c.6-3.5 3-5.5 6-5.5s5.4 2 6 5.5M15.5 5.2a3.5 3.5 0 0 1 0 6.6M18 14.8c1.6.8 2.7 2.6 3 5.2"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 15l3-3 2 2 3-4"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><path d="M5 20V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v15M15 9h3a1 1 0 0 1 1 1v10M3 20h18M8.5 8h3M8.5 12h3M8.5 16h3"/></symbol>
+  <symbol id="i-story" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="12" cy="10.5" r="2.5"/><path d="M8 17c.8-1.8 2.2-2.8 4-2.8s3.2 1 4 2.8"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8.5 7H17v8.5"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9M4 12h3M11 12h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+  <symbol id="i-sort" viewBox="0 0 24 24"><path d="M4 7h10M4 12h7M4 17h4M17 6v12m0 0-3-3m3 3 3-3"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7.5a2 2 0 0 0 2 2h2.5"/></symbol>
+</svg>
+
+<aside class="side" aria-label="Sidebar">
+  <a class="logo" href="#top" aria-label="Talent Sheet"><svg viewBox="0 0 22 22" aria-hidden="true"><rect x="1.5" y="1.5" width="19" height="19" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 7.5h10M11 7.5v8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M6 15.5h2.5M13.5 15.5H16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".45"/></svg><span>TALENT<br>SHEET<i>.</i></span></a>
+  <nav class="nav" aria-label="Main">
+    <a href="#top"><svg class="icon"><use href="#i-people"/></svg>Talent</a>
+    <a href="#top" aria-current="page"><svg class="icon"><use href="#i-chart"/></svg>Investments</a>
+    <a href="#top"><svg class="icon"><use href="#i-building"/></svg>Industries</a>
+    <a href="#top"><svg class="icon"><use href="#i-story"/></svg>Stories</a>
+  </nav>
+</aside>
+
+<div class="main" id="top">
+  <header class="mbar">
+    <a class="logo" href="#top" aria-label="Talent Sheet"><svg viewBox="0 0 22 22" aria-hidden="true"><rect x="1.5" y="1.5" width="19" height="19" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 7.5h10M11 7.5v8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M6 15.5h2.5M13.5 15.5H16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".45"/></svg><span>TALENT<br>SHEET<i>.</i></span></a>
+    <button class="menu-btn" id="mbtn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mnav"><svg class="icon" style="width:18px;height:18px"><use href="#i-menu"/></svg></button>
+    <nav class="nav" id="mnav" aria-label="Main" hidden style="margin-top:0">
+      <a href="#top"><svg class="icon"><use href="#i-people"/></svg>Talent</a>
+      <a href="#top" aria-current="page"><svg class="icon"><use href="#i-chart"/></svg>Investments</a>
+      <a href="#top"><svg class="icon"><use href="#i-building"/></svg>Industries</a>
+      <a href="#top"><svg class="icon"><use href="#i-story"/></svg>Stories</a>
+    </nav>
+  </header>
+
+  <div class="inner">
+    <div class="top">
+      <form class="search" id="describe" role="search"><svg class="icon"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Search deals, talent, companies..." autocomplete="off" aria-label="Search deals"></form>
+    </div>
+
+    <section class="head">
+      <h1>Investments</h1>
+      <p class="sub">Every deal on record between athletes and the companies they back. Try “owned since 2024” or “partnered football”, then press Enter to keep it as a filter.</p>
+    </section>
+
+    <div class="tabs">
+      <div role="tablist" aria-label="View" id="views" style="display:contents"></div>
+      <span class="grow"></span>
+      <div class="tools">
+        <div class="pop" id="fpop"></div>
+        <div class="pop" id="spop"></div>
+        <button class="tool" id="copy" type="button"><svg class="icon"><use href="#i-copy"/></svg><span class="lbl">Copy CSV</span></button>
+      </div>
+    </div>
+    <div class="chips" id="chips"></div>
+
+    <div class="tw"><table id="tbl"><thead><tr id="head"></tr></thead><tbody id="body"></tbody></table></div>
+    <p class="foot">Amounts marked ~ are estimated or implied. Round size and valuation are for the company round. Industry and description come from Airtable and are blank where not yet confirmed. Verified means a press release or the investor's own announcement; Reported means a credible secondary source. League comes from the Talent table in Airtable and is blank where unclear. Logos from Logo.dev.<br>Keyboard: ↑ ↓ move between rows, → opens, ← closes, / searches.</p>
+  </div>
+</div>
+
+<script>
+const DATA=__DATA__;
+const LOGOS=__LOGOS__;
+// Relationship labels per DESIGN.md (derived from Airtable Deal Type)
+const REL={"Capital Investment":"Invested","Equity":"Invested","Franchise Ownership":"Owned","Brand Ambassador":"Partnered","Brand Ambassador/Equity":"Partnered","Executive Stake":"Executive"};
+const REL_ORDER=["Invested","Owned","Partnered","Executive","Founded"];
+
+// rows: [athlete, company, date, types, stake, roundSize, valuation, confidence, round, source]
+const groups=new Map();
+DATA.rows.forEach(r=>{
+  const [ath,co,date,types,stake,size,val,conf,round,src,vr]=r;
+  let type=(types||"").split(",").map(t=>REL[t]).filter(Boolean)[0]||"Unclassified";
+  if(type==="Executive"&&co==="SpringHill Company")type="Founded"; // DESIGN.md: FOUNDED when the athlete founded it
+  const key=[co,date,round,type].join("|");
+  let g=groups.get(key);
+  if(!g)g=groups.set(key,{co,date,round,type,size,val,conf,ath:[],stake:null,srcs:[],ver:null}).get(key);
+  g.ath.push({name:ath,stake});
+  if(src&&!g.srcs.includes(src))g.srcs.push(src);
+  if(stake)g.stake=(g.stake||0)+stake;
+  if(size&&!g.size)g.size=size;if(val&&!g.val)g.val=val;
+  if(conf&&conf!=="Undisclosed")g.conf=conf;
+  const rank={Verified:3,Reported:2,Unverified:1};if(vr&&(!g.ver||rank[vr]>rank[g.ver]))g.ver=vr;
+});
+const ALL=[...groups.values()].map((g,i)=>{
+  return {...g,id:i,ind:DATA.ind[g.co]||[],desc:DATA.desc[g.co]||"",domain:DATA.dom[g.co]||null,disclosed:!!(g.stake||g.size||g.val),year:g.date?+g.date.slice(0,4):0};
+});
+const TYPES=REL_ORDER.filter(t=>ALL.some(g=>g.type===t));
+const INDUSTRIES=[...new Set(ALL.flatMap(g=>g.ind))].sort();
+const YEARS=[2024,2025,2026];
+const LG_ORDER=["NBA","WNBA","NFL","MLB","NHL","PGA Tour","LIV Golf","Premier League","La Liga","Bundesliga","Saudi Pro League","NWSL","ATP","WTA","IPL","UFC","Olympics","NASCAR"];
+const SHOW_ROUND=ALL.filter(g=>g.round).length/ALL.length>=0.5; // hide Round when most deals have none
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt=n=>{if(n==null)return null;const a=Math.abs(n);
+  if(a>=1e9)return "$"+(n/1e9).toFixed(a>=1e10?1:2).replace(/\.?0+$/,"")+"B";
+  if(a>=1e6)return "$"+(n/1e6).toFixed(a>=1e8?0:1).replace(/\.0$/,"")+"M";
+  if(a>=1e3)return "$"+Math.round(n/1e3)+"K";return "$"+n};
+const fmtDate=d=>d?new Date(d+"T12:00:00").toLocaleDateString("en-US",{month:"short",year:"numeric"}):null;
+const hash=s=>[...s].reduce((a,c)=>a*31+c.charCodeAt(0)|0,7);
+const ini=n=>{const w=n.replace(/\(.*\)/g,"").replace(/[^A-Za-z0-9 ]/g," ").trim().split(/\s+/);return (w.length>1?w[0][0]+w[1][0]:w[0].slice(0,2)).toUpperCase()};
+const ic=(id,cls="icon")=>`<svg class="${cls}"><use href="#${id}"/></svg>`;
+
+// Logo tile: real Logo.dev logo on a white tile, initials on a light tile if it fails (DESIGN.md)
+function mark(co,domain,sm){
+  const u=domain&&LOGOS[domain],c="mark"+(sm?" sm":"");
+  return u?`<span class="${c} has-logo" aria-hidden="true"><img src="${u}" alt="" data-co="${esc(co)}"></span>`:`<span class="${c}" aria-hidden="true">${esc(ini(co))}</span>`;
+}
+
+const state={view:"deals",f:{types:[],leagues:[],inds:[],min:0,disc:false,since:0,text:[]},sort:{deals:"date",athletes:"count"},open:new Set(),menu:null,showChips:true,q:""};
+const SORTS={
+  deals:[["date","Newest first"],["date-asc","Oldest first"],["size","Round size, high to low"],["val","Valuation, high to low"],["co","Company, A to Z"],["ath","Most talent"]],
+  athletes:[["count","Most deals"],["latest","Latest deal"],["name","Name, A to Z"]]
+};
+
+// Describe-search: relationship words, "over $10M", "since 2024"; everything else matches text
+const LG_WORDS={nba:"NBA",wnba:"WNBA",nfl:"NFL",mlb:"MLB",nhl:"NHL",ipl:"IPL",ufc:"UFC",atp:"ATP",wta:"WTA",nascar:"NASCAR",nwsl:"NWSL",pga:"PGA Tour",liv:"LIV Golf",premier:"Premier League",laliga:"La Liga",bundesliga:"Bundesliga",olympics:"Olympics",olympic:"Olympics"};
+const TYPE_WORDS={invest:"Invested",invested:"Invested",investment:"Invested",investments:"Invested",investing:"Invested",owned:"Owned",own:"Owned",owns:"Owned",ownership:"Owned",franchise:"Owned",owner:"Owned",partnered:"Partnered",ambassador:"Partnered",ambassadors:"Partnered",endorsement:"Partnered",executive:"Executive",exec:"Executive",board:"Executive",founded:"Founded",founder:"Founded"};
+const STOP=new Set(["deal","deals","with","in","by","the","a","an","of","athlete","athletes","and","for","that","show","me","all","from","to"]);
+function parse(s){
+  let t=" "+s.toLowerCase()+" ",out={types:[],leagues:[],since:0,text:[]};
+  t=t.replace(/(?:since|after|from|in)\s+(20\d\d)/,(m,y)=>{out.since=+y;return " "});
+  t.split(/[\s,]+/).filter(Boolean).forEach(w=>{const ty=TYPE_WORDS[w],lgw=LG_WORDS[w];if(ty){if(!out.types.includes(ty))out.types.push(ty)}else if(lgw){if(!out.leagues.includes(lgw))out.leagues.push(lgw)}else if(!STOP.has(w))out.text.push(w)});
+  return out;
+}
+const hay=g=>(g.co+" "+g.ath.map(a=>a.name).join(" ")+" "+g.ind.join(" ")+" "+(g.round||"")+" "+g.type).toLowerCase();
+function filtered(){
+  const F=state.f,live=state.q.trim()?parse(state.q):{types:[],leagues:[],since:0,text:[]};
+  const leagues=[...F.leagues,...live.leagues],types=[...F.types,...live.types],since=Math.max(F.since,live.since),text=[...F.text,...live.text];
+  return ALL.filter(g=>(!types.length||types.includes(g.type))
+    &&(!leagues.length||g.ath.some(a=>leagues.includes(lgOf(a.name))))
+    &&(!F.inds.length||g.ind.some(i=>F.inds.includes(i)))
+    &&(!F.disc||g.disclosed)&&(!since||g.year>=since)
+    &&(!text.length||text.every(w=>hay(g).includes(w))));
+}
+const cmpNum=(a,b,dir=-1)=>{if(a==null&&b==null)return 0;if(a==null)return 1;if(b==null)return -1;return (a-b)*dir};
+const T=d=>d?Date.parse(d):null;
+function sortDeals(rows){
+  const f={date:(a,b)=>cmpNum(T(a.date),T(b.date),-1),"date-asc":(a,b)=>cmpNum(T(a.date),T(b.date),1),
+    stake:(a,b)=>cmpNum(a.stake,b.stake),size:(a,b)=>cmpNum(a.size,b.size),val:(a,b)=>cmpNum(a.val,b.val),
+    co:(a,b)=>a.co.localeCompare(b.co),ath:(a,b)=>b.ath.length-a.ath.length}[state.sort.deals];
+  return rows.sort((a,b)=>f(a,b)||a.co.localeCompare(b.co));
+}
+function byAthlete(rows){
+  const m=new Map(),lgs=[...state.f.leagues,...(state.q.trim()?parse(state.q).leagues:[])];
+  rows.forEach(g=>g.ath.forEach(a=>{if(lgs.length&&!lgs.includes(lgOf(a.name)))return;let e=m.get(a.name);if(!e)e=m.set(a.name,{name:a.name,deals:[],total:0}).get(a.name);e.deals.push({g,stake:a.stake});if(a.stake)e.total+=a.stake}));
+  const list=[...m.values()];list.forEach(e=>{e.latest=e.deals.reduce((x,d)=>d.g.date&&d.g.date>x?d.g.date:x,"")});
+  const k=state.sort.athletes;
+  list.sort((a,b)=>({count:b.deals.length-a.deals.length,total:b.total-a.total,latest:b.latest.localeCompare(a.latest),name:0}[k]||0)||a.name.localeCompare(b.name));
+  return list;
+}
+
+const verl=v=>v?`<span class="rel v-${v.toLowerCase()}">${v}</span>`:un("Undisclosed");
+const rel=t=>`<span class="rel${t==="Unclassified"?" none":""}">${t}</span>`;
+const un=t=>`<span class="un">${t}</span>`;
+function amount(v,g){if(v==null)return un("Undisclosed");const est=g.conf&&g.conf.startsWith("Estimated");return `<span class="amt num">${est?"~":""}${fmt(v)}</span>`}
+// League per talent: the League field on the Airtable Talent table (blank where unclear, so no badge)
+const LEAGUE=__LEAGUE__;
+const LGLOGOS=__LGLOGOS__;
+const lgOf=n=>LEAGUE[n.trim()]||null;
+// Talent with a built profile page (previews/experiment-2.html, published as an artifact)
+const PROFILE_URL="https://claude.ai/artifact/8ty3HnP54whm6cXKqcTXZo#";
+const PROFILES={"Kevin Durant":"kevin-durant","LeBron James":"lebron-james","Cristiano Ronaldo":"cristiano-ronaldo"};
+const nameLink=(n,cls="")=>PROFILES[n]?`<a class="pl ${cls}" href="${PROFILE_URL}${PROFILES[n]}" target="_blank" rel="noopener" title="Open ${esc(n)}'s profile">${esc(n)}</a>`:`<span class="${cls}">${esc(n)}</span>`;
+const person=n=>{const w=n.trim().split(/\s+/);return (w[0][0]+(w.length>1?w[w.length-1][0]:"")).toUpperCase()};
+function avatar(n,lg){
+  const l=lgOf(n),u=l&&LGLOGOS[l];
+  return `<span class="av${lg?" lg":""}" aria-hidden="true">${esc(person(n))}${u?`<span class="lgb"><img src="${u}" alt="" data-lg="1"></span>`:""}</span>`;
+}
+function names(g){const s=g.ath.slice(0,2),ex=g.ath.length-2;return `<div class="names"><span class="stack">${s.map(a=>avatar(a.name)).join("")}</span><span class="nm" title="${esc(g.ath.map(a=>a.name+(lgOf(a.name)?" · "+lgOf(a.name):"")).join(", "))}">${s.map(a=>nameLink(a.name)).join(", ")}</span>${ex>0?`<span class="more num">+${ex}</span>`:""}</div>`}
+function facts(g){
+  return `<div class="dc"><h4>Deal</h4><div class="ln"><span>Relationship</span>${rel(g.type)}</div><div class="ln"><span>Verification</span>${verl(g.ver)}</div><div class="ln"><span>Year</span><b>${g.year||un("Undisclosed")}</b></div><div class="ln"><span>Round</span><b>${g.round?esc(g.round):un("Undisclosed")}</b></div></div>
+   <div class="dc"><h4>Round numbers</h4><div class="ln"><span>Round size</span><b>${fmt(g.size)||un("Undisclosed")}</b></div><div class="ln"><span>Valuation</span><b>${fmt(g.val)||un("Undisclosed")}</b></div><div class="ln"><span>Confidence</span><b>${g.conf||un("Undisclosed")}</b></div></div>`;
+}
+function detail(g,cols){
+  return `<tr class="detail"><td colspan="${cols}"><div class="din">
+   <div class="dc"><div class="top2">${mark(g.co,g.domain)}<span><span class="co">${esc(g.co)}</span><span class="catl">${g.ind.length?esc(g.ind.join(", ")):"Industry not set"}</span></span></div>${g.desc?`<p class="desc">${esc(g.desc)}</p>`:""}
+     <div style="margin-top:12px">${g.ath.map(a=>`<div class="ln"><span>${nameLink(a.name)}${lgOf(a.name)?` <span class="dim">· ${esc(lgOf(a.name))}</span>`:""}</span><b>${a.stake?fmt(a.stake):un("Undisclosed")}</b></div>`).join("")}</div></div>
+   ${facts(g)}
+   ${g.srcs.length?`<div class="dc"><h4>Source</h4>${g.srcs.map(s=>`<div class="ln"><a href="${esc(s)}" target="_blank" rel="noopener">${esc(new URL(s).hostname.replace(/^www\./,""))}</a></div>`).join("")}</div>`:""}
+  </div></td></tr>`;
+}
+const DEAL_COLS=[["Company","co"],["Industry","ind"],["Relationship","rel"],...(SHOW_ROUND?[["Latest round","rnd"]]:[]),["Talent","tal"],["Year","yr"],["Website","web"]];
+const ATH_COLS=[["Talent","a1"],["Deals","a2"],["Companies","a3"],["Relationships","a4"],["Latest deal","a5"]];
+function renderTable(rows){
+  const deals=state.view==="deals",cols=deals?DEAL_COLS:ATH_COLS;
+  $("#tbl").className=deals?"t-deals":"t-ath";$("#head").innerHTML=cols.map(([c,k])=>`<th scope="col" class="w-${k}">${c}</th>`).join("");
+  const body=$("#body"),plus=ic("i-plus","icon plus");
+  if(deals){
+    const list=sortDeals(rows.slice());
+    if(!list.length){body.innerHTML=`<tr><td colspan="${cols.length}" class="empty">No deals match. Clear a filter or change the search.</td></tr>`;return 0}
+    body.innerHTML=list.map(g=>{const o=state.open.has("d"+g.id);return `<tr class="row" tabindex="-1" data-k="d${g.id}" aria-expanded="${o}">
+      <td><div class="cell-co">${plus}${mark(g.co,g.domain)}<span class="co">${esc(g.co)}</span></div></td>
+      <td>${g.ind.length?`<span class="cat">${esc(g.ind.join(", "))}</span>`:`<span class="dim">—</span>`}</td>
+      <td>${rel(g.type)}</td>
+      ${SHOW_ROUND?`<td>${g.round?esc(g.round):`<span class="dim">—</span>`}</td>`:""}
+      <td>${names(g)}</td>
+      <td class="num">${g.year||un("Undisclosed")}</td>
+      <td>${g.domain?`<a class="site" href="https://${g.domain}" target="_blank" rel="noopener">${g.domain}${ic("i-arrow")}</a>`:`<span class="dim">—</span>`}</td>
+    </tr>${o?detail(g,cols.length):""}`}).join("");
+    return list.length;
+  }
+  const list=byAthlete(rows);
+  if(!list.length){body.innerHTML=`<tr><td colspan="${cols.length}" class="empty">No talent match. Clear a filter or change the search.</td></tr>`;return 0}
+  body.innerHTML=list.map(e=>{const o=state.open.has("a"+e.name),types=REL_ORDER.filter(t=>e.deals.some(d=>d.g.type===t)),cos=[...new Set(e.deals.map(d=>d.g.co))];
+    return `<tr class="row" tabindex="-1" data-k="a${esc(e.name)}" aria-expanded="${o}">
+      <td><div class="cell-co">${plus}${avatar(e.name,true)}${PROFILES[e.name]?nameLink(e.name,"co"):`<span class="co">${esc(e.name)}</span>`}</div></td>
+      <td class="num">${e.deals.length}</td>
+      <td><div class="names">${cos.slice(0,2).map(c=>`<span style="display:inline-flex;align-items:center;gap:8px">${mark(c,DATA.dom[c],true)}${esc(c)}</span>`).join("")}${cos.length>2?`<span class="more num">+${cos.length-2}</span>`:""}</div></td>
+      <td><div style="display:flex;gap:14px">${types.map(rel).join("")}</div></td>
+      <td class="num">${fmtDate(e.latest)||un("Undisclosed")}</td>
+    </tr>${o?`<tr class="detail"><td colspan="${cols.length}"><div class="din">${e.deals.map(d=>`<div class="dc"><div class="top2" style="margin-bottom:10px">${mark(d.g.co,d.g.domain)}<span><span class="co">${esc(d.g.co)}</span><span class="catl">${d.g.ind.length?esc(d.g.ind.join(", ")):"Industry not set"}</span></span></div><div class="ln"><span>Relationship</span>${rel(d.g.type)}</div><div class="ln"><span>Round</span><b>${d.g.round?esc(d.g.round):un("Undisclosed")}</b></div><div class="ln"><span>Stake</span><b>${d.stake?fmt(d.stake):un("Undisclosed")}</b></div><div class="ln"><span>Date</span><b>${fmtDate(d.g.date)||un("Undisclosed")}</b></div></div>`).join("")}</div></td></tr>`:""}`}).join("");
+  return list.length;
+}
+function activeChips(){
+  const F=state.f,c=[];
+  if(F.types.length)c.push(["types","Relationship",F.types.join(", ")]);
+  if(F.leagues.length)c.push(["leagues","League",F.leagues.join(", ")]);
+  if(F.inds.length)c.push(["inds","Industry",F.inds.join(", ")]);
+  if(F.since)c.push(["since","Since",F.since]);
+  if(F.disc)c.push(["disc","Amounts","Disclosed only"]);
+  F.text.forEach((t,i)=>c.push(["text:"+i,"Matches",t]));
+  return c;
+}
+function renderChips(n){
+  const c=activeChips(),noun=state.view==="deals"?"deal":"talent";
+  $("#chips").innerHTML=`<span class="summary num"><b>${n}</b> ${noun}${noun==="deal"&&n!==1?"s":""}</span>`+
+    (state.showChips?c.map(([k,l,v])=>`<span class="fc">${l}: <b>${esc(v)}</b><button data-rm="${k}" aria-label="Remove ${l} filter">${ic("i-x","icon")}</button></span>`).join(""):"")+
+    (c.length?`<button class="ghost" id="clear">Clear all</button><button class="ghost" id="hide">${state.showChips?"Hide filters":"Show filters"}</button>`:"");
+  $("#chips .fc .icon")&&document.querySelectorAll("#chips .fc .icon").forEach(i=>{i.style.width=i.style.height="11px"});
+}
+function filterPanel(){
+  const F=state.f;
+  return `<div class="menu fp" role="dialog" aria-label="Filters">
+   <div><h4>Relationship</h4><div class="opts">${TYPES.map(t=>`<button class="opt" aria-pressed="${F.types.includes(t)}" data-ft="${t}">${t}</button>`).join("")}</div></div>
+   <div><h4>Since</h4><div class="opts"><button class="opt" aria-pressed="${!F.since}" data-fy="0">Any</button>${YEARS.map(y=>`<button class="opt" aria-pressed="${F.since===y}" data-fy="${y}">${y}</button>`).join("")}</div></div>
+   <div><h4>League</h4><div class="opts">${LG_ORDER.filter(l=>ALL.some(g=>g.ath.some(a=>lgOf(a.name)===l))).map(l=>`<button class="opt" aria-pressed="${F.leagues.includes(l)}" data-fl="${l}">${l}</button>`).join("")}</div></div>
+   <div><h4>Industry</h4><div class="opts inds">${INDUSTRIES.map(t=>`<button class="opt" aria-pressed="${F.inds.includes(t)}" data-fi="${esc(t)}">${esc(t)}</button>`).join("")}</div></div>
+   <div><h4>Amounts</h4><div class="opts"><button class="opt" aria-pressed="${F.disc}" data-fd="1">Disclosed only</button></div></div>
+   <div class="row2"><button class="link" data-clear="1">Reset</button><button class="link" data-close="1" style="color:var(--accent)">Done</button></div>
+  </div>`;
+}
+function renderControls(){
+  const n=activeChips().length,shown=n||state.q.trim()?filtered().length:ALL.length;
+  $("#views").innerHTML=[["deals","Deals"],["athletes","By talent"]].map(([k,l])=>`<button class="tab" role="tab" aria-selected="${state.view===k}" data-view="${k}">${l}</button>`).join("");
+  $("#fpop").innerHTML=`<button class="tool" id="fbtn" aria-haspopup="true" aria-expanded="${state.menu==="f"}">${ic("i-sliders","icon")}<span class="lbl">Filters</span>${n?`<span class="cnt num">${n}</span>`:""}${n&&state.menu!=="f"?`<span class="of num">${shown} of ${ALL.length}</span>`:""}</button>`+(state.menu==="f"?filterPanel():"");
+  $("#spop").innerHTML=`<button class="tool" id="sbtn" aria-haspopup="true" aria-expanded="${state.menu==="s"}">${ic("i-sort","icon")}<span class="lbl">Sort</span></button>`+(state.menu==="s"?`<div class="menu" role="menu">${SORTS[state.view].map(([k,l])=>`<button class="mi" role="menuitemradio" aria-checked="${state.sort[state.view]===k}" data-sort="${k}">${l}<span class="chk">${ic("i-check","icon")}</span></button>`).join("")}</div>`:"");
+}
+function settab(){const rs=[...document.querySelectorAll(".row")];if(!rs.length)return;const cur=rs.find(r=>r.dataset.k===state.cur)||rs[0];rs.forEach(r=>r.tabIndex=-1);cur.tabIndex=0}
+function render(){const n=renderTable(filtered());renderControls();renderChips(n);settab()}
+const toggleIn=(a,v)=>{const i=a.indexOf(v);i>=0?a.splice(i,1):a.push(v)};
+function commit(){
+  const p=parse(state.q),F=state.f;
+  p.types.forEach(t=>{if(!F.types.includes(t))F.types.push(t)});
+  p.leagues.forEach(t=>{if(!F.leagues.includes(t))F.leagues.push(t)});
+  if(p.since)F.since=p.since;
+  p.text.forEach(t=>{if(!F.text.includes(t))F.text.push(t)});
+  state.q="";$("#q").value="";render();
+}
+$("#describe").addEventListener("submit",e=>{e.preventDefault();commit()});
+$("#q").addEventListener("input",e=>{state.q=e.target.value;const n=renderTable(filtered());renderChips(n);settab()});
+document.addEventListener("click",e=>{
+  const c=s=>e.target.closest(s),F=state.f;let b;
+  if(c("#fbtn")){state.menu=state.menu==="f"?null:"f";return renderControls()}
+  if(c("#sbtn")){state.menu=state.menu==="s"?null:"s";return renderControls()}
+  if(b=c("[data-ft]")){toggleIn(F.types,b.dataset.ft);return render()}
+  if(b=c("[data-fy]")){F.since=+b.dataset.fy;return render()}
+  if(b=c("[data-fl]")){toggleIn(F.leagues,b.dataset.fl);return render()}
+  if(b=c("[data-fi]")){toggleIn(F.inds,b.dataset.fi);return render()}
+  if(c("[data-fd]")){F.disc=!F.disc;return render()}
+  if(c("[data-clear]")||c("#clear")){Object.assign(F,{types:[],leagues:[],inds:[],min:0,disc:false,since:0,text:[]});return render()}
+  if(c("[data-close]")){state.menu=null;return renderControls()}
+  if(b=c("[data-sort]")){state.sort[state.view]=b.dataset.sort;state.menu=null;return render()}
+  if(b=c("[data-rm]")){const k=b.dataset.rm;if(k.startsWith("text:"))F.text.splice(+k.slice(5),1);else if(k==="types"||k==="inds"||k==="leagues")F[k]=[];else if(k==="disc")F.disc=false;else F[k]=0;return render()}
+  if(c("#hide")){state.showChips=!state.showChips;return render()}
+  if(b=c("[data-view]")){state.view=b.dataset.view;state.menu=null;state.open.clear();return render()}
+  if(c("#copy"))return copyCsv();
+  if(c("#mbtn")){const m=$("#mnav"),o=m.hidden;m.hidden=!o;$("#mbtn").setAttribute("aria-expanded",String(o));return}
+  if(c("a"))return;
+  if(b=c(".row")){const k=b.dataset.k;state.open.has(k)?state.open.delete(k):state.open.add(k);state.cur=k;renderTable(filtered());settab();const r=[...document.querySelectorAll(".row")].find(r=>r.dataset.k===k);r&&r.focus({preventScroll:true});return}
+  if(state.menu&&!c(".pop")){state.menu=null;renderControls()}
+});
+document.addEventListener("focusin",e=>{const r=e.target.closest&&e.target.closest(".row");if(r){state.cur=r.dataset.k;document.querySelectorAll(".row").forEach(x=>x.tabIndex=x===r?0:-1)}});
+document.addEventListener("keydown",e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();$("#q").focus();return}
+  if(e.key==="Escape"&&state.menu){state.menu=null;renderControls();return}
+  const r=e.target.closest&&e.target.closest(".row");
+  if(r){
+    const rs=[...document.querySelectorAll(".row")],i=rs.indexOf(r),go=j=>{const t=rs[Math.max(0,Math.min(rs.length-1,j))];if(t){e.preventDefault();t.focus()}};
+    if(e.key==="Enter"||e.key===" "){e.preventDefault();r.click()}
+    else if(e.key==="ArrowDown")go(i+1);else if(e.key==="ArrowUp")go(i-1);
+    else if(e.key==="Home")go(0);else if(e.key==="End")go(rs.length-1);
+    else if(e.key==="PageDown")go(i+10);else if(e.key==="PageUp")go(i-10);
+    else if(e.key==="ArrowRight"&&r.getAttribute("aria-expanded")==="false"){e.preventDefault();r.click()}
+    else if((e.key==="ArrowLeft"||e.key==="Escape")&&r.getAttribute("aria-expanded")==="true"){e.preventDefault();r.click()}
+    return;
+  }
+  const tb=e.target.closest&&e.target.closest("[role=tab]");
+  if(tb&&(e.key==="ArrowRight"||e.key==="ArrowLeft")){const t=[...document.querySelectorAll("[role=tab]")],n=t[(t.indexOf(tb)+(e.key==="ArrowRight"?1:t.length-1))%t.length];n.click();document.querySelector(`[data-view="${n.dataset.view}"]`).focus();return}
+  if(e.key==="/"&&!/^(INPUT|TEXTAREA)$/.test(e.target.tagName)){e.preventDefault();$("#q").focus()}
+  if(e.key==="Escape"&&e.target.id==="q"){state.q="";e.target.value="";e.target.blur();render()}
+});
+// Logo load failure -> initials on a light tile
+document.addEventListener("error",e=>{const im=e.target;if(im.tagName==="IMG"&&im.dataset.lg){im.parentNode.remove();return}if(im.tagName!=="IMG"||!im.dataset.co)return;const w=im.parentNode;w.classList.remove("has-logo");w.textContent=ini(im.dataset.co)},true);
+function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1800)}
+function copyCsv(){
+  const rows=sortDeals(filtered().slice()),q=v=>'"'+String(v==null?"":v).replace(/"/g,'""')+'"';
+  const csv=[["Company","Talent","Relationship","Round","Athlete stake","Round size","Valuation","Date","Source"].map(q).join(",")].concat(rows.map(g=>[g.co,g.ath.map(a=>a.name).join("; "),g.type,g.round,g.stake,g.size,g.val,g.date,g.srcs[0]].map(q).join(","))).join("\n");
+  const done=()=>toast(`Copied ${rows.length} deals as CSV`);
+  const fb=()=>{const ta=document.createElement("textarea");ta.value=csv;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");done()}catch(_){toast("Copy is blocked in this view")}ta.remove()};
+  try{navigator.clipboard.writeText(csv).then(done,fb)}catch(_){fb()}
+}
+render();
+</script>

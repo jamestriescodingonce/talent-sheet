@@ -1,0 +1,395 @@
+<title>Kevin Durant Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
+<style>
+/* Tokens: DESIGN.md v3 §10. Dark (Night) is the default and this page commits to it. */
+:root {
+  color-scheme: dark;
+  --surface: #0B120E; --surface-raised: #131C17; --surface-sunk: #080D0A; --surface-hover: #18231D;
+  --hairline: #25332B; --control-border: #607268;
+  --ink: #F1F0E9; --ink-muted: #9CA79F; --ink-disabled: #56615A;
+  --brand: #3DDC97; --on-brand: #0B120E; --brand-wash: #0E2A1E;
+  --pitch: #12432D; --on-pitch: #F4F1E6; --highlight: #B8E986;
+  --fresh: #F0B25A; --fresh-wash: #2C2010; --negative: #F08C7C;
+  --focus-ring: #8FB4FF; --locked: #1A2520;
+  --cat-athlete: #8DB0EE;
+
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-6: 24px; --space-10: 40px; --space-16: 64px;
+  --radius-sm: 3px; --radius-md: 8px; --radius-pill: 999px;
+  --content-max: 1200px; --sidebar: 232px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--surface); }
+body {
+  margin: 0; background: var(--surface); color: var(--ink);
+  font: 400 16px/26px var(--font-sans); -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--brand-wash); color: var(--ink); }
+a { color: var(--brand); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+h1, h2, h3, p { margin: 0; }
+h1, h2 { text-wrap: balance; }
+.icon { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: square; stroke-linejoin: miter; }
+.label { font: 500 11px/16px var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; }
+.muted { color: var(--ink-muted); }
+.figure { font: 500 15px/20px var(--font-sans); font-variant-numeric: tabular-nums; }
+.undisclosed { color: var(--ink-muted); font-weight: 400; }
+
+/* App shell */
+.shell { display: grid; grid-template-columns: var(--sidebar) minmax(0, 1fr); min-height: 100%; }
+.sidebar {
+  position: sticky; top: env(safe-area-inset-top, 0px); align-self: start; height: 100vh;
+  border-right: 1px solid var(--hairline); padding: var(--space-6) var(--space-4); display: flex; flex-direction: column; gap: var(--space-6);
+}
+.wordmark { font: 600 22px/1 var(--font-display); color: var(--ink); text-decoration: none; letter-spacing: -0.01em; padding-inline: var(--space-3); white-space: nowrap; }
+.wordmark .dot { color: var(--brand); }
+.sidenav { display: grid; gap: 2px; }
+.sidenav a {
+  display: flex; align-items: center; gap: var(--space-3); min-height: 44px; padding-inline: var(--space-3);
+  border-radius: var(--radius-md); color: var(--ink-muted); text-decoration: none; font-size: 15px; font-weight: 500;
+  transition: color 120ms ease-out, background-color 120ms ease-out;
+}
+.sidenav a:hover { color: var(--ink); background: var(--surface-hover); }
+.sidenav a[aria-current="page"] { color: var(--brand); background: var(--brand-wash); }
+
+.main { padding: var(--space-6) var(--space-10) var(--space-16); min-width: 0; }
+.main-inner { max-width: var(--content-max); margin-inline: auto; display: grid; gap: var(--space-6); }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+.crumbs { font-size: 14px; color: var(--ink-muted); display: flex; gap: var(--space-2); }
+.crumbs a { color: var(--ink-muted); }
+.crumbs a:hover { color: var(--ink); }
+.search {
+  display: flex; align-items: center; gap: var(--space-2); width: min(320px, 100%); min-height: 40px;
+  background: var(--surface-sunk); border: 1px solid var(--control-border); border-radius: var(--radius-sm);
+  padding-inline: var(--space-3); color: var(--ink-muted);
+}
+.search:focus-within { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.search input { border: 0; background: none; outline: none; flex: 1; min-width: 0; font-size: 15px; color: var(--ink); }
+.search input::placeholder { color: var(--ink-muted); }
+.search .icon { width: 16px; height: 16px; }
+
+/* Hero banner */
+.hero {
+  display: grid; grid-template-columns: minmax(240px, 40%) 1fr; min-height: 320px;
+  background: var(--surface-sunk); border: 1px solid var(--hairline); border-radius: var(--radius-md); overflow: hidden;
+}
+.photo { position: relative; background: var(--surface-raised); border-right: 1px solid var(--hairline); overflow: hidden; }
+.photo svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.photo .label { position: absolute; left: var(--space-4); bottom: var(--space-3); color: var(--ink-muted); }
+.hero-copy { display: flex; flex-direction: column; justify-content: center; gap: var(--space-3); padding: var(--space-10); }
+.hero-copy .league { color: var(--ink-muted); display: flex; align-items: center; gap: var(--space-2); }
+.hero-copy .league::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--cat-athlete); }
+.name { font: 500 64px/64px var(--font-display); letter-spacing: -0.02em; }
+.assoc { font-size: 14px; line-height: 20px; color: var(--ink-muted); }
+.assoc strong { color: var(--ink); font-weight: 500; }
+.socials { display: flex; gap: var(--space-1); margin-top: var(--space-2); margin-left: -10px; }
+.socials a {
+  width: 44px; height: 44px; display: grid; place-items: center; border-radius: var(--radius-md);
+  color: var(--ink-muted); transition: color 120ms ease-out, background-color 120ms ease-out;
+}
+.socials a:hover { color: var(--ink); background: var(--surface-hover); }
+.socials .icon { width: 20px; height: 20px; }
+
+/* Tabs */
+.tabs { display: flex; gap: var(--space-6); border-bottom: 1px solid var(--hairline); overflow-x: auto; }
+.tabs button {
+  border: 0; background: none; cursor: pointer; padding: var(--space-3) 0; min-height: 44px; margin-bottom: -1px;
+  font-size: 15px; font-weight: 500; color: var(--ink-muted); border-bottom: 2px solid transparent; white-space: nowrap;
+  transition: color 120ms ease-out;
+}
+.tabs button:hover { color: var(--ink); }
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--brand); }
+
+/* Section head */
+.section-head { display: flex; justify-content: space-between; align-items: end; gap: var(--space-4); flex-wrap: wrap; }
+.section-head h2 { font: 600 18px/24px var(--font-sans); }
+.section-head p { font-size: 14px; line-height: 20px; color: var(--ink-muted); margin-top: var(--space-1); font-variant-numeric: tabular-nums; }
+.chips { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 6px 14px;
+  border-radius: var(--radius-pill); border: 1px solid var(--control-border); background: transparent;
+  font-size: 14px; font-weight: 500; cursor: pointer; color: var(--ink); transition: background-color 120ms ease-out;
+}
+.chip:hover { background: var(--surface-hover); }
+.chip[aria-pressed="true"] { background: var(--brand-wash); border-color: var(--brand); color: var(--brand); }
+.chip .n { color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.chip[aria-pressed="true"] .n { color: var(--brand); }
+
+/* Portfolio cards (DESIGN.md v3 §7) */
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-6); }
+.card {
+  display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-4);
+  background: var(--surface-raised); border: 1px solid var(--hairline); border-radius: var(--radius-md);
+  transition: background-color 120ms ease-out, border-color 120ms ease-out;
+}
+.card:hover { background: var(--surface-hover); border-color: var(--control-border); }
+.card-top { display: flex; gap: var(--space-3); align-items: center; min-width: 0; }
+.logo {
+  width: 40px; height: 40px; flex: none; border-radius: var(--radius-md); border: 1px solid var(--hairline);
+  background: var(--surface-sunk); display: grid; place-items: center; font: 600 12px/1 var(--font-sans); color: var(--ink-muted);
+}
+.card-top h3 { font: 600 16px/22px var(--font-sans); overflow-wrap: anywhere; }
+.card-top .sector { font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+.desc { font-size: 14px; line-height: 20px; color: var(--ink-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 40px; }
+.facts { display: grid; grid-template-columns: 1fr auto; gap: var(--space-1) var(--space-4); margin: 0; padding-top: var(--space-3); border-top: 1px solid var(--hairline); margin-top: auto; }
+.facts dt { color: var(--ink-muted); }
+.facts dd { margin: 0; font-size: 14px; line-height: 20px; }
+.facts .yr { text-align: right; }
+.card-foot { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); }
+.details-btn {
+  display: inline-flex; align-items: center; gap: var(--space-1); min-height: 44px; margin-block: -12px;
+  border: 0; background: none; padding: 0; cursor: pointer; color: var(--brand); font-size: 14px; font-weight: 600;
+}
+.details-btn .icon { width: 14px; height: 14px; transition: transform 160ms ease-out; }
+.details-btn[aria-expanded="true"] .icon { transform: rotate(90deg); }
+.details { display: grid; gap: var(--space-2); padding: var(--space-3); background: var(--surface-sunk); border-radius: var(--radius-sm); font-size: 14px; line-height: 20px; }
+.details div { display: flex; justify-content: space-between; gap: var(--space-3); }
+.details a { display: inline-flex; align-items: center; gap: var(--space-1); }
+.details .icon { width: 14px; height: 14px; }
+
+.tag { display: inline-flex; align-items: center; gap: 5px; border-radius: var(--radius-sm); padding: 2px 6px; white-space: nowrap; }
+.tag.verified { background: var(--brand-wash); color: var(--brand); }
+.tag.reported { border: 1px solid var(--control-border); color: var(--ink); padding: 1px 5px; }
+.tag .icon { width: 12px; height: 12px; stroke-width: 2; }
+
+/* Timeline + news */
+.list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hairline); }
+.list li { display: grid; grid-template-columns: 140px 1fr auto; gap: var(--space-4); align-items: center; padding: var(--space-4) 0; border-bottom: 1px solid var(--hairline); }
+.list .when { font: 500 15px/20px var(--font-sans); font-variant-numeric: tabular-nums; }
+.list a { display: inline-flex; align-items: center; gap: var(--space-1); font-size: 14px; }
+.list .icon { width: 14px; height: 14px; }
+
+@media (max-width: 1180px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 960px) {
+  .shell { grid-template-columns: 1fr; }
+  .sidebar {
+    position: static; height: auto; flex-direction: row; align-items: center; gap: var(--space-4);
+    border-right: 0; border-bottom: 1px solid var(--hairline); padding: var(--space-3) var(--space-4); overflow-x: auto;
+  }
+  .sidenav { display: flex; gap: 2px; }
+  .sidenav a { white-space: nowrap; }
+  .sidenav a .icon { display: none; }
+  .main { padding: var(--space-6) var(--space-6) var(--space-16); }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .name { font-size: 48px; line-height: 50px; }
+}
+@media (max-width: 640px) {
+  .main { padding-inline: var(--space-4); }
+  .hero { grid-template-columns: 1fr; }
+  .photo { aspect-ratio: 4 / 3; border-right: 0; border-bottom: 1px solid var(--hairline); }
+  .hero-copy { padding: var(--space-6); }
+  .name { font-size: 40px; line-height: 44px; }
+  .grid { grid-template-columns: 1fr; }
+  .topbar { flex-wrap: wrap; }
+  .search { width: 100%; }
+  .list li { grid-template-columns: 1fr auto; }
+  .list li > :first-child { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5M6 9.5V20h12V9.5"/></symbol>
+  <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.5"/><path d="M3 20c.6-3.5 3-5.5 6-5.5s5.4 2 6 5.5M15.5 5.2a3.5 3.5 0 0 1 0 6.6M18 14.8c1.6.8 2.7 2.6 3 5.2"/></symbol>
+  <symbol id="i-deal" viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><path d="M5 20V4h10v16M15 9h4v11M3 20h18M8 8h4M8 12h4M8 16h4"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5"/><rect x="13.5" y="4" width="6.5" height="6.5"/><rect x="4" y="13.5" width="6.5" height="6.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5"/></symbol>
+  <symbol id="i-news" viewBox="0 0 24 24"><path d="M4 5h13v14H6a2 2 0 0 1-2-2V5zM17 9h3v8a2 2 0 0 1-2 2M7.5 9h6M7.5 12.5h6M7.5 16h4"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+  <symbol id="i-insta" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.8"/><path d="M16.8 7.2h.01"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14l4-4M8.5 11.5l-2 2a3.2 3.2 0 0 0 4.5 4.5l2-2M15.5 12.5l2-2A3.2 3.2 0 0 0 13 6l-2 2"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 7l5 5-5 5"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M9 6h9v9M18 6L7 17"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+</svg>
+
+<div class="shell">
+  <aside class="sidebar">
+    <a class="wordmark" href="#top">Talent Sheet<span class="dot">.</span></a>
+    <nav class="sidenav" aria-label="Main">
+      <a href="#top"><svg class="icon"><use href="#i-home"/></svg>Home</a>
+      <a href="#top" aria-current="page"><svg class="icon"><use href="#i-people"/></svg>Athletes</a>
+      <a href="#top"><svg class="icon"><use href="#i-deal"/></svg>Investments</a>
+      <a href="#top"><svg class="icon"><use href="#i-building"/></svg>Companies</a>
+      <a href="#top"><svg class="icon"><use href="#i-grid"/></svg>Industries</a>
+      <a href="#top"><svg class="icon"><use href="#i-news"/></svg>Stories</a>
+    </nav>
+  </aside>
+
+  <main class="main" id="top">
+    <div class="main-inner">
+      <div class="topbar">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Athletes</a><span aria-hidden="true">/</span><span>Kevin Durant</span></nav>
+        <label class="search" for="q"><svg class="icon"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Search athletes or companies" autocomplete="off"></label>
+      </div>
+
+      <section class="hero" aria-label="Kevin Durant">
+        <div class="photo">
+          <!-- Neutral illustrated silhouette. Placeholder until a licensed photo is supplied. -->
+          <svg viewBox="0 0 400 320" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Photo placeholder">
+            <rect width="400" height="320" fill="#131C17"/>
+            <path d="M70 320c4-70 52-108 130-114 78 6 126 44 130 114z" fill="#25332B"/>
+            <path d="M178 176h44v34c-6 10-14 14-22 14s-16-4-22-14z" fill="#1E2A23"/>
+            <ellipse cx="200" cy="128" rx="42" ry="52" fill="#2C3B32"/>
+            <path d="M166 206c8 14 20 22 34 22s26-8 34-22" fill="none" stroke="#1E2A23" stroke-width="6"/>
+          </svg>
+          <span class="label">Photo placeholder</span>
+        </div>
+        <div class="hero-copy">
+          <p class="label league">NBA · Forward</p>
+          <h1 class="name">Kevin Durant</h1>
+          <p class="assoc">Associated company: <strong>Thirty Five Ventures</strong> (co-founder)</p>
+          <div class="socials">
+            <a href="https://www.instagram.com/easymoneysniper/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="icon"><use href="#i-insta"/></svg></a>
+            <a href="https://x.com/KDTrey5" target="_blank" rel="noopener" aria-label="X"><svg class="icon"><use href="#i-x"/></svg></a>
+            <a href="https://www.thirtyfiveventures.com/" target="_blank" rel="noopener" aria-label="Thirty Five Ventures website"><svg class="icon"><use href="#i-link"/></svg></a>
+          </div>
+        </div>
+      </section>
+
+      <div class="tabs" role="tablist" aria-label="Profile sections">
+        <button type="button" role="tab" id="tab-portfolio" aria-controls="panel-portfolio" aria-selected="true">Portfolio</button>
+        <button type="button" role="tab" id="tab-timeline" aria-controls="panel-timeline" aria-selected="false" tabindex="-1">Timeline</button>
+        <button type="button" role="tab" id="tab-news" aria-controls="panel-news" aria-selected="false" tabindex="-1">News &amp; stories</button>
+      </div>
+
+      <section role="tabpanel" id="panel-portfolio" aria-labelledby="tab-portfolio" style="display:grid; gap: var(--space-6);">
+        <div class="section-head">
+          <div>
+            <h2>Investment portfolio</h2>
+            <p id="summary"></p>
+          </div>
+        </div>
+        <div class="chips" id="chips" aria-label="Filter by sector"></div>
+        <div class="grid" id="grid"></div>
+      </section>
+
+      <section role="tabpanel" id="panel-timeline" aria-labelledby="tab-timeline" hidden>
+        <ol class="list" id="timeline"></ol>
+      </section>
+
+      <section role="tabpanel" id="panel-news" aria-labelledby="tab-news" hidden>
+        <ul class="list" id="news"></ul>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script>
+(() => {
+  const BZ = 'https://www.benzinga.com/m-a/26/08/61500112/kevin-durant-made-23900-profit-thanks-to-nvidia-heres-the-company-that-made-him-more-than-nba-salary';
+  // Snapshot from the Airtable base, carried over from the earlier Profile board.
+  // Every source is secondary reporting, so every deal is Reported, not Verified.
+  const DEALS = [
+    { company: 'Hugging Face', initials: 'HF', sector: 'AI and dev tools', desc: 'Open-source AI model hub and ML developer platform.', rel: 'Investor', round: 'Seed + Series A', amount: '$250K', year: 2018, status: 'reported', source: 'https://x.com/JoePompliano/status/2093016643089887357', sourceName: 'X · Joe Pompliano' },
+    { company: 'Rhoback', initials: 'RB', sector: 'Apparel', desc: 'Performance apparel brand for golf and everyday wear.', rel: 'Investor', round: '$50M round', amount: null, year: 2026, status: 'reported', source: 'https://www.citybiz.co/article/860663/activewear-brand-rhoback-raises-50m-from-l-cattertons-champ-fund/', sourceName: 'citybiz' },
+    { company: 'Paris Saint-Germain', initials: 'PSG', sector: 'Sports franchise', desc: 'Ligue 1 football club based in Paris, France.', rel: 'Franchise owner', round: 'Ownership stake', amount: null, year: null, status: 'reported', source: 'https://www.nba.com/news/kevin-durant-paris-saint-germain', sourceName: 'NBA.com' },
+    { company: 'Philadelphia Union', initials: 'PU', sector: 'Sports franchise', desc: 'Major League Soccer club based in Chester, Pennsylvania.', rel: 'Franchise owner', round: 'Ownership stake', amount: null, year: null, status: 'reported', source: BZ, sourceName: 'Benzinga' },
+    { company: 'Kalshi', initials: 'K', sector: 'Fintech', desc: 'Regulated event-contract and prediction market exchange.', rel: 'Investor', round: null, amount: null, year: null, status: 'reported', source: BZ, sourceName: 'Benzinga' },
+    { company: 'Acorns', initials: 'A', sector: 'Fintech', desc: 'Micro-investing and automated savings app.', rel: 'Investor', round: null, amount: null, year: null, status: 'reported', source: BZ, sourceName: 'Benzinga' },
+    { company: 'Dapper Labs', initials: 'DL', sector: 'Web3', desc: 'Blockchain platform behind NBA Top Shot and Flow.', rel: 'Investor', round: null, amount: null, year: null, status: 'reported', source: BZ, sourceName: 'Benzinga' },
+    { company: 'Spindrift', initials: 'S', sector: 'Consumer', desc: 'Sparkling water made with real squeezed fruit.', rel: 'Investor', round: null, amount: null, year: null, status: 'reported', source: BZ, sourceName: 'Benzinga' },
+  ];
+
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const tag = s => s === 'verified'
+    ? '<span class="tag verified label"><svg class="icon"><use href="#i-check"/></svg>Verified</span>'
+    : '<span class="tag reported label">Reported</span>';
+  const year = y => y ? `<span class="figure">${y}</span>` : '<span class="figure undisclosed">Undisclosed</span>';
+
+  const sectors = [...new Set(DEALS.map(d => d.sector))];
+  let filter = 'All';
+  const open = new Set();
+
+  const chips = document.getElementById('chips');
+  function renderChips() {
+    const defs = [['All', DEALS.length]].concat(sectors.map(s => [s, DEALS.filter(d => d.sector === s).length]));
+    chips.innerHTML = defs.map(([s, n]) => `<button type="button" class="chip" data-sector="${esc(s)}" aria-pressed="${s === filter}">${esc(s)} <span class="n">${n}</span></button>`).join('');
+  }
+  chips.addEventListener('click', e => {
+    const b = e.target.closest('[data-sector]'); if (!b) return;
+    filter = b.dataset.sector; renderChips(); renderGrid();
+  });
+
+  const grid = document.getElementById('grid');
+  function renderGrid() {
+    const rows = DEALS.filter(d => filter === 'All' || d.sector === filter);
+    grid.innerHTML = rows.map(d => {
+      const i = DEALS.indexOf(d), isOpen = open.has(i);
+      return `
+      <article class="card">
+        <div class="card-top">
+          <span class="logo" aria-hidden="true">${esc(d.initials)}</span>
+          <div><h3>${esc(d.company)}</h3><p class="sector">${esc(d.sector)}</p></div>
+        </div>
+        <p class="desc">${esc(d.desc)}</p>
+        <dl class="facts">
+          <dt class="label">Relationship</dt><dt class="label yr">Invested</dt>
+          <dd>${esc(d.rel)}</dd><dd class="yr">${year(d.year)}</dd>
+        </dl>
+        <div class="card-foot">
+          <button type="button" class="details-btn" data-i="${i}" aria-expanded="${isOpen}" aria-controls="d-${i}">View details<svg class="icon"><use href="#i-arrow"/></svg></button>
+          ${tag(d.status)}
+        </div>
+        <div class="details" id="d-${i}" ${isOpen ? '' : 'hidden'}>
+          <div><span class="muted">Round</span><span>${d.amount ? `<span class="figure">${esc(d.amount)}</span>` : '<span class="undisclosed">Undisclosed</span>'}${d.round ? ` <span class="muted">· ${esc(d.round)}</span>` : ''}</span></div>
+          <div><span class="muted">Source</span><a href="${esc(d.source)}" target="_blank" rel="noopener">${esc(d.sourceName)}<svg class="icon"><use href="#i-out"/></svg></a></div>
+        </div>
+      </article>`;
+    }).join('');
+    document.getElementById('summary').textContent =
+      `${rows.length} ${rows.length === 1 ? 'company' : 'companies'} · ${new Set(rows.map(r => r.sector)).size} ${filter === 'All' ? 'sectors' : 'sector'} · ${rows.filter(r => r.status === 'verified').length} verified`;
+  }
+  grid.addEventListener('click', e => {
+    const b = e.target.closest('.details-btn'); if (!b) return;
+    const i = Number(b.dataset.i);
+    open.has(i) ? open.delete(i) : open.add(i);
+    const on = open.has(i);
+    b.setAttribute('aria-expanded', String(on));
+    document.getElementById('d-' + i).hidden = !on;
+  });
+
+  const sorted = DEALS.slice().sort((a, b) => (b.year || 0) - (a.year || 0));
+  document.getElementById('timeline').innerHTML = sorted.map(d => `
+    <li>
+      <span class="when${d.year ? '' : ' undisclosed'}">${d.year || 'Date undisclosed'}</span>
+      <span>${esc(d.rel)} · <strong>${esc(d.company)}</strong> <span class="muted">· ${esc(d.sector)}</span></span>
+      ${tag(d.status)}
+    </li>`).join('');
+  document.getElementById('news').innerHTML = DEALS.map(d => `
+    <li>
+      <strong>${esc(d.company)}</strong>
+      <span class="muted">${esc(d.rel)}</span>
+      <a href="${esc(d.source)}" target="_blank" rel="noopener">${esc(d.sourceName)}<svg class="icon"><use href="#i-out"/></svg></a>
+    </li>`).join('');
+
+  const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+  function select(t) {
+    tabs.forEach(x => {
+      const on = x === t;
+      x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1;
+      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+    });
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(t));
+    t.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      select(n); n.focus();
+    });
+  });
+
+  renderChips();
+  renderGrid();
+})();
+</script>
