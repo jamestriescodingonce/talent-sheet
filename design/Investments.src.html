@@ -250,14 +250,14 @@ td{padding:0 10px;height:56px;white-space:nowrap;vertical-align:middle;font-size
     <div class="chips" id="chips"></div>
 
     <div class="tw"><table id="tbl"><thead><tr id="head"></tr></thead><tbody id="body"></tbody></table></div>
-    <p class="foot">Amounts marked ~ are estimated or implied. Round size and valuation are for the company round. Industry and description come from Airtable and are blank where not yet confirmed. Verified means a press release or the investor's own announcement; Reported means a credible secondary source. League comes from the Talent table in Airtable and is blank where unclear. Logos from Logo.dev.<br>Keyboard: ↑ ↓ move between rows, → opens, ← closes, / searches.</p>
+    <p class="foot">Amounts marked ~ are estimated or implied. Round size and valuation are for the company round. Industry and description come from the Talent Sheet database and are blank where not yet confirmed. Verified means a press release or the investor's own announcement; Reported means a credible secondary source. League comes from the talent record and is blank where unclear. Logos from Logo.dev.<br>Keyboard: ↑ ↓ move between rows, → opens, ← closes, / searches.</p>
   </div>
 </div>
 
 <script>
 const DATA=__DATA__;
 const LOGOS=__LOGOS__;
-// Relationship labels per DESIGN.md (derived from Airtable Deal Type)
+// Relationship labels per DESIGN.md (derived from investments.deal_type in Supabase)
 const REL={"Capital Investment":"Invested","Equity":"Invested","Franchise Ownership":"Owned","Brand Ambassador":"Partnered","Brand Ambassador/Equity":"Partnered","Executive Stake":"Executive"};
 const REL_ORDER=["Invested","Owned","Partnered","Executive","Founded"];
 
@@ -350,13 +350,13 @@ const verl=v=>v?`<span class="rel v-${v.toLowerCase()}">${v}</span>`:un("Undiscl
 const rel=t=>`<span class="rel${t==="Unclassified"?" none":""}">${t}</span>`;
 const un=t=>`<span class="un">${t}</span>`;
 function amount(v,g){if(v==null)return un("Undisclosed");const est=g.conf&&g.conf.startsWith("Estimated");return `<span class="amt num">${est?"~":""}${fmt(v)}</span>`}
-// League per talent: the League field on the Airtable Talent table (blank where unclear, so no badge)
+// League per talent: the sport on the Supabase talent record (blank where unclear, so no badge)
 const LEAGUE=__LEAGUE__;
 const LGLOGOS=__LGLOGOS__;
 const lgOf=n=>LEAGUE[n.trim()]||null;
 // Talent with a built profile page (previews/experiment-2.html, published as an artifact)
-const PROFILE_URL="https://claude.ai/artifact/8ty3HnP54whm6cXKqcTXZo#";
-const PROFILES={"Kevin Durant":"kevin-durant","LeBron James":"lebron-james","Cristiano Ronaldo":"cristiano-ronaldo"};
+const PROFILE_URL="https://claude.ai/artifact/XHvgLJzvyGTDWCVNuXAsmp";
+const PROFILES={"Kevin Durant":""}; // only talent with a Supabase-backed profile page
 const nameLink=(n,cls="")=>PROFILES[n]?`<a class="pl ${cls}" href="${PROFILE_URL}${PROFILES[n]}" target="_blank" rel="noopener" title="Open ${esc(n)}'s profile">${esc(n)}</a>`:`<span class="${cls}">${esc(n)}</span>`;
 const person=n=>{const w=n.trim().split(/\s+/);return (w[0][0]+(w.length>1?w[w.length-1][0]:"")).toUpperCase()};
 function avatar(n,lg){
