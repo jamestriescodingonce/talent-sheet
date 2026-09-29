@@ -30,7 +30,8 @@ h1,h2,h3,h4,p{margin:0}
 /* Sidebar */
 .side{position:fixed;inset:0 auto 0 0;width:170px;background:var(--bg);border-right:1px solid var(--rule);padding:24px 12px}
 .logo{display:flex;align-items:center;gap:10px;padding-inline:6px;color:var(--accent)}
-.logo svg{width:22px;height:20px;flex:none}
+.logo svg{width:24px;height:24px;flex:none}
+.logo i{font-style:normal;color:var(--accent)}
 .logo span{font-size:10px;font-weight:600;letter-spacing:.18em;line-height:1.25;color:#E8EDF0}
 .nav{display:grid;gap:2px;margin-top:42px}
 .nav a{display:flex;align-items:center;gap:10px;height:38px;padding:0 10px;border-radius:6px;font-size:11px;color:#7F8B94;transition:color 150ms ease,background-color 150ms ease}
@@ -92,6 +93,9 @@ h1,h2,h3,h4,p{margin:0}
 .fc button{position:relative;width:18px;height:18px;border:0;border-radius:4px;background:none;color:var(--muted);display:grid;place-items:center}
 .fc button::after{content:"";position:absolute;inset:-6px}
 .fc button:hover{color:var(--text)}
+.act{margin-left:auto;display:flex;align-items:center;gap:12px}
+.act .lbl{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.act svg{display:block;overflow:visible}
 .ghost{height:26px;padding:0 4px;border:0;background:none;font-size:10px;color:var(--muted);transition:color 150ms ease}
 .ghost:hover{color:var(--text)}
 
@@ -99,8 +103,8 @@ h1,h2,h3,h4,p{margin:0}
 .tw{margin-top:8px;overflow-x:auto}
 table{border-collapse:collapse;width:100%;min-width:900px;table-layout:fixed}
 td{overflow:hidden;text-overflow:ellipsis}
-.t-deals th:nth-child(1){width:20%}.t-deals th:nth-child(2){width:11%}.t-deals th:nth-child(3){width:10%}.t-deals th:nth-child(4){width:11%}.t-deals th:nth-child(5){width:10%}.t-deals th:nth-child(6){width:18%}.t-deals th:nth-child(7){width:7%}.t-deals th:nth-child(8){width:13%}
-.t-ath th:nth-child(1){width:22%}.t-ath th:nth-child(2){width:8%}.t-ath th:nth-child(3){width:28%}.t-ath th:nth-child(4){width:18%}.t-ath th:nth-child(5){width:12%}.t-ath th:nth-child(6){width:12%}
+.t-deals th:nth-child(1){width:21%}.t-deals th:nth-child(2){width:12%}.t-deals th:nth-child(3){width:11%}.t-deals th:nth-child(4){width:12%}.t-deals th:nth-child(5){width:24%}.t-deals th:nth-child(6){width:7%}.t-deals th:nth-child(7){width:13%}
+.t-ath th:nth-child(1){width:24%}.t-ath th:nth-child(2){width:8%}.t-ath th:nth-child(3){width:32%}.t-ath th:nth-child(4){width:22%}.t-ath th:nth-child(5){width:14%}.t-ath th:nth-child(6){width:12%}
 th{padding:0 10px;height:36px;text-align:left;white-space:nowrap;font-size:9px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--rule)}
 th:first-child,td:first-child{padding-left:4px}
 td{padding:0 10px;height:56px;white-space:nowrap;vertical-align:middle;font-size:11px;color:var(--text-2);border-bottom:1px solid var(--rule);transition:background-color 150ms ease}
@@ -121,8 +125,13 @@ td{padding:0 10px;height:56px;white-space:nowrap;vertical-align:middle;font-size
 .rel{display:inline-flex;align-items:center;gap:6px;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:#7D8A93}
 .rel::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent)}
 .rel.none::before{background:var(--very-muted)}
-.names{display:flex;gap:6px;align-items:baseline;min-width:0}
-.names>span:first-child{overflow:hidden;text-overflow:ellipsis}
+.av{width:20px;height:20px;flex:none;border-radius:50%;display:grid;place-items:center;background:#1A252D;color:var(--text-2);font-size:8px;font-weight:500;letter-spacing:.02em;box-shadow:0 0 0 1.5px var(--bg);transition:box-shadow 150ms ease}
+.row:hover .av,.row[aria-expanded=true] .av{box-shadow:0 0 0 1.5px var(--card-hover)}
+.av.lg{width:24px;height:24px;font-size:9px}
+.stack{display:flex;flex:none}
+.stack .av+.av{margin-left:-3px}
+.names{display:flex;align-items:center;gap:6px;align-items:baseline;min-width:0}
+.names .nm{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .names .more{color:var(--muted)}
 .site{max-width:100%;display:inline-flex;align-items:center;gap:6px;color:var(--text-2);transition:color 150ms ease}
 .site .icon{width:11px;height:11px;color:var(--very-muted)}
@@ -189,9 +198,9 @@ td{padding:0 10px;height:56px;white-space:nowrap;vertical-align:middle;font-size
 </svg>
 
 <aside class="side" aria-label="Sidebar">
-  <a class="logo" href="#top"><svg><use href="#i-a"/></svg><span>ATHLETE<br>PORTFOLIO</span></a>
+  <a class="logo" href="#top" aria-label="Talent Sheet"><svg viewBox="0 0 22 22" aria-hidden="true"><rect x="1.5" y="1.5" width="19" height="19" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 7.5h10M11 7.5v8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M6 15.5h2.5M13.5 15.5H16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".45"/></svg><span>TALENT<br>SHEET<i>.</i></span></a>
   <nav class="nav" aria-label="Main">
-    <a href="#top"><svg class="icon"><use href="#i-people"/></svg>Athletes</a>
+    <a href="#top"><svg class="icon"><use href="#i-people"/></svg>Talent</a>
     <a href="#top" aria-current="page"><svg class="icon"><use href="#i-chart"/></svg>Investments</a>
     <a href="#top"><svg class="icon"><use href="#i-building"/></svg>Industries</a>
     <a href="#top"><svg class="icon"><use href="#i-story"/></svg>Stories</a>
@@ -200,10 +209,10 @@ td{padding:0 10px;height:56px;white-space:nowrap;vertical-align:middle;font-size
 
 <div class="main" id="top">
   <header class="mbar">
-    <a class="logo" href="#top"><svg><use href="#i-a"/></svg><span>ATHLETE<br>PORTFOLIO</span></a>
+    <a class="logo" href="#top" aria-label="Talent Sheet"><svg viewBox="0 0 22 22" aria-hidden="true"><rect x="1.5" y="1.5" width="19" height="19" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 7.5h10M11 7.5v8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M6 15.5h2.5M13.5 15.5H16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".45"/></svg><span>TALENT<br>SHEET<i>.</i></span></a>
     <button class="menu-btn" id="mbtn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mnav"><svg class="icon" style="width:18px;height:18px"><use href="#i-menu"/></svg></button>
     <nav class="nav" id="mnav" aria-label="Main" hidden style="margin-top:0">
-      <a href="#top"><svg class="icon"><use href="#i-people"/></svg>Athletes</a>
+      <a href="#top"><svg class="icon"><use href="#i-people"/></svg>Talent</a>
       <a href="#top" aria-current="page"><svg class="icon"><use href="#i-chart"/></svg>Investments</a>
       <a href="#top"><svg class="icon"><use href="#i-building"/></svg>Industries</a>
       <a href="#top"><svg class="icon"><use href="#i-story"/></svg>Stories</a>
@@ -212,12 +221,12 @@ td{padding:0 10px;height:56px;white-space:nowrap;vertical-align:middle;font-size
 
   <div class="inner">
     <div class="top">
-      <form class="search" id="describe" role="search"><svg class="icon"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Search deals, athletes, companies..." autocomplete="off" aria-label="Search deals"></form>
+      <form class="search" id="describe" role="search"><svg class="icon"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Search deals, talent, companies..." autocomplete="off" aria-label="Search deals"></form>
     </div>
 
     <section class="head">
       <h1>Investments</h1>
-      <p class="sub">Every deal on record between athletes and the companies they back. Try “owned since 2024” or “invested over $10M”, then press Enter to keep it as a filter.</p>
+      <p class="sub">Every deal on record between athletes and the companies they back. Try “owned since 2024” or “partnered football”, then press Enter to keep it as a filter.</p>
     </section>
 
     <div class="tabs">
@@ -232,7 +241,7 @@ td{padding:0 10px;height:56px;white-space:nowrap;vertical-align:middle;font-size
     <div class="chips" id="chips"></div>
 
     <div class="tw"><table id="tbl"><thead><tr id="head"></tr></thead><tbody id="body"></tbody></table></div>
-    <p class="foot">Amounts marked ~ are estimated or implied. Athlete stake is the athlete's own amount; round size and valuation are for the company round. Industry comes from Airtable where set and is inferred from the company name otherwise. Logos from Logo.dev.</p>
+    <p class="foot">Amounts marked ~ are estimated or implied. Round size and valuation are for the company round. Industry comes from Airtable where set and is inferred from the company name otherwise. Logos from Logo.dev.</p>
   </div>
 </div>
 
@@ -286,17 +295,15 @@ function mark(co,domain,sm){
 
 const state={view:"deals",f:{types:[],inds:[],min:0,disc:false,since:0,text:[]},sort:{deals:"date",athletes:"count"},open:new Set(),menu:null,showChips:true,q:""};
 const SORTS={
-  deals:[["date","Newest first"],["date-asc","Oldest first"],["stake","Athlete stake, high to low"],["size","Round size, high to low"],["val","Valuation, high to low"],["co","Company, A to Z"],["ath","Most athletes"]],
-  athletes:[["count","Most deals"],["total","Disclosed stake, high to low"],["latest","Latest deal"],["name","Name, A to Z"]]
+  deals:[["date","Newest first"],["date-asc","Oldest first"],["size","Round size, high to low"],["val","Valuation, high to low"],["co","Company, A to Z"],["ath","Most talent"]],
+  athletes:[["count","Most deals"],["latest","Latest deal"],["name","Name, A to Z"]]
 };
-const MINS=[[0,"Any"],[1e5,"$100K+"],[1e6,"$1M+"],[1e7,"$10M+"],[5e7,"$50M+"]];
 
 // Describe-search: relationship words, "over $10M", "since 2024"; everything else matches text
 const TYPE_WORDS={invest:"Invested",invested:"Invested",investment:"Invested",investments:"Invested",investing:"Invested",owned:"Owned",own:"Owned",owns:"Owned",ownership:"Owned",franchise:"Owned",owner:"Owned",partnered:"Partnered",ambassador:"Partnered",ambassadors:"Partnered",endorsement:"Partnered",executive:"Executive",exec:"Executive",board:"Executive",founded:"Founded",founder:"Founded"};
 const STOP=new Set(["deal","deals","with","in","by","the","a","an","of","athlete","athletes","and","for","that","show","me","all","from","to"]);
 function parse(s){
   let t=" "+s.toLowerCase()+" ",out={types:[],min:0,since:0,text:[]};
-  t=t.replace(/(?:over|above|more than|at least|min(?:imum)?|>)\s*\$?\s*(\d+(?:\.\d+)?)\s*(k|m|b)?\b/,(m,n,u)=>{out.min=+n*({k:1e3,m:1e6,b:1e9}[u]||1);return " "});
   t=t.replace(/(?:since|after|from|in)\s+(20\d\d)/,(m,y)=>{out.since=+y;return " "});
   t.split(/[\s,]+/).filter(Boolean).forEach(w=>{const ty=TYPE_WORDS[w];if(ty){if(!out.types.includes(ty))out.types.push(ty)}else if(!STOP.has(w))out.text.push(w)});
   return out;
@@ -304,10 +311,10 @@ function parse(s){
 const hay=g=>(g.co+" "+g.ath.map(a=>a.name).join(" ")+" "+g.ind.join(" ")+" "+(g.round||"")+" "+g.type).toLowerCase();
 function filtered(){
   const F=state.f,live=state.q.trim()?parse(state.q):{types:[],min:0,since:0,text:[]};
-  const types=[...F.types,...live.types],min=Math.max(F.min,live.min),since=Math.max(F.since,live.since),text=[...F.text,...live.text];
+  const types=[...F.types,...live.types],since=Math.max(F.since,live.since),text=[...F.text,...live.text];
   return ALL.filter(g=>(!types.length||types.includes(g.type))
     &&(!F.inds.length||g.ind.some(i=>F.inds.includes(i)))
-    &&(!min||(g.stake||0)>=min)&&(!F.disc||g.disclosed)&&(!since||g.year>=since)
+    &&(!F.disc||g.disclosed)&&(!since||g.year>=since)
     &&(!text.length||text.every(w=>hay(g).includes(w))));
 }
 const cmpNum=(a,b,dir=-1)=>{if(a==null&&b==null)return 0;if(a==null)return 1;if(b==null)return -1;return (a-b)*dir};
@@ -330,7 +337,8 @@ function byAthlete(rows){
 const rel=t=>`<span class="rel${t==="Unclassified"?" none":""}">${t}</span>`;
 const un=t=>`<span class="un">${t}</span>`;
 function amount(v,g){if(v==null)return un("Undisclosed");const est=g.conf&&g.conf.startsWith("Estimated");return `<span class="amt num">${est?"~":""}${fmt(v)}</span>`}
-function names(g){const s=g.ath.slice(0,2).map(a=>esc(a.name)).join(", "),ex=g.ath.length-2;return `<div class="names"><span>${s}</span>${ex>0?`<span class="more num">+${ex}</span>`:""}</div>`}
+const person=n=>{const w=n.trim().split(/\s+/);return (w[0][0]+(w.length>1?w[w.length-1][0]:"")).toUpperCase()};
+function names(g){const s=g.ath.slice(0,2),ex=g.ath.length-2;return `<div class="names"><span class="stack">${s.map(a=>`<span class="av" aria-hidden="true">${esc(person(a.name))}</span>`).join("")}</span><span class="nm">${s.map(a=>esc(a.name)).join(", ")}</span>${ex>0?`<span class="more num">+${ex}</span>`:""}</div>`}
 function facts(g){
   return `<div class="dc"><h4>Deal</h4><div class="ln"><span>Relationship</span>${rel(g.type)}</div><div class="ln"><span>Year</span><b>${g.year||un("Undisclosed")}</b></div><div class="ln"><span>Round</span><b>${g.round?esc(g.round):un("Undisclosed")}</b></div></div>
    <div class="dc"><h4>Round numbers</h4><div class="ln"><span>Round size</span><b>${fmt(g.size)||un("Undisclosed")}</b></div><div class="ln"><span>Valuation</span><b>${fmt(g.val)||un("Undisclosed")}</b></div><div class="ln"><span>Confidence</span><b>${g.conf||un("Undisclosed")}</b></div></div>`;
@@ -343,8 +351,8 @@ function detail(g,cols){
    ${g.srcs.length?`<div class="dc"><h4>Source</h4>${g.srcs.map(s=>`<div class="ln"><a href="${esc(s)}" target="_blank" rel="noopener">${esc(new URL(s).hostname.replace(/^www\./,""))}</a></div>`).join("")}</div>`:""}
   </div></td></tr>`;
 }
-const DEAL_COLS=["Company","Industry","Relationship","Latest round","Athlete stake","Athletes","Year","Website"];
-const ATH_COLS=["Athlete","Deals","Companies","Relationships","Disclosed stake","Latest deal"];
+const DEAL_COLS=["Company","Industry","Relationship","Latest round","Talent","Year","Website"];
+const ATH_COLS=["Talent","Deals","Companies","Relationships","Latest deal"];
 function renderTable(rows){
   const deals=state.view==="deals",cols=deals?DEAL_COLS:ATH_COLS;
   $("#tbl").className=deals?"t-deals":"t-ath";$("#head").innerHTML=cols.map(c=>`<th scope="col">${c}</th>`).join("");
@@ -357,7 +365,6 @@ function renderTable(rows){
       <td>${g.ind.length?`<span class="cat">${esc(g.ind.join(", "))}</span>`:`<span class="dim">—</span>`}</td>
       <td>${rel(g.type)}</td>
       <td>${g.round?esc(g.round):`<span class="dim">—</span>`}</td>
-      <td>${amount(g.stake,g)}</td>
       <td>${names(g)}</td>
       <td class="num">${g.year||un("Undisclosed")}</td>
       <td>${g.domain?`<a class="site" href="https://${g.domain}" target="_blank" rel="noopener">${g.domain}${ic("i-arrow")}</a>`:`<span class="dim">—</span>`}</td>
@@ -365,14 +372,13 @@ function renderTable(rows){
     return list.length;
   }
   const list=byAthlete(rows);
-  if(!list.length){body.innerHTML=`<tr><td colspan="${cols.length}" class="empty">No athletes match. Clear a filter or change the search.</td></tr>`;return 0}
+  if(!list.length){body.innerHTML=`<tr><td colspan="${cols.length}" class="empty">No talent match. Clear a filter or change the search.</td></tr>`;return 0}
   body.innerHTML=list.map(e=>{const o=state.open.has("a"+e.name),types=REL_ORDER.filter(t=>e.deals.some(d=>d.g.type===t)),cos=[...new Set(e.deals.map(d=>d.g.co))];
     return `<tr class="row" tabindex="0" data-k="a${esc(e.name)}" aria-expanded="${o}">
-      <td><div class="cell-co">${plus}<span class="co">${esc(e.name)}</span></div></td>
+      <td><div class="cell-co">${plus}<span class="av lg" aria-hidden="true">${esc(person(e.name))}</span><span class="co">${esc(e.name)}</span></div></td>
       <td class="num">${e.deals.length}</td>
       <td><div class="names">${cos.slice(0,2).map(c=>`<span style="display:inline-flex;align-items:center;gap:8px">${mark(c,DATA.dom[c],true)}${esc(c)}</span>`).join("")}${cos.length>2?`<span class="more num">+${cos.length-2}</span>`:""}</div></td>
       <td><div style="display:flex;gap:14px">${types.map(rel).join("")}</div></td>
-      <td>${e.total?`<span class="amt num">${fmt(e.total)}</span>`:un("Undisclosed")}</td>
       <td class="num">${fmtDate(e.latest)||un("Undisclosed")}</td>
     </tr>${o?`<tr class="detail"><td colspan="${cols.length}"><div class="din">${e.deals.map(d=>`<div class="dc"><div class="top2" style="margin-bottom:10px">${mark(d.g.co,d.g.domain)}<span><span class="co">${esc(d.g.co)}</span><span class="catl">${d.g.ind.length?esc(d.g.ind.join(", ")):"Industry not set"}</span></span></div><div class="ln"><span>Relationship</span>${rel(d.g.type)}</div><div class="ln"><span>Round</span><b>${d.g.round?esc(d.g.round):un("Undisclosed")}</b></div><div class="ln"><span>Stake</span><b>${d.stake?fmt(d.stake):un("Undisclosed")}</b></div><div class="ln"><span>Date</span><b>${fmtDate(d.g.date)||un("Undisclosed")}</b></div></div>`).join("")}</div></td></tr>`:""}`}).join("");
   return list.length;
@@ -381,24 +387,34 @@ function activeChips(){
   const F=state.f,c=[];
   if(F.types.length)c.push(["types","Relationship",F.types.join(", ")]);
   if(F.inds.length)c.push(["inds","Industry",F.inds.join(", ")]);
-  if(F.min)c.push(["min","Min athlete stake",fmt(F.min)]);
   if(F.since)c.push(["since","Since",F.since]);
   if(F.disc)c.push(["disc","Amounts","Disclosed only"]);
   F.text.forEach((t,i)=>c.push(["text:"+i,"Matches",t]));
   return c;
 }
+// Activity: deals by month over the 12 months ending at the latest dated deal (real record dates; undated deals excluded)
+const LAST=ALL.reduce((m,g)=>g.date&&g.date.slice(0,7)>m?g.date.slice(0,7):m,"");
+function activity(rows){
+  const [ly,lm]=LAST.split("-").map(Number),keys=[];
+  for(let i=11;i>=0;i--){const d=new Date(ly,lm-1-i,1);keys.push(d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"))}
+  const cnt=keys.map(k=>rows.filter(g=>g.date&&g.date.startsWith(k)).length),max=Math.max(...cnt,1),W=120,H=24;
+  const pts=cnt.map((v,i)=>[+(i*(W/11)).toFixed(1),+(H-2-(v/max)*(H-6)).toFixed(1)]);
+  const total=cnt.reduce((a,b)=>a+b,0),last=pts[11];
+  const f=k=>new Date(k+"-01T12:00:00").toLocaleDateString("en-US",{month:"short",year:"numeric"});
+  const label=f(keys[0])+" to "+f(keys[11]);
+  return `<span class="act" title="Deals by month, ${label}: ${total} dated deals" role="img" aria-label="Deals by month, ${label}: ${total} dated deals"><span class="lbl">Activity</span><svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true"><path d="M${pts.map(p=>p.join(",")).join(" L")}" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${last[0]}" cy="${last[1]}" r="2" fill="var(--accent)"/></svg></span>`;
+}
 function renderChips(n){
-  const c=activeChips(),noun=state.view==="deals"?"deal":"athlete";
-  $("#chips").innerHTML=`<span class="summary num"><b>${n}</b> ${noun}${n===1?"":"s"}</span>`+
+  const c=activeChips(),noun=state.view==="deals"?"deal":"talent";
+  $("#chips").innerHTML=`<span class="summary num"><b>${n}</b> ${noun}${noun==="deal"&&n!==1?"s":""}</span>`+
     (state.showChips?c.map(([k,l,v])=>`<span class="fc">${l}: <b>${esc(v)}</b><button data-rm="${k}" aria-label="Remove ${l} filter">${ic("i-x","icon")}</button></span>`).join(""):"")+
-    (c.length?`<button class="ghost" id="clear">Clear all</button><button class="ghost" id="hide">${state.showChips?"Hide filters":"Show filters"}</button>`:"");
+    (c.length?`<button class="ghost" id="clear">Clear all</button><button class="ghost" id="hide">${state.showChips?"Hide filters":"Show filters"}</button>`:"")+activity(filtered());
   $("#chips .fc .icon")&&document.querySelectorAll("#chips .fc .icon").forEach(i=>{i.style.width=i.style.height="11px"});
 }
 function filterPanel(){
   const F=state.f;
   return `<div class="menu fp" role="dialog" aria-label="Filters">
    <div><h4>Relationship</h4><div class="opts">${TYPES.map(t=>`<button class="opt" aria-pressed="${F.types.includes(t)}" data-ft="${t}">${t}</button>`).join("")}</div></div>
-   <div><h4>Min athlete stake</h4><div class="opts">${MINS.map(([v,l])=>`<button class="opt" aria-pressed="${F.min===v}" data-fm="${v}">${l}</button>`).join("")}</div></div>
    <div><h4>Since</h4><div class="opts"><button class="opt" aria-pressed="${!F.since}" data-fy="0">Any</button>${YEARS.map(y=>`<button class="opt" aria-pressed="${F.since===y}" data-fy="${y}">${y}</button>`).join("")}</div></div>
    <div><h4>Industry</h4><div class="opts inds">${INDUSTRIES.map(t=>`<button class="opt" aria-pressed="${F.inds.includes(t)}" data-fi="${esc(t)}">${esc(t)}</button>`).join("")}</div></div>
    <div><h4>Amounts</h4><div class="opts"><button class="opt" aria-pressed="${F.disc}" data-fd="1">Disclosed only</button></div></div>
@@ -407,7 +423,7 @@ function filterPanel(){
 }
 function renderControls(){
   const n=activeChips().length;
-  $("#views").innerHTML=[["deals","Deals"],["athletes","By athlete"]].map(([k,l])=>`<button class="tab" role="tab" aria-selected="${state.view===k}" data-view="${k}">${l}</button>`).join("");
+  $("#views").innerHTML=[["deals","Deals"],["athletes","By talent"]].map(([k,l])=>`<button class="tab" role="tab" aria-selected="${state.view===k}" data-view="${k}">${l}</button>`).join("");
   $("#fpop").innerHTML=`<button class="tool" id="fbtn" aria-haspopup="true" aria-expanded="${state.menu==="f"}">${ic("i-sliders","icon")}<span class="lbl">Filters</span>${n?`<span class="cnt num">${n}</span>`:""}</button>`+(state.menu==="f"?filterPanel():"");
   $("#spop").innerHTML=`<button class="tool" id="sbtn" aria-haspopup="true" aria-expanded="${state.menu==="s"}">${ic("i-sort","icon")}<span class="lbl">Sort</span></button>`+(state.menu==="s"?`<div class="menu" role="menu">${SORTS[state.view].map(([k,l])=>`<button class="mi" role="menuitemradio" aria-checked="${state.sort[state.view]===k}" data-sort="${k}">${l}<span class="chk">${ic("i-check","icon")}</span></button>`).join("")}</div>`:"");
 }
@@ -416,7 +432,7 @@ const toggleIn=(a,v)=>{const i=a.indexOf(v);i>=0?a.splice(i,1):a.push(v)};
 function commit(){
   const p=parse(state.q),F=state.f;
   p.types.forEach(t=>{if(!F.types.includes(t))F.types.push(t)});
-  if(p.min)F.min=p.min;if(p.since)F.since=p.since;
+  if(p.since)F.since=p.since;
   p.text.forEach(t=>{if(!F.text.includes(t))F.text.push(t)});
   state.q="";$("#q").value="";render();
 }
@@ -427,7 +443,6 @@ document.addEventListener("click",e=>{
   if(c("#fbtn")){state.menu=state.menu==="f"?null:"f";return renderControls()}
   if(c("#sbtn")){state.menu=state.menu==="s"?null:"s";return renderControls()}
   if(b=c("[data-ft]")){toggleIn(F.types,b.dataset.ft);return render()}
-  if(b=c("[data-fm]")){F.min=+b.dataset.fm;return render()}
   if(b=c("[data-fy]")){F.since=+b.dataset.fy;return render()}
   if(b=c("[data-fi]")){toggleIn(F.inds,b.dataset.fi);return render()}
   if(c("[data-fd]")){F.disc=!F.disc;return render()}
@@ -453,7 +468,7 @@ document.addEventListener("error",e=>{const im=e.target;if(im.tagName!=="IMG"||!
 function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1800)}
 function copyCsv(){
   const rows=sortDeals(filtered().slice()),q=v=>'"'+String(v==null?"":v).replace(/"/g,'""')+'"';
-  const csv=[["Company","Athletes","Relationship","Round","Athlete stake","Round size","Valuation","Date","Source"].map(q).join(",")].concat(rows.map(g=>[g.co,g.ath.map(a=>a.name).join("; "),g.type,g.round,g.stake,g.size,g.val,g.date,g.srcs[0]].map(q).join(","))).join("\n");
+  const csv=[["Company","Talent","Relationship","Round","Athlete stake","Round size","Valuation","Date","Source"].map(q).join(",")].concat(rows.map(g=>[g.co,g.ath.map(a=>a.name).join("; "),g.type,g.round,g.stake,g.size,g.val,g.date,g.srcs[0]].map(q).join(","))).join("\n");
   const done=()=>toast(`Copied ${rows.length} deals as CSV`);
   const fb=()=>{const ta=document.createElement("textarea");ta.value=csv;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");done()}catch(_){toast("Copy is blocked in this view")}ta.remove()};
   try{navigator.clipboard.writeText(csv).then(done,fb)}catch(_){fb()}
