@@ -1,10 +1,10 @@
-# Talent Sheet — Design System (v6)
+# Talent Sheet — Design System (v6.1)
 
 **Who owns what.** Talent Sheet is the public record of equity between athletes, other public figures and the companies they back. The product should feel like **a premium athlete business database**: dark, quiet, editorial and data-rich without feeling busy. Think Linear + Bloomberg + a modern VC database. Never a sports news site, a SaaS dashboard, an analytics dashboard or a sportsbook.
 
 This file is the single source of truth for design. If code, CLAUDE.md, PRODUCT.md or any earlier preview disagrees with this file, this file wins.
 
-**Reference build:** `previews/experiment-2.html` (published at https://claude.ai/artifact/8ty3HnP54whm6cXKqcTXZo). When in doubt, match it. Earlier directions (v2 paper, v3 cards, v4 share-certificate, v5 photo-banner with glows and filter chips) are **retired**; they live only in git history and `previews/` for reference. Do not reuse their layouts.
+**Reference builds:** `previews/experiment-2.html` for the athlete profile (published at https://claude.ai/artifact/8ty3HnP54whm6cXKqcTXZo) and `design/Investments.html` for the Investments table page (published at https://claude.ai/artifact/KnV2RuHPYEF3R4wmTbAXBy). See section 10 for what the Investments page adds. When in doubt, match them. Earlier directions (v2 paper, v3 cards, v4 share-certificate, v5 photo-banner with glows and filter chips) are **retired**; they live only in git history and `previews/` for reference. Do not reuse their layouts.
 
 ---
 
@@ -104,8 +104,8 @@ Use `tabular-nums` for figures. **Open item:** the 8–10px sizes and the dimmes
 ## 5. Components
 
 **Sidebar**
-- Top: geometric "A" mark (green stroke) beside a two-line wordmark in 10px / 600 / 0.18em tracking, #E8EDF0. **Open decision:** the reference says "ATHLETE PORTFOLIO"; the product name is Talent Sheet. Use whichever the user confirms; until then match the reference.
-- 42px below the logo: nav items Athletes, Investments, Industries, Stories. Each 38px tall, padding 0 10px, radius 6px, 11px text, 15px line icon, 10px gap. Inactive #7F8B94; hover `text`; active background `nav-on`, text `text`, icon `accent`. No left colour bar, no bright backgrounds.
+- Top: the Talent Sheet mark (green stroke, 24px) beside a two-line wordmark **TALENT / SHEET.** in 10px / 600 / 0.18em tracking, #E8EDF0, with the full stop in `accent`. **Decided:** the product name is Talent Sheet; "ATHLETE PORTFOLIO" in `experiment-2.html` is superseded. The mark is a placeholder: a 22px rounded square (radius 4.5px, 1.6px stroke) holding a "T" (top bar and stem) with two faint ledger ticks at the foot. Replace it when a real logo exists.
+- 42px below the logo: nav items Talent, Investments, Industries, Stories (the section is called "Talent", not "Athletes", because it covers coaches, executives and other public figures). Each 38px tall, padding 0 10px, radius 6px, 11px text, 15px line icon, 10px gap. Inactive #7F8B94; hover `text`; active background `nav-on`, text `text`, icon `accent`. No left colour bar, no bright backgrounds.
 
 **Search**
 - Top-right of the main column: 270px × 32px, `card` background, 1px `border`, radius 16px. 14px search icon. Placeholder "Search athletes, companies, industries..." at 10px in `muted`. Visually quiet.
@@ -158,7 +158,7 @@ Use `tabular-nums` for figures. **Open item:** the 8–10px sizes and the dimmes
 
 Exactly: athlete identity, business description, a little metadata, the portfolio. The page ends shortly after the grid; the empty space is intentional.
 
-**Do not add:** business evolution timelines, charts, graphs, valuations, allocation breakdowns, recent activity feeds, news, featured stories, related-athlete rows, recommendations, social links, follower counts, engagement metrics, article cards, right sidebars, KPI cards, filter chips, large pills or badges.
+**Do not add:** business evolution timelines, charts, graphs, valuations, allocation breakdowns, recent activity feeds, news, featured stories, related-athlete rows, recommendations, social links, follower counts, engagement metrics, article cards, right sidebars, KPI cards, large pills or badges. Filter chips are not allowed on the profile page; the Investments page has quiet ones (section 10).
 
 (The user previously deferred re-adding "Portfolio by category" and "Recent activity" in some new form. That stays deferred and must not be added without their approval.)
 
@@ -182,7 +182,7 @@ Every deal should carry a verification status and a source.
 - **Reported:** credible secondary source; source link required.
 - **Unverified:** internal only; never public.
 
-The current reference doesn't show per-deal status on cards (the data has no status field yet); the company sheet always shows the source. When a status field exists, show it in the sheet and as a small label, not a badge-heavy treatment.
+The data now has a `Verification` field (Verified, Reported, Unverified) on every deal. Until each deal is reviewed by hand it is set by source domain: press-wire releases (PR Newswire, Business Wire, GlobeNewswire) and the investor's or talent's own site are Verified; any other sourced deal is Reported; a deal with no source is Unverified. Show the status as a small label with a dot (section 10), never as a badge. Unverified deals are internal only by this document's rule; the Investments preview still shows them, labelled, until the user decides whether to hide them.
 
 ---
 
@@ -229,4 +229,31 @@ Theme shadcn components (Sheet for the company sheet, Tabs, Input for search) wi
 
 ### Data
 
-Profiles render from the athlete's Airtable data (Talent, Companies, Investments). Components are reusable across athletes; never hardcode one athlete. Fields not yet in the base (sport, company category and description, photo, team, verified) are either added to the base or omitted; they are never invented in the UI.
+Profiles render from the athlete's Airtable data (Talent, Companies, Investments). Components are reusable across athletes; never hardcode one athlete. Fields the base now has beyond the original three tables: Talent `League`, Investments `Verification`, Companies `Industries` (linked) and `Description`. Fields not yet in the base (sport, photo, team) are either added to the base or omitted; they are never invented in the UI. League, industry and description values entered so far come from public knowledge and are blank where unclear; treat them as needing review.
+
+---
+
+## 10. Investments page (table view)
+
+A dense but quiet directory of every deal, company first. Same tokens as everywhere else; the differences from the profile page are below. Reference: `design/Investments.html`.
+
+**Layout.** The v6 shell: 170px sidebar, main column `max-width: 1120px`, quiet 270 × 32px search top right (radius 16px). Then, top to bottom: page heading "Investments" (section-heading style, 18px / 500) with an 11px subtitle; a 42px tab band (same styling as the profile tabs) holding the views **Deals** and **By talent** on the left and the tools **Filters**, **Sort**, **Copy CSV** on the right as quiet 11px text buttons; a summary line with active filters; the table. No card wrapper around the table, no KPI tiles, no charts.
+
+**Search** understands plain phrases ("owned since 2024", "nba partnered"): relationship words, league names and "since {year}" become filters when the user presses Enter; other words match company, talent, industry and round.
+
+**Filters** open in a small panel (surface, 1px border, 8px radius, no shadow). Groups: Relationship, League, Since, Industry, Amounts. Options are 26px, 6px-radius, 1px-border text buttons; selected = `accent` text and `accent-line` border (no fill). Active filters show as quiet chips: 26px, 8px radius, 1px `border`, 10px text, with a close icon; plus "Clear all" and "Hide filters" as plain text. With filters active and the panel closed, the Filters button shows the filter count in `accent` and "{shown} of {total}" in `muted`.
+
+**Table.** Hairline `rule` rows, no vertical dividers, no zebra. Header 9px uppercase 0.06em `muted`. Rows 56px, 11px text. Row hover and the focused or expanded row use `card-hover`; the company name turns `accent`. Columns in Deals view: Company, Industry, Relationship, Latest round, Talent, Year, Website. **Latest round is hidden when fewer than half of all deals have a round.** Athlete stake is not a column (it appears in the expanded row).
+- **Company:** a "+" that rotates to "x" when open, the 32px logo tile (radius 8px) **beside** the name (12px / 500). Real Logo.dev logos; initials on a light tile on failure.
+- **Relationship:** the v6 label (Invested, Owned, Partnered, Executive, Founded) at 8px uppercase with the 5px green dot. SpringHill Company is Founded.
+- **Talent:** overlapping 26px circular initials avatars (fill `border` #1A252D, 8px text) for the first two people, then their names (linked green when the person has a profile page) and "+N". No photos, no generated likenesses. **League badge:** where the talent's `League` is set, a 14px circle with that league's Logo.dev logo sits at the avatar's bottom-right (offset -5px, ring in the row background). No badge when the league is blank. The By talent view uses 30px avatars with a 16px badge.
+- **Unknown values:** every unknown or undisclosed value uses one style: `very-muted`. Year and amounts read "Undisclosed"; industry and round read "—".
+- **Website:** the domain in `text-2` with an 11px arrow; hover turns it `accent`.
+
+**Expanded row** (opens in place, 200ms fade, no scale or slide): compact cards, 8px radius, 1px `border`, 15px padding, 12px gap. First card: 32px logo tile beside the company name and industry, then the one-line description (10px, `#87949D`), then each person with their league and stake. Then Deal (relationship, **verification**, year, round), Round numbers (round size, valuation, confidence) and Source (green domain links). **Verification** is a small label with a dot in the same style as the relationship label: Verified = `accent` dot, Reported = `muted` dot, Unverified = `very-muted` dot. Never a filled badge.
+
+**By talent view.** One row per person: avatar with league badge, name, deal count, companies (20px logo tiles), relationship labels, latest deal. Expanding shows one card per deal. A league filter also hides teammates outside the chosen league here.
+
+**Keyboard.** The table is one Tab stop (roving tabindex). Up / Down move between rows; Home, End, PageUp, PageDown jump; Right opens a row, Left or Esc closes it; Enter and Space toggle. Left / Right switch the Deals and By talent tabs. "/" and Cmd-K focus search; Esc clears it. The focused row shows a 1.5px `focus` outline and the `card-hover` background. No animation on keyboard-driven actions.
+
+**Data shown.** Company, talent, relationship, round, dates, amounts, source, verification, league, industry and description all come from the base. Nothing is computed or estimated on the page, except that a row's amounts are labelled "~" when the base marks the precision as estimated. There is no trend line, activity chart or total, because the base has no series to draw one from.

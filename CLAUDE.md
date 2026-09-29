@@ -240,7 +240,9 @@ hashes. Impeccable manages its own version (`impeccable check` /
   from Logo.dev (token from the Airtable `Logo URL` formula) and embed them as
   data URIs (see `previews/experiment-2.html`). The real app can hotlink.
 - Current direction: `previews/experiment-2.html`, recorded in `DESIGN.md`
-  v6. Open decisions: product name in the wordmark ("Athlete Portfolio"
-  vs Talent Sheet) and raising the smallest text sizes to 11px.
+  v6.1. The wordmark is decided: Talent Sheet (the sidebar section is "Talent").
+  `DESIGN.md` section 10 records the Investments page (`design/Investments.html`,
+  published at https://claude.ai/artifact/KnV2RuHPYEF3R4wmTbAXBy). Open decision:
+  raising the smallest text sizes to 11px.
 - Deferred by user, to revisit: re-add "Portfolio by category" and
   "Recent activity" panels to the Profile Overview tab in some new form.
