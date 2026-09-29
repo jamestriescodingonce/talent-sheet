@@ -92,6 +92,33 @@
         ],
         "createdAt": "2026-09-28T06:00:38.718Z",
         "reason": "Claude: tab band is a fixed 42px bar with vertically centred labels, per spec"
+      },
+      {
+        "rule": "undersized-ui-text",
+        "value": "*",
+        "files": [
+          "previews/experiment-2.html"
+        ],
+        "createdAt": "2026-09-29T01:43:20.794Z",
+        "reason": "User spec for this experiment sets the wordmark and metadata at 8-10px; preview toggle buttons are preview chrome"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "previews/experiment-2.html"
+        ],
+        "createdAt": "2026-09-29T01:43:20.805Z",
+        "reason": "Claude: static scan pairs text with #ffffff, which never renders on this dark-only page"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "previews/experiment-2.html"
+        ],
+        "createdAt": "2026-09-29T01:43:20.816Z",
+        "reason": "Claude: tab band is a fixed 42px bar with vertically centred labels, per spec"
       }
     ]
   }
