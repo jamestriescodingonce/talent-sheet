@@ -38,7 +38,7 @@ Data lives in an Airtable base (Talent, Companies, Investments junction table). 
 ## Capabilities and Constraints
 - Profiles per talent, company pages, directory search and filters (planned).
 - Gating: amounts, dates, rounds and sources may be gated behind an intake form for visitors.
-- Company logos come from Logo.dev in the real app; they cannot load inside Claude Artifact previews.
+- Company logos come from Logo.dev. The real app hotlinks them; Claude Artifact previews must download and embed them (this environment allows `img.logo.dev`).
 - Undecided: the newsletter's format and cadence; account model.
 
 ## Brand Commitments
@@ -46,11 +46,11 @@ Data lives in an Airtable base (Talent, Companies, Investments junction table). 
 - Voice: informed, dry, a little wry. Facts first. Sentence case, no exclamation marks, no "game-changer" or "empower".
 - Never reads as a sportsbook or trading app (no green/red up/down, no hype).
 - Dark mode first; a cool green accent (user decision).
-- Profile layout follows the user's reference screenshot (sidebar, photo banner hero, tabs, filter chips, logo-beside-name portfolio cards). User decision; binding for profile work.
+- Profile layout follows `previews/experiment-2.html` as recorded in DESIGN.md v6 (quiet dark database layout, portfolio-first, cool green accent). User decision; binding for profile work. The earlier photo-banner/filter-chip reference (v5) is retired.
 
 ## Evidence on Hand
 - Real deal data for Kevin Durant (8 companies plus Thirty Five Ventures), all from secondary sources, so all "Reported".
-- Confirmed: placeholders for now. No licensed talent photos and no company logo files yet. No testimonials, customer names or traffic numbers: do not invent them.
+- Confirmed: no licensed talent photos yet (placeholder silhouette). Company logos are available from Logo.dev. No testimonials, customer names or traffic numbers: do not invent them.
 
 ## Product Principles
 1. Trust is the product: every claim shows how it is known.

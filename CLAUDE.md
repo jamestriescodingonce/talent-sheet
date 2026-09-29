@@ -32,8 +32,10 @@ Next.js/Tailwind config, nothing runnable. What exists today is:
    scaffolded.
 
 When scaffolding the real app, `DESIGN.md` is the source of truth for
-colours, fonts, spacing, components and voice. The artifact is a reference
-for page structure and content only. The stashed components are candidate
+colours, fonts, spacing, components and voice, and its reference build is
+`previews/experiment-2.html` (published at
+https://claude.ai/artifact/8ty3HnP54whm6cXKqcTXZo). The older artifact below
+and the other files in `previews/` are history, not direction. The stashed components are candidate
 building blocks (several have missing peer files/deps — noted below).
 
 ## Live preview (Claude Artifact)
@@ -120,7 +122,7 @@ Boards:
 - The sandbox's network egress is allowlist-only: `registry.npmjs.org`,
   PyPI, and `github.com`/`raw.githubusercontent.com`/`api.github.com`
   (via `add_repo` + `git clone`) are reachable; general sites (Google,
-  Wikipedia, logo.dev, jsdelivr, unpkg, Airtable's own web app,
+  Wikipedia, jsdelivr, unpkg, Airtable's own web app,
   competitor sites) are not. This is why fonts came from a GitHub clone
   and colors came from pixel-sampling user screenshots rather than
   fetching the live competitor site.
@@ -237,8 +239,8 @@ hashes. Impeccable manages its own version (`impeccable check` /
   on this environment's allowed network domains, so previews download logos
   from Logo.dev (token from the Airtable `Logo URL` formula) and embed them as
   data URIs (see `previews/experiment-2.html`). The real app can hotlink.
-- Current favourite direction: `previews/experiment-2.html` (clean
-  "Athlete Portfolio" layout, Airtable data, cool green accent). Not yet
-  folded into `DESIGN.md`, which still describes v5.
+- Current direction: `previews/experiment-2.html`, recorded in `DESIGN.md`
+  v6. Open decisions: product name in the wordmark ("Athlete Portfolio"
+  vs Talent Sheet) and raising the smallest text sizes to 11px.
 - Deferred by user, to revisit: re-add "Portfolio by category" and
   "Recent activity" panels to the Profile Overview tab in some new form.

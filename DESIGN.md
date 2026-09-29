@@ -1,255 +1,232 @@
-# Talent Sheet — Design System (v5)
+# Talent Sheet — Design System (v6)
 
-**Who owns what.** Talent Sheet is the public record of equity between athletes, other public figures and the companies they back: a directory you can search and a newsletter you actually open. It reads as a trusted record first and a great column second. Never as a sportsbook.
+**Who owns what.** Talent Sheet is the public record of equity between athletes, other public figures and the companies they back. The product should feel like **a premium athlete business database**: dark, quiet, editorial and data-rich without feeling busy. Think Linear + Bloomberg + a modern VC database. Never a sports news site, a SaaS dashboard, an analytics dashboard or a sportsbook.
 
-**In one line:** The Ringer's voice, Fidelity's restraint, and a green you could only find in a clubhouse.
+This file is the single source of truth for design. If code, CLAUDE.md, PRODUCT.md or any earlier preview disagrees with this file, this file wins.
 
-**Visual world (v5):** dark, photo-led and premium, following the user's reference layout for profiles. The v4 "share register" certificate treatment was rejected and is retired. Reference build: `previews/profile-v5.html` (three versions of the hero treatment, pick pending).
-
-This file is the single source of truth for design. If code and this file disagree, this file wins. All example names are fictional.
+**Reference build:** `previews/experiment-2.html` (published at https://claude.ai/artifact/8ty3HnP54whm6cXKqcTXZo). When in doubt, match it. Earlier directions (v2 paper, v3 cards, v4 share-certificate, v5 photo-banner with glows and filter chips) are **retired**; they live only in git history and `previews/` for reference. Do not reuse their layouts.
 
 ---
 
 ## 1. Principles
 
-- **Night first.** Dark (Night) is the primary theme: a deep green-black ground, never pure black. Light (Paper) is kept as an alternate theme.
-- **Cool green that pops, not neon.** In dark, `brand` is a cool, bright green. Use it generously on interactive and key elements (links, active tabs and chips, key figures, verified marks), never as a large flat fill.
-- **One lime moment.** `highlight` (#B8E986) appears only on `pitch` fields: the wordmark dot, one underline, or one figure. It's memorable because it's rare.
-- **Mode-tuned greens.** `brand` has a different value per theme on purpose. Never swap them.
-- **Depth, lightly (loosened, medium).** Allowed: a soft green glow or gradient behind the hero, and soft shadows on cards that deepen slightly on hover with a 2px lift. Still not allowed: glowing text, glowing borders, neon fills, rainbow or multi-hue gradients, glassmorphism.
-- **Trust is the product.** Every deal shows how we know it.
-
-Deliberately avoided: neon as a background (Robinhood, Cash App), gradients and crowns (DraftKings), pure black (Spotify), and any green/red up/down pairing (trading apps).
+- **The portfolio is the page.** Hierarchy: athlete → who they are → what businesses they're involved with. Everything else is secondary.
+- **Optimise for discovery, not density.** Someone should land on an athlete and think "I didn't know they were involved with *that*", click the company, and find another athlete. Portfolio cards and the company sheet are the discovery mechanism; no recommendation widgets.
+- **Quiet by default.** ~90% of the UI is dark grey, white and muted grey. Colour is for interaction and a few key facts only.
+- **Defined by spacing, contrast and type, not borders or boxes.** Hairline borders, almost no shadows, small radii. Not a bubbly UI.
+- **Remove before adding.** If a page looks busy, too colourful or too much like a dashboard, remove elements. If it looks empty, improve type and spacing before adding a module.
+- **Never invent data.** If the record doesn't have a value (photo, team, number, verified flag, totals), leave it out. Never fake counts or ranges.
 
 ---
 
 ## 2. Colour
 
-### Proportion
-A typical page is ~85% `surface` / `surface-raised` / `ink`, ~8% `ink-muted` and `hairline`, ~5–7% `brand` (accents plus the hero glow). A large `pitch` field appears **at most once per page** (masthead, hero or footer).
+Dark only.
 
-### Tokens
+| Token | Value | Use |
+|---|---|---|
+| `bg` | #090C0F | Page and sidebar ground |
+| `surface` | #0B1014 | Sheets, panels |
+| `card` | #0D1419 | Cards, search field |
+| `card-hover` | #10181E | Card hover |
+| `border` | #1A252D | Default 1px border (cards, search, sheet) |
+| `border-hover` | #26343D | Hovered border (neutral) |
+| `rule` | #172127 | Sidebar edge, tab band top/bottom, sheet rows |
+| `text` | #F1F4F6 | Primary text |
+| `text-2` | #98A5AE | Secondary text |
+| `muted` | #687680 | Muted labels, placeholders, categories |
+| `very-muted` | #4F5D66 | Placeholder captions, notes |
+| `accent` | #3DDC97 | The cool green. Links, active states, key facts (see below) |
+| `accent-hover` | #6BE7B1 | Link hover |
+| `accent-wash` | rgba(61,220,151,0.10) | Hovered rows in the company sheet |
+| `accent-line` | rgba(61,220,151,0.30) | Card hover border |
+| `nav-on` | #10231A | Active sidebar item background |
+| `focus` | #8FB4FF | Keyboard focus outline only. Blue so it never reads as brand |
 
-| Token | Light (Paper) | Dark (Night) | Use |
-|---|---|---|---|
-| `surface` | #F7F6F1 | #0A110D | Page ground. Never #FFF / #000. |
-| `surface-raised` | #FFFFFF | #0F1813 | Cards, table body, newsletter frame. |
-| `surface-sunk` | #EEEDE6 | #080D0A | Table header band, data wells, search field. |
-| `surface-hover` | #F0EFE8 | #14201A | Row and card hover. |
-| `hairline` | #DCDAD0 | #24332A | 1px dividers, row rules, card edges. Never the only edge of a control. |
-| `control-border` | #8C897D | #607268 | Inputs, secondary buttons, outline badges (3:1). |
-| `ink` | #0C1510 | #EDEBE0 | Primary text and figures. |
-| `ink-muted` | #545D57 | #A3AEA6 | Secondary text, metadata, column labels. |
-| `ink-disabled` | #A3A69F | #56615A | Disabled controls only. |
-| `brand` | #0F5B38 | #3DDC97 | Links, the one primary action, verified marks, wordmark, active tab. |
-| `on-brand` | #FFFFFF | #0B120E | Text/icons on a brand fill. |
-| `brand-wash` | #E3EFE7 | #10281D | Selected rows, active filter chips, verified badge. Text on it: `brand`. |
-| `pitch` | #0B3B27 | #12432D | Signature field: masthead, share cards, hero band, footer. |
-| `on-pitch` | #F4F1E6 | #F4F1E6 | Cream text on pitch. |
-| `highlight` | #B8E986 | #B8E986 | Lime. **Only on pitch.** Never on paper or surface. |
-| `fresh` | #8A5300 | #F0B25A | Recency only: NEW marker, "this week" counts. One per row. |
-| `fresh-wash` | #FBEBD2 | #2C2010 | NEW marker ground. |
-| `negative` | #A1392B | #F08C7C | Exits, markdowns, dissolved deals. Always with a minus sign or word. |
-| `focus-ring` | #2F6FDB | #8FB4FF | 2px focus outline, 2px offset. Blue so it never reads as brand or status. |
-| `locked` | #EEEDE6 | #1A2520 | Gated fields for visitors who haven't done the intake form. Text: `ink-muted`. |
+**Where green goes** (the "Richer" setting in the reference, which is the chosen one):
+- Logo mark, active sidebar icon, active tab text and its 2px underline.
+- The first hero metadata figure (the company count).
+- A 5px dot before each relationship label on cards.
+- Card hover: border `accent-line` and the company name turns `accent`.
+- Links in the company sheet ("Also backed by" athletes, source).
+- A soft green radial glow behind the athlete photo, spilling slightly into the hero. This is the only glow allowed.
 
-### Talent categories
-Always a dot **plus** a word, never colour alone. Also the chart series order. Brand green is never a category, so green always means Talent Sheet.
-
-| Token | Light | Dark | Category |
-|---|---|---|---|
-| `cat-athlete` | #2C5AA0 | #8DB0EE | Athlete |
-| `cat-coach` | #7B3F86 | #D29BDC | Coach |
-| `cat-entertainer` | #A8522B | #F0A27F | Entertainer / Celebrity |
-| `cat-executive` | #1D6E73 | #6FC6CB | Executive |
-| `cat-investor` | #7F6512 | #DDBF5C | Financial Investor |
-| `cat-other` | #4F5B67 | #AAB6C2 | Other |
-
-Every text pairing above passes 4.5:1 in both themes; `control-border` and `focus-ring` pass 3:1.
+**Never:** green as a large flat fill, glowing text or borders, neon, multi-hue gradients, green/red up/down pairs, blue as a brand colour.
 
 ---
 
 ## 3. Typography
 
-One family, **Geist**, used with tight tracking at display sizes and plain at reading sizes. The reference is a clean, modern sans throughout; hierarchy comes from size and weight, not a second face. No monospace.
+**Geist** (Google Fonts, 400/500/600), falling back to Inter, then system UI. `-webkit-font-smoothing: antialiased`. No decorative or display faces, no monospace. Use weight 500 for headings; avoid heavy weights.
 
-Load from Google Fonts: Geist (400, 500, 600, 700). All numbers use `font-variant-numeric: tabular-nums` where they line up.
+| Style | Size / line | Weight | Tracking | Colour | Use |
+|---|---|---|---|---|---|
+| Athlete name | 32px / 1.05 (26px mobile) | 500 | -0.035em | #F3F6F8 | Profile hero |
+| Section heading | 18px | 500 | -0.02em | #EFF3F5 | "Investment Portfolio" |
+| Tagline | 14px | 500 | -0.01em | #E7ECEF | Optional editorial line, only if written by an editor |
+| Team line | 12px | 400 | 0 | #8996A0 | "Team · #number", only if in the data |
+| Body / description | 11px / 1.6 | 400 | 0 | #87949D | Athlete description (max 470px) |
+| Subtitle | 11px | 400 | 0 | #75828C | Under section headings |
+| Nav / tabs | 11px | 400 | 0 | see components | Sidebar, profile tabs |
+| Company name | 12px | 500 | 0 | #E7ECEF | Cards |
+| Card description | 10px / 1.5 | 400 | 0 | #87949D | Two lines max (`line-clamp: 2`) |
+| Metadata figure | 15px | 500 | -0.01em | `text` | Hero metadata |
+| Metadata label | 9px, uppercase | 400 | 0.06em | `muted` | Hero metadata |
+| Sport label | 10px, uppercase | 400 | 0.08em | #74828C | Above the name |
+| Category | 9px | 400 | 0 | `muted` | Under company name |
+| Year | 10px | 400 | 0 | #6F7C85 | Card footer |
+| Relationship | 8px, uppercase | 400 | 0.08em | #7D8A93 | Card footer |
 
-| Style | Size / line | Weight | Tracking | Use |
-|---|---|---|---|---|
-| `display` | clamp(40px, 4.6vw, 60px) / 1 | 600 | -0.035em | Profile name |
-| `headline` | 22 / 28 | 600 | -0.02em | Section titles ("Investment portfolio") |
-| `figure-lg` | 24 / 30 | 600 | -0.02em | Hero facts (companies, sectors, earliest deal) |
-| `title` | 16 / 20 | 600 | -0.01em | Company name on a card |
-| `body` | 15 / 1.55 | 400 | 0 | Paragraphs, descriptions |
-| `small` | 13–14 / 1.45 | 400–500 | 0 | Sector, metadata, key/value labels, tags |
-| `caption` | 11 / 16 | 500 | 0.08em, uppercase | Rare: photo credit or placeholder label only |
+Use `tabular-nums` for figures. **Open item:** the 8–10px sizes and the dimmest greys fall below common readability guidance; raising the floor to 11px is recommended before launch but not yet approved.
 
 ---
 
 ## 4. Spacing, radius, layout
 
-**Spacing:** `space-1` 4px (icon to label) · `space-2` 8px (inside chips) · `space-3` 12px (cell and button vertical padding) · `space-4` 16px (card padding, cell horizontal padding) · `space-6` 24px (card gutter, mobile side margin) · `space-10` 40px (between sections) · `space-16` 64px (hero and masthead).
+**Spacing scale:** 4, 8, 12, 16, 20, 24, 32, 40px. Avoid arbitrary values.
 
-**Radius:** `radius-sm` 6px (tags, inputs, small controls) · `radius-md` 12px (cards, buttons) · `radius-lg` 16px (hero banner, large panels) · `radius-pill` 999px (filter chips and avatar stacks only).
+**Radius:** cards 8px · search 16px (pill) · sidebar active item 6px · athlete image 4px max · company logo tiles 8px. Never 20–24px radii.
 
-**Layout:**
-- `content-max` 1200px for directory and table pages; `reading-max` 680px for newsletter issues, bios, articles.
-- `bp-sm` 640px: below, tables collapse to stacked deal cards.
-- `bp-md` 960px: below, filters move into a sheet; profile stat strip wraps.
-- `row-height` 56px minimum deal row; 44px minimum tap target inside it.
+**Shadows:** none. If ever unavoidable: `0 8px 30px rgba(0,0,0,0.15)`.
 
----
+**Desktop (target 1440px):**
+- Sidebar: 170px, fixed left, `bg`, 1px `rule` right edge, padding 24px 12px.
+- Main content: max-width 1120px, centred in the remaining space, padding 24px 40px 72px. Content never stretches edge to edge.
+- Key distances: page top 24px · search → hero 8px · hero ≈260px tall · hero → tabs 0 · tab band 42px · tabs → portfolio 26px · heading → subtitle 6px · subtitle → cards 20px · card gap 12px · page bottom 60–80px.
 
-## 5. Voice and content
-
-Informed, dry, a little wry. A smart friend who read the filing so you didn't have to. Facts first; the joke, if any, is short and second.
-
-- Lead with person, then company, then deal shape: "Maya Okafor joined the seed round of Tidewell as investor and brand ambassador."
-- Name the relationship precisely: investor, ambassador + equity, franchise owner, executive stake, advisor, fund founder. Never "partnered with."
-- Exact numbers when public; "Undisclosed" when not. Never "a massive round."
-- Every deal carries a verification status and a source.
-- Sentence case. No exclamation marks. Never "unlock" as marketing, "game-changer," "empower."
-- Newsletter headlines may have personality; directory UI never does ("3 companies · 2 sectors").
+**Responsive:**
+- ≤1100px: portfolio 3 columns; hero image 240px.
+- ≤850px: hide the sidebar; show a 54px mobile top bar (logo left, menu icon right, 1px `rule` bottom) with a simple dropdown nav. Search goes full width. Hero stacks. Portfolio 2 columns.
+- ≤600px: portfolio 1 column; main padding 16px; name 26px; image full width × 200px; hide the vehicle mark (it is already in the metadata); metadata wraps without dividers.
 
 ---
 
-## 6. Verification and gating
+## 5. Components
 
-**Verification** (told apart by shape and word, not just hue):
-- **Verified:** `brand` check + "Verified" on `brand-wash`. Primary source confirmed (filing, company announcement, the talent's own post).
-- **Reported:** outline badge in `control-border` + "Reported." Credible secondary source; source link required.
-- **Unverified:** dashed outline, `ink-muted`. Internal view only; never in the public directory or newsletter.
+**Sidebar**
+- Top: geometric "A" mark (green stroke) beside a two-line wordmark in 10px / 600 / 0.18em tracking, #E8EDF0. **Open decision:** the reference says "ATHLETE PORTFOLIO"; the product name is Talent Sheet. Use whichever the user confirms; until then match the reference.
+- 42px below the logo: nav items Athletes, Investments, Industries, Stories. Each 38px tall, padding 0 10px, radius 6px, 11px text, 15px line icon, 10px gap. Inactive #7F8B94; hover `text`; active background `nav-on`, text `text`, icon `accent`. No left colour bar, no bright backgrounds.
 
-Non-public amounts render as "Undisclosed" in `ink-muted`, never a dash or zero.
+**Search**
+- Top-right of the main column: 270px × 32px, `card` background, 1px `border`, radius 16px. 14px search icon. Placeholder "Search athletes, companies, industries..." at 10px in `muted`. Visually quiet.
 
-**Gating:** the open layer shows name, sport, company, relationship and verification status. Amounts, dates, round details and sources are gated behind the intake form: they render as a `locked` field with a small lock icon and "Unlock" in `brand`. Never blur real numbers.
+**Athlete hero** (sits directly on the page, never inside a card)
+- Grid: 300px image column + info column, 36px gap, ≈260px tall.
+- Image: ~280 × 250px, `object-fit: cover`, `object-position: center top`, radius ≤4px, no border, no circular crop, no card. Soft green glow behind it (see colour). Use the athlete's real image; when none exists, a neutral rim-lit silhouette labelled "No photo on record". Never a generated likeness of a real person.
+- Info column, top to bottom: sport label · name (with a 14px verified badge in #5DA9FF **only** if the data has a verified flag) · team line (only if in the data) · tagline (only if editor-written) · description · metadata row.
+- Metadata row: at most three inline items separated by 1px × 28px #1C252C rules, 24px gap. No boxes, no coloured backgrounds, no giant numbers. Use only values the data supports:
+  - `{n}` Companies on record (count excludes the investment vehicle).
+  - Vehicle mark, e.g. 35V, "Investment vehicle", if the athlete has one.
+  - `{year}–Present` "Active" only when the data dates the start (e.g. the vehicle's founding year); otherwise `{year}` "Earliest dated deal". Never imply a range the data doesn't support.
+- Investment vehicle mark (if any): far right of the hero, e.g. "35V" at 32px / 500 #DCE4E8 with "THIRTY FIVE VENTURES" beneath at 7px / 0.14em #596771. Must never overpower the name.
 
----
+**Profile tabs**
+- Directly under the hero: Portfolio · Activity · About. 42px band with 1px `rule` top and bottom, 11px labels, 28px gap. Inactive #71808A; active `accent` text with a 2px `accent` underline. No pills, no rounded backgrounds. Portfolio is selected by default; tabs without a built page stay visible but inert.
 
-## 7. Components
+**Portfolio section**
+- Heading "Investment Portfolio", subtitle "A selection of companies {athlete} has invested in, founded or partnered with."
+- Grid: 4 columns, 12px gap.
 
-**Button**
-- Primary: `brand` fill, `on-brand` text. One per view (Subscribe, Search, Submit a deal).
-- Secondary: `control-border` outline, `ink` text. Link: `brand`, underlined.
-- `radius-md`, padding `space-3` × `space-4`, Geist 600 15px. Focus: 2px `focus-ring`, 2px offset. Disabled: `surface-sunk` + `ink-disabled`. Labels are sentence-case verbs.
+**Portfolio card** (compact database record, not a dashboard tile)
+- 142px tall, `card` background, 1px `border`, radius 8px, padding 15px. The whole card is a button.
+- Top: 32px logo tile (radius 8px) beside company name (12px) and category (9px). Logo always **beside** the name, never stacked above it.
+- Middle: one-sentence description, 10px, two lines max.
+- Bottom row: year on the left ("Undisclosed" when unknown, never a dash); relationship label on the right with a 5px green dot.
+- Hover (150ms ease): background `card-hover`, border `accent-line`, company name `accent`. No lift, no shadow, no glow.
 
-**Tag**
-- Talent type: `label` text + 8px dot in the matching `cat-*` colour.
-- Verification: as in section 6. New: `fresh` on `fresh-wash`, only for deals added in the last 7 days, max one per row.
-- Filter chip: `radius-pill`, `control-border` outline; selected = `brand-wash` ground, `brand` border and text.
-- Tags use `radius-sm`. Never put a tag on a pitch field.
+**Relationship labels** — derived from the Airtable `Deal Type`:
+| Deal Type | Label |
+|---|---|
+| Capital Investment, Equity | INVESTED |
+| Franchise Ownership | OWNED |
+| Brand Ambassador, Brand Ambassador/Equity | PARTNERED |
+| Executive Stake | FOUNDED when the athlete founded it (e.g. SpringHill), otherwise EXECUTIVE |
 
-**Deal row** (the core of the directory)
-- Columns in order: Talent (name + league/role, category dot) · Company (brand link, NEW tag if added this week) · Relationship (precise wording) · Round (`figure`, right-aligned, "Undisclosed" if not public) · Date (`figure`, month + year) · Status (verification tag).
-- Header band `surface-sunk` with `label` heads; body `surface-raised`; `hairline` row rules; hover `surface-hover`; min height `row-height`.
-- Below `bp-sm`: stacked card (name + company on top, relationship + round beneath, status bottom-right).
-- Gated view: Round and Date render as `locked` with lock + "Unlock."
-- Data: the deal record from Airtable plus a source URL for the status tag.
+**Company sheet** (opens when a card is clicked)
+- Right-side panel, max 380px, `surface`, 1px `border` left edge, 24px padding, over a dark scrim. Slides in 200ms, strong ease-out; Esc and the scrim close it; focus returns to the card.
+- Contents: logo + company name (18px / 500) + category; one-line description; rows for Relationship, Year, Round, Amount ("Undisclosed" in `muted` when not public) and Source (green link to the source domain); then **"Also backed by"**: other athletes on record for the company. Athletes with a profile are green links that open their profile; others are plain text.
 
-**Profile banner** (follows the user's reference)
-- App shell: 248px left sidebar (wordmark, icon nav, newsletter card at the foot) plus a slim top bar (section links, search). Below 1000px the sidebar becomes a top strip.
-- Banner: `radius` 16px, photo on the left (~44%), text on the right: league · position, name in `display`, one sentence (associated company and what they back), a row of three facts (`figure-lg`, the count in `brand`), social icons. No bio paragraph, no tagline.
-- The banner carries the page's one glow: a soft green radial or gradient behind the photo. Its exact treatment is the choice between versions A (Floodlight), B (Pitch) and C (Broadcast) in `previews/profile-v5.html`.
-- Photos fade into the banner on their inner edge. Placeholder: a rim-lit studio silhouette labelled "Placeholder photo", never a likeness of a real person.
+**Company logos**
+- Real logos from Logo.dev, using the Airtable `Logo URL` field (`https://img.logo.dev/{domain}?token=…`). Logos keep their own colours on their own tiles; never recolour. On load failure, fall back to initials on a light tile.
+- In Claude Artifact previews, logos must be downloaded (the environment allows `img.logo.dev`) and embedded as data URIs, because previews can't load external images. The real app hotlinks.
 
-**Portfolio card**
-- `radius` 12px, 1px `hairline`, soft shadow; hover lifts 2px and deepens the shadow (220ms, strong ease-out). Reduced motion: no lift.
-- Grid: 4 columns ≥1280px, 3 ≥1000px, 2 ≥680px, 1 below; 16px gutter.
-- Logo in a 44px circle **beside** the company name and sector (never stacked). Logos keep their own colours on a light tile.
-- Two-line description, then Relationship / Invested (year or "Undisclosed"), then a footer: "View details →" in `brand` and a Verified/Reported tag. View details expands in place (round, amount, source).
-- Sector filter chips above the grid (`radius-pill`); "View all (n) →" link beside the section title.
-
-**Newsletter masthead**
-- `pitch` ground; wordmark in Geist 700 `on-pitch`; full stop in `highlight` (the only lime on the page).
-- Meta bar: issue number, tagline, date in `label`, over a 1px `on-pitch` rule.
-
-**Share card**
-- 1200×630 (link previews) and 1080×1350 (Instagram, headline 80px).
-- `pitch` ground, Geist 600 `on-pitch` headline, one key figure in `highlight` (never more), wordmark top-left, verification + source bottom-left. Typographic only, no photos.
+**Icons:** line icons, ~1.5px stroke, 14–15px, `muted` at rest.
 
 ---
 
-## 8. Logo, icons, imagery
+## 6. What a profile page contains
 
-- **Wordmark (interim):** "Talent Sheet" in Geist 700. On paper: `ink` with a `brand` full stop. On pitch: `on-pitch` with a `highlight` full stop. The full stop is the brand's signature detail. Clear space = cap height.
-- **Monogram** (favicon, avatars): "TS" in Geist 700, `on-pitch` on `pitch`, `radius-md` square.
-- **Icons:** line icons, 1.5px stroke, square caps, `ink-muted` at rest, `ink` on hover. No filled icons, no emoji in product UI.
-- **Photos:** cropped tight in a `radius-md` frame with a `hairline` edge. Only licensed photos of real people; otherwise the silhouette placeholder.
-- **Company logos:** keep their own colours on `surface-raised` tiles; never recolour.
+Exactly: athlete identity, business description, a little metadata, the portfolio. The page ends shortly after the grid; the empty space is intentional.
 
----
+**Do not add:** business evolution timelines, charts, graphs, valuations, allocation breakdowns, recent activity feeds, news, featured stories, related-athlete rows, recommendations, social links, follower counts, engagement metrics, article cards, right sidebars, KPI cards, filter chips, large pills or badges.
 
-## 9. Do and don't
-
-**Do:** keep pages mostly dark ground · let the hero be the loudest element · show how every deal is known · set numbers in tabular sans · separate with hairlines and light depth.
-
-**Don't:** put lime on paper · pair green with red for up/down · use `fresh` for emphasis · stack heavy or coloured shadows on cards · recolour partner logos · use a category colour without its word.
+(The user previously deferred re-adding "Portfolio by category" and "Recent activity" in some new form. That stays deferred and must not be added without their approval.)
 
 ---
 
-## 10. Implementation
+## 7. Voice and content
+
+Informed, dry, a little wry. A smart friend who read the filing so you didn't have to. Facts first.
+
+- Lead with person, then company, then deal shape.
+- Name the relationship precisely (investor, franchise owner, founder, ambassador + equity, executive). Never "partnered with" in prose; PARTNERED is only a card label for ambassador deals.
+- Exact numbers when public; "Undisclosed" when not. Never "a massive round", never invented totals like "80+".
+- Sentence case in UI copy. No exclamation marks. Never "unlock" as marketing, "game-changer" or "empower".
+
+---
+
+## 8. Verification
+
+Every deal should carry a verification status and a source.
+- **Verified:** primary source (filing, company announcement, the talent's own post).
+- **Reported:** credible secondary source; source link required.
+- **Unverified:** internal only; never public.
+
+The current reference doesn't show per-deal status on cards (the data has no status field yet); the company sheet always shows the source. When a status field exists, show it in the sheet and as a small label, not a badge-heavy treatment.
+
+---
+
+## 9. Implementation
 
 ### CSS variables
-Every token is a CSS variable of the same name. Themes switch with `data-theme="light"` / `data-theme="dark"` on `<html>`. Dark is the default.
 
 ```css
-:root, [data-theme="dark"] {
-  --surface: #0A110D; --surface-raised: #0F1813; --surface-sunk: #080D0A; --surface-hover: #14201A;
-  --hairline: #24332A; --control-border: #607268;
-  --ink: #EDEBE0; --ink-muted: #A3AEA6; --ink-disabled: #56615A;
-  --brand: #3DDC97; --on-brand: #0B120E; --brand-wash: #10281D;
-  --pitch: #12432D; --on-pitch: #F4F1E6; --highlight: #B8E986;
-  --fresh: #F0B25A; --fresh-wash: #2C2010; --negative: #F08C7C;
-  --focus-ring: #8FB4FF; --locked: #1A2520;
-  --cat-athlete: #8DB0EE; --cat-coach: #D29BDC; --cat-entertainer: #F0A27F;
-  --cat-executive: #6FC6CB; --cat-investor: #DDBF5C; --cat-other: #AAB6C2;
-}
-[data-theme="light"] {
-  --surface: #F7F6F1; --surface-raised: #FFFFFF; --surface-sunk: #EEEDE6; --surface-hover: #F0EFE8;
-  --hairline: #DCDAD0; --control-border: #8C897D;
-  --ink: #0C1510; --ink-muted: #545D57; --ink-disabled: #A3A69F;
-  --brand: #0F5B38; --on-brand: #FFFFFF; --brand-wash: #E3EFE7;
-  --pitch: #0B3B27; --on-pitch: #F4F1E6; --highlight: #B8E986;
-  --fresh: #8A5300; --fresh-wash: #FBEBD2; --negative: #A1392B;
-  --focus-ring: #2F6FDB; --locked: #EEEDE6;
-  --cat-athlete: #2C5AA0; --cat-coach: #7B3F86; --cat-entertainer: #A8522B;
-  --cat-executive: #1D6E73; --cat-investor: #7F6512; --cat-other: #4F5B67;
-}
 :root {
-  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
-  --space-6: 24px; --space-10: 40px; --space-16: 64px;
-  --radius-sm: 6px; --radius-md: 12px; --radius-lg: 16px; --radius-pill: 999px;
-  --content-max: 1200px; --reading-max: 680px; --row-height: 56px;
+  color-scheme: dark;
+  --bg: #090C0F; --surface: #0B1014; --card: #0D1419; --card-hover: #10181E;
+  --border: #1A252D; --border-hover: #26343D; --rule: #172127;
+  --text: #F1F4F6; --text-2: #98A5AE; --muted: #687680; --very-muted: #4F5D66;
+  --accent: #3DDC97; --accent-hover: #6BE7B1;
+  --accent-wash: rgba(61, 220, 151, 0.10); --accent-line: rgba(61, 220, 151, 0.30);
+  --nav-on: #10231A; --focus: #8FB4FF;
+  --sans: "Geist", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius-card: 8px; --radius-search: 16px; --radius-nav: 6px; --radius-image: 4px;
+  --sidebar: 170px; --content-max: 1120px;
 }
 ```
 
-### Tailwind (Next.js)
-Map utilities to the variables rather than copying hex values, so theme switching is free:
+### Tailwind (Next.js) with shadcn/ui
+
+Map utilities to the variables rather than copying hex values:
 
 ```css
 @theme {
+  --color-bg: var(--bg);
   --color-surface: var(--surface);
-  --color-surface-raised: var(--surface-raised);
-  --color-surface-sunk: var(--surface-sunk);
-  --color-ink: var(--ink);
-  --color-ink-muted: var(--ink-muted);
-  --color-hairline: var(--hairline);
-  --color-brand: var(--brand);
-  --color-brand-wash: var(--brand-wash);
-  --color-pitch: var(--pitch);
-  --color-highlight: var(--highlight);
-  --color-fresh: var(--fresh);
-  --color-negative: var(--negative);
-  --font-sans: var(--font-sans);
+  --color-card: var(--card);
+  --color-card-hover: var(--card-hover);
+  --color-border: var(--border);
+  --color-rule: var(--rule);
+  --color-text: var(--text);
+  --color-text-2: var(--text-2);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --font-sans: var(--sans);
 }
 ```
 
-Add `tabular-nums` to every table cell and figure. Breakpoints: `bp-sm` 640px, `bp-md` 960px.
+Theme shadcn components (Sheet for the company sheet, Tabs, Input for search) with these tokens; don't use shadcn's default rounded, shadowed look.
 
-### Framer (marketing site)
-Create colour styles named exactly as the tokens (Surface, Ink, Brand, Pitch, Highlight…) with light and dark values, and text styles for display, headline, deck, title, body, small, figure and label. Identical names mean changes here can be mirrored in minutes.
+### Data
 
-### Email (newsletter)
-Most clients ignore web fonts: Geist falls back to Helvetica/Arial. Email is light-theme only. Build the masthead as a `pitch` table cell with live `on-pitch` text and the `highlight` full stop, not an image. Keep the body at `reading-max`.
+Profiles render from the athlete's Airtable data (Talent, Companies, Investments). Components are reusable across athletes; never hardcode one athlete. Fields not yet in the base (sport, company category and description, photo, team, verified) are either added to the base or omitted; they are never invented in the UI.
