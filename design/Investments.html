@@ -75,7 +75,7 @@ td.r{text-align:right}
 .row[aria-expanded=true] .plus{rotate:45deg;color:var(--accent)}
 .logo{width:34px;height:34px;border-radius:50%;background:#fff;flex:none;display:grid;place-items:center;overflow:hidden;position:relative;outline:1px solid oklch(1 0 0 / .1);outline-offset:-1px}
 .logo img{width:100%;height:100%;object-fit:cover;border-radius:inherit;outline:1px solid oklch(0 0 0 / .1);outline-offset:-1px}
-.logo.fb{background:#1a2420;color:var(--muted)}
+.logo.fb{background:#1a2420;color:var(--muted);font-family:var(--font-head);font-weight:600;font-size:14px}
 .co-name{font-family:var(--font-head);font-weight:600;font-size:15px;letter-spacing:-.005em;overflow:hidden;text-overflow:ellipsis;max-width:200px}
 .ath{display:flex;align-items:center;gap:10px;min-width:210px}
 .stack{display:flex}
@@ -226,9 +226,12 @@ function view(){
   return rows;
 }
 
+const MONO=["#22402c","#1f3550","#4a3320","#3b2a55","#2d4a3f","#552b36"];
+function mono(n){const c=MONO[Math.abs(hash(n))%MONO.length],ch=(n.replace(/[^A-Za-z0-9]/g,"")[0]||"?").toUpperCase();
+  return `<span class="logo fb" style="background:${c};color:#eaf1ec" data-n="${esc(n)}">${ch}</span>`}
 function logo(g){
   const url=g.domain?`https://img.logo.dev/${g.domain}?token=pk_PcfE66eoSjaVeTdrWKr5xg&fallback=404`:null;
-  return url?`<span class="logo"><img src="${url}" alt="" loading="lazy"></span>`:`<span class="logo fb">${globe}</span>`;
+  return url?`<span class="logo" data-n="${esc(g.co)}"><img src="${url}" alt="" loading="lazy"></span>`:mono(g.co);
 }
 function money(v,g,cls=""){
   if(v!=null){const est=g.conf&&g.conf.startsWith("Estimated");return `<span class="num ${cls} ${est?"est":""}">${fmt(v)}</span>`}
@@ -305,7 +308,7 @@ $("#body").addEventListener("click",e=>{if(e.target.closest("a"))return;const tr
 $("#body").addEventListener("keydown",e=>{const tr=e.target.closest(".row");if(tr&&(e.key==="Enter"||e.key===" ")){e.preventDefault();toggle(tr)}});
 addEventListener("keydown",e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();$("#q").focus()}});
 // logo.dev 404 -> grey-globe placeholder (same pattern as CompanyLogo)
-document.addEventListener("error",e=>{const im=e.target;if(im.tagName!=="IMG")return;const w=im.parentNode;w.classList.add("fb");w.innerHTML=globe},true);
+document.addEventListener("error",e=>{const im=e.target;if(im.tagName!=="IMG")return;const w=im.parentNode;w.replaceWith(Object.assign(document.createElement("span"),{innerHTML:mono(w.dataset.n)}).firstChild)},true);
 renderStats();renderTabs();render();
 </script>
 </body>
