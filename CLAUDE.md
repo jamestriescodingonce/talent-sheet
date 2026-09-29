@@ -22,7 +22,7 @@ executive stakes held by athletes and other public figures.
 **There is no app scaffold in this repo yet** — no `package.json`, no
 Next.js/Tailwind config, nothing runnable. What exists today is:
 
-1. A real Airtable base that holds the actual data (see **Data source**).
+1. A Supabase (Postgres) project that holds the actual data (see **Data source**). Airtable is retired.
 2. A live, interactive UI mockup built as a Claude Artifact (see **Live
    preview**) — this is where all visual design/UX decisions have actually
    been made and validated so far.
@@ -45,10 +45,11 @@ Polish Preview," a Design-canvas artifact (`.dc.html` boards, `canvas.json`
 manifest). Private; only visible to people it's been shared with.
 
 Boards:
-- **`Main.dc.html`** — dashboard demo (fictional data): deal cards grid,
-  tabbed filter (All/Equity/Brand deals/Franchise), save/menu interactions.
-- **`Profile.dc.html`** — Kevin Durant athlete profile page, built against
-  real Airtable data/shape. Tabs: Overview, Portfolio, Timeline, News.
+- **`Main.dc.html`** — Investments page (DESIGN.md v6): company-first
+  hairline table of the 10 most recent deals, real Supabase data.
+- **`Profile.dc.html`** — Kevin Durant profile (DESIGN.md v6, matches
+  `previews/experiment-2.html`): hero, Portfolio/Activity/About tabs, 4-column
+  portfolio cards, click-through company sheet. Real Supabase data.
 - **`FAQ.dc.html`** — standalone FAQ accordion section, copy written for
   Talent Sheet specifically (see content below).
 
@@ -129,24 +130,32 @@ Boards:
 
 ## Data source
 
-Real Airtable base: `appAXXfdCTRzc2PuA`.
+Supabase project `uuvevybaeiscpmprfpgw`
+(`https://uuvevybaeiscpmprfpgw.supabase.co`), migrated off Airtable. Tables in
+`public`: `talent`, `companies`, `investments` (real foreign keys to talent,
+companies and `rounds`), plus `sports`, `categories`, `industries`,
+`company_industries`, `cities`, `company_cities`. Each table keeps a unique
+`airtable_id` column from the migration; nothing reads it. The old Airtable
+base is `appAXXfdCTRzc2PuA`, kept here only as a historical reference.
 
-Tables:
-- **`Talent`** (`tblwM9JBGOubeavKA`) — athletes/public figures.
-- **`Companies`** (`tbl2Y410YVkNjRVGw`) — includes the `Logo URL` formula
-  field described above.
-- **`Investments`** (`tblKid9dFDGw079xt`) — junction table linking Talent
-  ↔ Companies with deal details (junction-table pattern with formula-based
-  Name field and cross-table link mirroring — see the `collate` skill
-  below for the exact schema rules).
+Client and queries live in `lib/supabase.ts` and `lib/data.ts`; copy
+`.env.example` to `.env.local` and add the publishable key. **RLS is off on
+every table**, so the publishable key can write as well as read: enable RLS
+with read-only anon policies before shipping.
 
-Two separate skills (not stored in this repo — installed as plugin
-skills) drive the Airtable workflow:
+The Artifact boards cannot call Supabase at runtime (no network beyond Google
+Fonts and uploaded files). Each board embeds a dated snapshot of Supabase rows
+and says so in a code comment; refresh those blocks when the data changes.
+
+Known gap: Kevin Durant has no `investments` row for Paris Saint-Germain, which
+was on his profile under Airtable. The company row exists.
+
+Two skills (installed as plugin skills, not stored in this repo) drive the
+workflow:
 - **`research`** — finds and verifies candidate athlete-investment deals
   from public sources (news search, Sportico transactions roundups,
   X/Twitter, LinkedIn).
-- **`collate`** — enters verified deals into the base, enforcing its
-  junction-table/formula/mirroring schema rules.
+- **`collate`** — enters verified deals into Supabase.
 Use `research` before `collate` when adding new deals.
 
 ## Stashed components

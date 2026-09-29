@@ -134,7 +134,7 @@ Use `tabular-nums` for figures. **Open item:** the 8–10px sizes and the dimmes
 - Bottom row: year on the left ("Undisclosed" when unknown, never a dash); relationship label on the right with a 5px green dot.
 - Hover (150ms ease): background `card-hover`, border `accent-line`, company name `accent`. No lift, no shadow, no glow.
 
-**Relationship labels** — derived from the Airtable `Deal Type`:
+**Relationship labels** — derived from `investments.deal_type` in Supabase:
 | Deal Type | Label |
 |---|---|
 | Capital Investment, Equity | INVESTED |
@@ -147,7 +147,7 @@ Use `tabular-nums` for figures. **Open item:** the 8–10px sizes and the dimmes
 - Contents: logo + company name (18px / 500) + category; one-line description; rows for Relationship, Year, Round, Amount ("Undisclosed" in `muted` when not public) and Source (green link to the source domain); then **"Also backed by"**: other athletes on record for the company. Athletes with a profile are green links that open their profile; others are plain text.
 
 **Company logos**
-- Real logos from Logo.dev, using the Airtable `Logo URL` field (`https://img.logo.dev/{domain}?token=…`). Logos keep their own colours on their own tiles; never recolour. On load failure, fall back to initials on a light tile.
+- Real logos from Logo.dev, using `companies.logo_url` in Supabase (`https://img.logo.dev/{domain}?token=…`). Logos keep their own colours on their own tiles; never recolour. On load failure, fall back to initials on a light tile.
 - In Claude Artifact previews, logos must be downloaded (the environment allows `img.logo.dev`) and embedded as data URIs, because previews can't load external images. The real app hotlinks.
 
 **Icons:** line icons, ~1.5px stroke, 14–15px, `muted` at rest.
@@ -229,4 +229,4 @@ Theme shadcn components (Sheet for the company sheet, Tabs, Input for search) wi
 
 ### Data
 
-Profiles render from the athlete's Airtable data (Talent, Companies, Investments). Components are reusable across athletes; never hardcode one athlete. Fields not yet in the base (sport, company category and description, photo, team, verified) are either added to the base or omitted; they are never invented in the UI.
+Profiles render from the athlete's Supabase data (`talent`, `companies`, `investments`). Components are reusable across athletes; never hardcode one athlete. Fields not yet in the base (sport, company category and description, photo, team, verified) are either added to the base or omitted; they are never invented in the UI.
