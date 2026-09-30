@@ -22,6 +22,25 @@ When scaffolding the real app, the artifact is the source of truth for
 layout/colors/fonts/copy, and the stashed components are candidate
 building blocks (several have missing peer files/deps — noted below).
 
+## Investments table (current baseline)
+
+`https://claude.ai/artifact/KnV2RuHPYEF3R4wmTbAXBy` — **"Investments Table"**,
+a single-page artifact. As of 2026-09-30 this is the main design/UX source
+of truth, ahead of the "UI Polish Preview" artifact below.
+
+- Data comes from Supabase (`uuvevybaeiscpmprfpgw`): `investments` joined
+  to `talent`, `companies`, `rounds`, `company_industries` and `sports`
+  (league = `talent.sport_id`).
+- Company logos (beside the company name) and league badges (small avatar
+  on each talent) are **embedded as base64 PNGs**. The artifact CSP blocks
+  hotlinked images, so Logo.dev URLs do not render there. Download from
+  `img.logo.dev` (reachable through the sandbox proxy) and inline them.
+- Rows are grouped by company + date + round + relationship. The Latest
+  round column is always shown.
+- The page is a static snapshot: republish it to refresh the data.
+- Caddix (Ja'Kobi Lane) is a placeholder row added from a screenshot. It
+  has no `investments` record in Supabase yet.
+
 ## Live preview (Claude Artifact)
 
 `https://claude.ai/artifact/XHvgLJzvyGTDWCVNuXAsmp` — "Talent Sheet UI
