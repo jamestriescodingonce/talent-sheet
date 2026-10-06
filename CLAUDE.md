@@ -9,7 +9,8 @@ executive stakes held by athletes and other public figures.
 **There is no app scaffold in this repo yet** — no `package.json`, no
 Next.js/Tailwind config, nothing runnable. What exists today is:
 
-1. A real Airtable base that holds the actual data (see **Data source**).
+1. A Supabase (Postgres) project that holds the actual data (see **Data
+   source**). Airtable is no longer used.
 2. A live, interactive UI mockup built as a Claude Artifact (see **Live
    preview**) — this is where all visual design/UX decisions have actually
    been made and validated so far.
@@ -109,25 +110,83 @@ Boards:
 
 ## Data source
 
-Real Airtable base: `appAXXfdCTRzc2PuA`.
+**Supabase** project `talent-sheet`, id `uuvevybaeiscpmprfpgw`. Airtable was
+the original source and has been dropped; the `airtable_id` columns are
+migration leftovers. Always read the live schema before writing (it evolves).
 
-Tables:
-- **`Talent`** (`tblwM9JBGOubeavKA`) — athletes/public figures.
-- **`Companies`** (`tbl2Y410YVkNjRVGw`) — includes the `Logo URL` formula
-  field described above.
-- **`Investments`** (`tblKid9dFDGw079xt`) — junction table linking Talent
-  ↔ Companies with deal details (junction-table pattern with formula-based
-  Name field and cross-table link mirroring — see the `collate` skill
-  below for the exact schema rules).
+Tables (public schema, row counts as of 2026-10-06):
+- **`investments`** (1,182) — junction of talent ↔ company. Columns:
+  `talent_id`, `company_id`, `round_id`, `via_company_id` (fund/vehicle),
+  `deal_type` (Capital Investment / Brand Ambassador / Equity Partnership /
+  Executive Stake / Franchise Ownership), `status` (Closed / Pending / Exited;
+  Pending is hidden from public view), `role`, `investment_date` +
+  `date_precision` (Day/Month/Year), `exit_date`, `amount_invested` +
+  `amount_precision`, `round_total_raised`, `post_money_valuation` +
+  `round_total_precision`, `verification` (Verified / Reported / Unverified),
+  `source_url`.
+- **`talent`** (511), **`companies`** (646, incl. `logo_url`, `website_url`,
+  `parent_company_id`), `company_industries` → `industries` (41),
+  `investment_sources` (1,286, many per investment), lookups `rounds`,
+  `categories`, `sports`; `cities`/`company_cities` exist but are empty.
+- `_stage_palmares` is a leftover staging table with **RLS disabled** —
+  pending the user's decision (enable RLS or drop it).
 
-Two separate skills (not stored in this repo — installed as plugin
-skills) drive the Airtable workflow:
+Two skills (not stored in this repo — installed as plugin skills) drive the
+data workflow:
 - **`research`** — finds and verifies candidate athlete-investment deals
   from public sources (news search, Sportico transactions roundups,
   X/Twitter, LinkedIn).
-- **`collate`** — enters verified deals into the base, enforcing its
-  junction-table/formula/mirroring schema rules.
+- **`collate`** — enters verified deals into Supabase, enforcing its schema
+  rules.
 Use `research` before `collate` when adding new deals.
+
+## Investments table (current version)
+
+**Source of truth: the artifact "Investments Table" —
+`https://claude.ai/artifact/KnV2RuHPYEF3R4wmTbAXBy`** (private). A copy of
+its latest HTML is saved at `artifacts/investments-table.html` (artifact
+version 17, 2026-10-06). When asked about "the investments table" or "the
+table", this is the one. Do not rebuild it from scratch or use the
+`Main.dc.html` board or the standalone page (see below) as the base.
+
+State as of that version:
+- Layout: 170px sidebar (Talent / Investments / Industries / Stories), quiet
+  top-right search, heading, tab band ("Deals" / "By talent"), Filters / Sort /
+  Copy CSV / theme-toggle tools, hairline table, rows expand in place.
+- **Columns** (in order): Company, Industry, Talent, Type, Verified / Reported,
+  Website. Round and Year were moved out of the table into the expanded view.
+- **Type** is a tinted pill with no dot and no extra text: Investment (green),
+  Ownership (blue), Partnership (amber), Executive (purple), Founded (pink).
+  Labels renamed from Invested/Owned/Partnered; "Relationship" is now "Type"
+  everywhere (filters, search words, CSV, chips).
+- **Verified / Reported** is plain icon + text, no pill or border: green ✓
+  circle = Verified, grey document icon = Reported, dim dashed circle =
+  Unverified.
+- **Expanded row**: two cards. Company card (logo, industry, description,
+  website, talent with stakes) and a Deal card (Type pill, Verified/Reported,
+  Year, Round, Valuation, source link). The old "Round numbers" card (round
+  size, confidence) and the separate Source card were removed.
+- **Type scale** is +1px over the original on every size (two +0.5px passes);
+  company description 13px, industry under company name 12px, Industry column
+  12.5px.
+- **Themes**: dark is the base (`:root`); a light palette sits under
+  `prefers-color-scheme: light` and `[data-theme="light"]`. A sun/moon button
+  toggles and remembers the choice in `localStorage` (key `ts-theme`). Palette
+  here is Geist + mint `#3DDC97` (dark) / `#0C9A5E` (light), which does **not**
+  match the lime/Bricolage/Violet Sans tokens above — restyle is pending the
+  user's call.
+- **Data is a baked snapshot** (~100 deal groups, logos from Logo.dev embedded),
+  not live Supabase; some rows in Supabase are missing from it and vice versa.
+  Refreshing it from Supabase is not done yet.
+
+Other investments pages that exist but are **not** the current one:
+`Main.dc.html` (the "Investments" board in the preview artifact, older design
+with 10 company rows) and a standalone table at
+`https://claude.ai/artifact/Fqx1Kfc5Xc32EmBLVKQiSz` (120 rows, my own design,
+superseded; offered for deletion, user hasn't confirmed).
+
+Light/dark mode exists only on this artifact so far; the preview boards
+(`Main`/`Profile`/`FAQ`) hardcode dark colors.
 
 ## Stashed components
 
