@@ -22,6 +22,15 @@ When scaffolding the real app, the artifact is the source of truth for
 layout/colors/fonts/copy, and the stashed components are candidate
 building blocks (several have missing peer files/deps — noted below).
 
+## "Investments table" = this artifact
+
+When the user says "the investments table" (or "the most up to date investments
+table"), they mean this Claude Artifact, not the Supabase/Airtable table:
+`https://claude.ai/artifact/KnV2RuHPYEF3R4wmTbAXBy` ("Investments Table", a
+single-page HTML with the deal rows embedded as a `DATA` snapshot). Give them
+this link / its latest published version. Refreshing it from Supabase
+(project `uuvevybaeiscpmprfpgw`) is a separate step they must ask for.
+
 ## Live preview (Claude Artifact)
 
 `https://claude.ai/artifact/XHvgLJzvyGTDWCVNuXAsmp` — "Talent Sheet UI
