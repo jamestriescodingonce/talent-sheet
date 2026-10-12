@@ -4,6 +4,22 @@ Athlete-investment tracker: a database + eventual app for venture/equity
 investments, franchise ownership stakes, brand-ambassador equity deals, and
 executive stakes held by athletes and other public figures.
 
+## Deploying (read this first)
+
+The live site is `https://talent-sheet-investments.vercel.app`. Vercel is
+connected to this GitHub repo and its **production branch is `main`**.
+
+- **Always commit and push your changes to `main`**, in every session, regardless
+  of the session's auto-assigned branch name. A push to `main` deploys the site
+  automatically; no Vercel access is needed.
+- The site is a static page: `index.html` at the repo root (copy kept at
+  `artifacts/investments-table.html`), with `vercel.json` disabling any build step.
+- The Claude Artifact "Investments Table"
+  (`https://claude.ai/artifact/KnV2RuHPYEF3R4wmTbAXBy`) is the editable source;
+  after changing it, copy the page to `index.html` and push to `main`.
+- Companies have an `hq` column in Supabase (`companies.hq`), filled for ~200 of 674;
+  the page embeds it as `DATA.hq`.
+
 ## Current state
 
 **There is no app scaffold in this repo yet** — no `package.json`, no
