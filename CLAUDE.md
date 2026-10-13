@@ -20,6 +20,18 @@ connected to this GitHub repo and its **production branch is `main`**.
 - Companies have an `hq` column in Supabase (`companies.hq`), filled for ~200 of 674;
   the page embeds it as `DATA.hq`.
 
+## Refreshing the live page (data + photos)
+
+`index.html` embeds its data; it is regenerated from Supabase (public read via the anon key):
+
+- `python3 scripts/refresh_data.py` rebuilds `DATA` (deals, industries, bios, domains), `DATA.hq`, `ADDED`, `LEAGUE`, and copies the page to `artifacts/investments-table.html`. Rules baked in: only sports figures are shown (talent categories Athlete / Coach / Executive, plus Magnus Carlsen; entertainers etc. stay in Supabase), palmares.vc and pitchbook.com sources are never shown, industries `Sports Equipment`→`Sports Tech` and `Clean Energy`→`Energy`.
+- `python3 scripts/publish_avatars.py` rebuilds `DATA.img` and `DATA.credits` (photo credits shown on the FAQ page) from `talent.image_*`.
+- `scripts/avatar.py` crops/resizes a photo to a 512px square WebP on a pale lavender background (for transparent cutouts) and uploads it to the public `talent-avatars` bucket through the `store-avatar` edge function (security note: that function accepts uploads from anyone holding the public anon key; delete it when not needed).
+- Photo sources, best first: club/league sites (NFL clubs, MLB `img.mlbstatic.com`, NHL `assets.nhle.com/mugs`, NBA `cdn.nba.com/headshots/nba/latest/1040x760/<id>.png`, MLS profile pages), then ESPN headshots (`a.espncdn.com/i/headshots/...`), then Wikimedia Commons (open licenses only; license + credit stored in `image_license`/`image_credit`). Wikimedia rate-limits aggressively: pace requests and batch license lookups.
+- Teams live in `teams` / `talent_teams` (not shown on the site yet). Only link a current team when verified against a live roster.
+- nba.com, wnba.com, arsenal.com, manutd.com, mancity.com, fcbayern.com block headless browsers (403).
+- `execute_sql` calls containing `DELETE` have been timing out in this environment; updates and inserts work.
+
 ## Current state
 
 **There is no app scaffold in this repo yet** — no `package.json`, no
