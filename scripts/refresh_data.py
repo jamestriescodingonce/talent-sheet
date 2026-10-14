@@ -14,7 +14,7 @@ import json, re, sys, urllib.request, urllib.parse
 BASE = 'https://uuvevybaeiscpmprfpgw.supabase.co/rest/v1/'
 ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dmV2eWJhZWlzY3BtcHJmcGd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2NDY4NTUsImV4cCI6MjEwNjIyMjg1NX0.wz5-cd-olMCxroCiDGp_SKD1JwOzQkfdO1g_9DWf-ic'  # public anon key
 KEEP_CATS = {'Athlete', 'Coach', 'Executive'}; KEEP_NAMES = {'Magnus Carlsen'}
-BAD = re.compile(r'palmares\.vc|pitchbook\.com', re.I)
+BAD = re.compile(r'palmares\.vc|pitchbook\.com|bookingagentinfo', re.I)
 REN = {'Sports Equipment': 'Sports Tech', 'Clean Energy': 'Energy'}
 CUTOFF = '2026-10-05T18:21'  # bulk imports before this are not individually dated
 
