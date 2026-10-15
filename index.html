@@ -62,10 +62,10 @@ h1,h2,h3,h4,p{margin:0}
 .main{margin-left:170px;overflow-x:clip}
 .inner{max-width:1280px;margin:0 auto;padding:24px 40px 72px}
 .top{display:flex;justify-content:flex-end}
-.search{display:flex;align-items:center;gap:8px;width:270px;height:32px;padding:0 12px;background:var(--card);border:1px solid var(--border);border-radius:16px;color:var(--muted);transition:border-color 150ms ease}
+.search{display:flex;align-items:center;gap:8px;width:300px;height:36px;padding:0 14px;background:var(--card);border:1px solid var(--border);border-radius:16px;color:var(--muted);transition:border-color 150ms ease}
 .search:hover{border-color:var(--border-hover)}
 .search:focus-within{border-color:var(--border-hover);outline:1.5px solid var(--focus);outline-offset:2px}
-.search input{flex:1;min-width:0;border:0;background:none;outline:none;font-size:11px;color:var(--text)}
+.search input{flex:1;min-width:0;border:0;background:none;outline:none;font-size:13.5px;color:var(--text)}
 .search input::placeholder{color:var(--muted)}
 .search .icon{width:14px;height:14px}
 .head{margin-top:20px}
@@ -122,7 +122,7 @@ h1,h2,h3,h4,p{margin:0}
 .tw::-webkit-scrollbar{height:8px}.tw::-webkit-scrollbar-thumb{background:var(--border-hover);border-radius:4px}
 /* Deals panel: tabs, chips and table sit in one contained surface so the table reads as a single object. */
 .panel{margin-top:20px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
-.panel .tabs{margin-top:0;border-top:0;height:48px;padding-inline:16px}
+.panel .tabs{margin-top:0;border-top:0;border-bottom:0;height:44px;padding-inline:16px}
 .panel .chips{margin-top:0;padding:10px 16px;border-bottom:1px solid var(--rule)}
 .panel .chips:empty{display:none}
 .panel .tw{margin-top:0}
@@ -655,7 +655,7 @@ function renderPager(total,pages){
   const nums=[...new Set([1,p-1,p,p+1,pages].filter(n=>n>=1&&n<=pages))].sort((a,b)=>a-b);
   let mid="",prev=0;
   nums.forEach(n=>{if(prev&&n-prev>1)mid+='<span class="gap">…</span>';mid+=`<button class="pg num" data-pg="${n}"${n===p?' aria-current="page"':''} aria-label="Page ${n}">${n}</button>`;prev=n});
-  $("#pager").innerHTML=pages<2?"":`<span class="pinfo num">${from}–${to} of ${total}</span><div class="pbtns"><button class="pg" data-pg="${p-1}"${p<2?" disabled":""} aria-label="Previous page">Prev</button>${mid}<button class="pg" data-pg="${p+1}"${p>=pages?" disabled":""} aria-label="Next page">Next</button></div>`;
+  $("#pager").innerHTML=pages<2?"":`<span class="pinfo num">${from}–${to} of ${total>500?"500+":total}</span><div class="pbtns"><button class="pg" data-pg="${p-1}"${p<2?" disabled":""} aria-label="Previous page">Prev</button>${mid}<button class="pg" data-pg="${p+1}"${p>=pages?" disabled":""} aria-label="Next page">Next</button></div>`;
 }
 function pageOf(list){
   const pages=Math.max(1,Math.ceil(list.length/PER));
@@ -728,7 +728,7 @@ function filterPanel(){
 }
 function renderControls(){
   const n=activeChips().length,shown=n||state.q.trim()?filtered().length:ALL.length;
-  $("#views").innerHTML="";
+  $("#views").innerHTML=`<span class="count num"><b>${shown>500?"500+":shown}</b> ${state.view==="deals"?(shown===1?"deal":"deals"):"talent"}</span>`;
   $("#fpop").innerHTML=`<button class="tool" id="fbtn" aria-haspopup="true" aria-expanded="${state.menu==="f"}">${ic("i-sliders","icon")}<span class="lbl">Filters</span>${n?`<span class="cnt num">${n}</span>`:""}${n&&state.menu!=="f"?`<span class="of num">${shown} of ${ALL.length}</span>`:""}</button>`+(state.menu==="f"?filterPanel():"");
   $("#spop").innerHTML=`<button class="tool" id="sbtn" aria-haspopup="true" aria-expanded="${state.menu==="s"}">${ic("i-sort","icon")}<span class="lbl">Sort</span></button>`+(state.menu==="s"?`<div class="menu" role="menu">${SORTS[state.view].map(([k,l])=>`<button class="mi" role="menuitemradio" aria-checked="${state.sort[state.view]===k}" data-sort="${k}">${l}<span class="chk">${ic("i-check","icon")}</span></button>`).join("")}</div>`:"");
 }
