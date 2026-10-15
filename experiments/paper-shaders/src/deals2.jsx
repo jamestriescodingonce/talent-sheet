@@ -46,9 +46,8 @@ function App() {
   return (
     <div className="shell">
       <div className="bgfx" aria-hidden="true">
-        <MeshGradient style={fill} colors={["#0a0c10", "#0a1f1a", "#10382d", "#2a7f61"]}
-          distortion={0.75} swirl={0.4} grainMixer={0.35} grainOverlay={0.25} scale={1.3} speed={sp(0.07)} />
-        <div className="grain grain-bg" />
+        <MeshGradient style={fill} colors={["#0a0c10", "#0a0f0f", "#0c1a15", "#10261d"]}
+          distortion={0.5} swirl={0.15} grainMixer={0} grainOverlay={0} scale={1.6} speed={sp(0.025)} />
       </div>
       <aside className="side">
         <div className="logoRow">
