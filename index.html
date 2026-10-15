@@ -270,6 +270,8 @@ a.fchip:focus-visible{outline:1.5px solid var(--focus);outline-offset:2px}
 .thead h1{margin:0;font-size:30px;font-weight:500;letter-spacing:-.025em;line-height:1.1;color:var(--text-hi)}
 .lgchip{display:inline-flex;align-items:center;gap:8px;margin-top:12px;height:28px;padding:0 12px;border:1px solid var(--border);border-radius:14px;background:var(--card);font-size:13px;color:var(--text-2)}
 .lgchip img{width:18px;height:18px;margin-left:-6px;border-radius:50%;object-fit:cover;background:#fff}
+.il{color:inherit;transition:color 150ms ease}
+.il:hover,.il:focus-visible{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
 /* Industries explore */
 .inner[data-mode="ind"] .inv,.inner[data-mode="indd"] .inv{display:none}
 .icard .itm{display:flex;align-items:center;gap:6px;margin-bottom:10px;font-size:12px;color:var(--muted)}
@@ -695,7 +697,7 @@ function facts(g){
 }
 function detail(g,cols){
   return `<tr class="detail"><td colspan="${cols}"><div class="din">
-   <div class="dc"><div class="top2"><a class="mlink" href="${cLink(g.co)}" tabindex="-1" aria-hidden="true">${mark(g.co,g.domain)}</a><span><a class="co colink" href="${cLink(g.co)}">${esc(g.co)}</a>${g.ind.length?`<span class="catl">${esc(g.ind.join(", "))}</span>`:""}</span></div>${g.desc?`<p class="desc">${esc(g.desc)}</p>`:""}
+   <div class="dc"><div class="top2"><a class="mlink" href="${cLink(g.co)}" tabindex="-1" aria-hidden="true">${mark(g.co,g.domain)}</a><span><a class="co colink" href="${cLink(g.co)}">${esc(g.co)}</a>${g.ind.length?`<span class="catl">${indLinks(g.ind)}</span>`:""}</span></div>${g.desc?`<p class="desc">${esc(g.desc)}</p>`:""}
      ${g.domain?`<div class="ln" style="margin-top:12px"><span>Website</span><a href="https://${g.domain}" target="_blank" rel="noopener">${g.domain}</a></div>`:""}
      ${DATA.hq[g.co]?`<div class="ln"${g.domain?"":' style="margin-top:12px"'}><span>HQ</span><b>${esc(DATA.hq[g.co])}</b></div>`:""}
      ${g.ath.length>1&&peopleCount(g.co)?`<div class="ln"><span>All talent</span><a href="#company=${encodeURIComponent(g.co)}">${peopleCount(g.co)} ${peopleCount(g.co)===1?"person":"people"} &rarr;</a></div>`:""}
@@ -731,7 +733,7 @@ function renderTable(rows){
     if(!list.length){body.innerHTML=`<tr><td colspan="${cols.length}" class="empty">No deals match. Clear a filter or change the search.</td></tr>`;return 0}
     body.innerHTML=pageOf(list).map(g=>{const o=state.open.has("d"+g.id);return `<tr class="row" tabindex="-1" data-k="d${g.id}" aria-expanded="${o}">
       <td><div class="cell-co">${plus}${mark(g.co,g.domain)}<span class="co">${esc(g.co)}</span></div></td>
-      <td>${g.ind.length?`<span class="cat">${esc(g.ind.join(", "))}</span>`:`<span class="dim">—</span>`}</td>
+      <td>${g.ind.length?`<span class="cat">${indLinks(g.ind)}</span>`:`<span class="dim">—</span>`}</td>
       <td>${names(g)}</td>
       <td>${rel(g.type)}</td>
       <td>${verl(g.ver)}</td>
@@ -748,7 +750,7 @@ function renderTable(rows){
       <td><div class="names">${cos.slice(0,2).map(c=>`<span style="display:inline-flex;align-items:center;gap:8px">${mark(c,DATA.dom[c],true)}${esc(c)}</span>`).join("")}${cos.length>2?`<span class="more num">+${cos.length-2}</span>`:""}</div></td>
       <td><div style="display:flex;gap:6px">${types.map(rel).join("")}</div></td>
       <td class="num">${fmtDate(e.latest)||un("Undisclosed")}</td>
-    </tr>${o?`<tr class="detail"><td colspan="${cols.length}"><div class="din">${e.deals.map(d=>`<div class="dc"><div class="top2" style="margin-bottom:10px">${mark(d.g.co,d.g.domain)}<span><span class="co">${esc(d.g.co)}</span>${d.g.ind.length?`<span class="catl">${esc(d.g.ind.join(", "))}</span>`:""}</span></div><div class="ln"><span>Type</span>${rel(d.g.type)}</div>${d.g.round?`<div class="ln"><span>Round</span><b>${esc(d.g.round)}</b></div>`:""}${d.stake?`<div class="ln"><span>Stake</span><b>${fmt(d.stake)}</b></div>`:""}${fmtDate(d.g.date)?`<div class="ln"><span>Date</span><b>${fmtDate(d.g.date)}</b></div>`:""}</div>`).join("")}</div></td></tr>`:""}`}).join("");
+    </tr>${o?`<tr class="detail"><td colspan="${cols.length}"><div class="din">${e.deals.map(d=>`<div class="dc"><div class="top2" style="margin-bottom:10px">${mark(d.g.co,d.g.domain)}<span><span class="co">${esc(d.g.co)}</span>${d.g.ind.length?`<span class="catl">${indLinks(d.g.ind)}</span>`:""}</span></div><div class="ln"><span>Type</span>${rel(d.g.type)}</div>${d.g.round?`<div class="ln"><span>Round</span><b>${esc(d.g.round)}</b></div>`:""}${d.stake?`<div class="ln"><span>Stake</span><b>${fmt(d.stake)}</b></div>`:""}${fmtDate(d.g.date)?`<div class="ln"><span>Date</span><b>${fmtDate(d.g.date)}</b></div>`:""}</div>`).join("")}</div></td></tr>`:""}`}).join("");
   return list.length;
 }
 function activeChips(){
@@ -879,7 +881,7 @@ function renderCos(){
   const pages=Math.max(1,Math.ceil(list.length/CPER));if(state.cpg>pages)state.cpg=pages;
   const page=list.slice((state.cpg-1)*CPER,state.cpg*CPER);
   const rows=page.map(c=>{const names=[...new Set(c.rows.map(r=>r.ath))];
-    return `<tr class="row crow" tabindex="-1" data-co="${esc(c.co)}"><td><div class="cell-co">${mark(c.co,c.domain)}<a class="co" href="${cLink(c.co)}">${esc(c.co)}</a></div></td><td>${c.ind.length?`<span class="cat">${esc(c.ind.join(", "))}</span>`:`<span class="dim">—</span>`}</td><td><div class="names"><span class="stack">${names.slice(0,3).map(n=>avatar(n)).join("")}</span><span class="nm num">${c.n} ${c.n===1?"person":"people"}</span></div></td><td>${c.hq?`<span class="cat">${esc(c.hq)}</span>`:`<span class="dim">—</span>`}</td><td>${c.domain?`<span class="site">${c.domain}</span>`:`<span class="dim">—</span>`}</td></tr>`}).join("");
+    return `<tr class="row crow" tabindex="-1" data-co="${esc(c.co)}"><td><div class="cell-co">${mark(c.co,c.domain)}<a class="co" href="${cLink(c.co)}">${esc(c.co)}</a></div></td><td>${c.ind.length?`<span class="cat">${indLinks(c.ind)}</span>`:`<span class="dim">—</span>`}</td><td><div class="names"><span class="stack">${names.slice(0,3).map(n=>avatar(n)).join("")}</span><span class="nm num">${c.n} ${c.n===1?"person":"people"}</span></div></td><td>${c.hq?`<span class="cat">${esc(c.hq)}</span>`:`<span class="dim">—</span>`}</td><td>${c.domain?`<span class="site">${c.domain}</span>`:`<span class="dim">—</span>`}</td></tr>`}).join("");
   const fm=state.menu==="cf",sm=state.menu==="cs";
   const fpop=`<div class="pop"><button class="tool" data-cmenu="cf" aria-haspopup="true" aria-expanded="${fm}">${ic("i-sliders","icon")}<span class="lbl">Filter</span>${ci.length?` <span class="cnt num">${ci.length}</span>`:""}</button>${fm?`<div class="menu fp" role="dialog" aria-label="Filter companies"><div><div class="row2"><h4>Industry</h4>${ci.length?'<button class="link" data-cclear="1">Clear</button>':""}</div><div class="opts inds" style="max-height:260px">${C_INDS.map(t=>`<button class="opt" aria-pressed="${ci.includes(t)}" data-cind="${esc(t)}">${esc(t)}</button>`).join("")}</div></div></div>`:""}</div>`;
   const spop=`<div class="pop"><button class="tool" data-cmenu="cs" aria-haspopup="true" aria-expanded="${sm}">${ic("i-sort","icon")}<span class="lbl">Sort</span></button>${sm?`<div class="menu" role="menu">${CSORTS.map(([k,l])=>`<button class="mi" role="menuitemradio" aria-checked="${state.csort===k}" data-csort="${k}">${l}<span class="chk">${ic("i-check","icon")}</span></button>`).join("")}</div>`:""}</div>`;
@@ -909,7 +911,7 @@ function renderCompany(){
   const head=cols.map(([l])=>`<th scope="col">${l}</th>`).join("");
   const body=rows.map(r=>`<tr>${cols.map(([,,f],i)=>`<td${i===0?' style="padding-left:4px"':""}>${f(r)||'<span class="dim">—</span>'}</td>`).join("")}</tr>`).join("");
   $("#cpage").innerHTML=`<button class="back" data-back="1">${ic("i-arrow")} Companies</button>
-  <div class="chead">${mark(c.co,c.domain)}<div><h1>${esc(c.co)}</h1><div class="meta">${c.ind.length?`<span>${esc(c.ind.join(", "))}</span>`:""}${c.domain?`<a href="https://${c.domain}" target="_blank" rel="noopener">${c.domain}</a>`:""}${c.hq?`<span>${esc(c.hq)}</span>`:""}</div></div></div>
+  <div class="chead">${mark(c.co,c.domain)}<div><h1>${esc(c.co)}</h1><div class="meta">${c.ind.length?`<span>${indLinks(c.ind)}</span>`:""}${c.domain?`<a href="https://${c.domain}" target="_blank" rel="noopener">${c.domain}</a>`:""}${c.hq?`<span>${esc(c.hq)}</span>`:""}</div></div></div>
   ${c.desc?`<p class="cdesc">${esc(c.desc)}</p>`:""}
   ${foundersHTML(c.co)}
   ${tw("t-co-detail",head,body)}
@@ -1037,7 +1039,7 @@ function renderDeal(){
   const src=r=>{if(!r.src)return"";let h="";try{h=new URL(r.src).hostname.replace(/^www\./,"")}catch(_){return""}return ln("Source",`<a href="${esc(r.src)}" target="_blank" rel="noopener">${esc(h)}</a>`)};
   const box=r=>`<div class="dc"><h4>${multi?esc([r.round,r.date&&fmtDate(r.date)].filter(Boolean).join(" · ")||"Deal"):"Deal"}</h4>${ln("Type",rel(r.type))}${multi?"":ln("Date",r.date?`<b>${fmtDate(r.date)}</b>`:un("Undated"))}${r.ver?ln("Verified / Reported",verl(r.ver)):""}${r.round&&!multi?ln("Round",`<b>${esc(r.round)}</b>`):""}${r.stake?ln("Stake",`<b>${estp(r)}${fmt(r.stake)}</b>`):""}${r.size?ln("Round size",`<b>${fmt(r.size)}</b>`):""}${r.val?ln("Valuation",`<b>${fmt(r.val)}</b>`):""}${src(r)}</div>`;
   const hq=DATA.hq[co];
-  const coBox=`<div class="dc"><h4>Company</h4>${c.desc?`<p class="desc" style="margin:0 0 6px">${esc(c.desc)}</p>`:""}${c.ind.length?ln("Industry",`<b>${esc(c.ind.join(", "))}</b>`):""}${c.domain?ln("Website",`<a href="https://${c.domain}" target="_blank" rel="noopener">${c.domain}</a>`):""}${hq?ln("HQ",`<b>${esc(hq)}</b>`):""}${ln("All talent",`<a href="${cLink(co)}">${peopleCount(co)} ${peopleCount(co)===1?"person":"people"} &rarr;</a>`)}</div>`;
+  const coBox=`<div class="dc"><h4>Company</h4>${c.desc?`<p class="desc" style="margin:0 0 6px">${esc(c.desc)}</p>`:""}${c.ind.length?ln("Industry",`<b>${indLinks(c.ind)}</b>`):""}${c.domain?ln("Website",`<a href="https://${c.domain}" target="_blank" rel="noopener">${c.domain}</a>`):""}${hq?ln("HQ",`<b>${esc(hq)}</b>`):""}${ln("All talent",`<a href="${cLink(co)}">${peopleCount(co)} ${peopleCount(co)===1?"person":"people"} &rarr;</a>`)}</div>`;
   const allOth=[...new Map((BYCO.get(co)?.rows||[]).filter(r=>r.ath!==n).map(r=>[r.ath,r])).values()],others=allOth.slice(0,5);
   const othBox=others.length?`<div class="dc"><h4>Also in ${esc(co)}</h4>${others.map(o=>`<div class="ln"><span class="who">${avatar(o.ath)}<span>${nameLink(o.ath)}${lgOf(o.ath)?` <span class="dim">· ${esc(lgOf(o.ath))}</span>`:""}</span></span><a href="${dLink(o.ath,co)}">View deal &rarr;</a></div>`).join("")}${allOth.length>5?`<div class="ln"><span class="dim">+${allOth.length-5} more</span><a href="${cLink(co)}">See everyone &rarr;</a></div>`:""}</div>`:"";
   const more=groupByCo((BYTAL.get(n)||[]).slice().sort(byDate).filter(r=>r.co!==co)).slice(0,3);
@@ -1051,6 +1053,7 @@ window.addEventListener("pageshow",e=>{if(e.persisted){resetDeals();if(state.mod
 let routed=false;
 // ---- Industries explore (#industries) and industry page (#industry=Name)
 const iLink=n=>`#industry=${encodeURIComponent(n)}`;
+const indLinks=a=>a.map(i=>`<a class="il" href="${iLink(i)}">${esc(i)}</a>`).join(", ");
 const ISORTS=[["cos","Most companies"],["deals","Most deals"],["latest","Latest activity"],["az","A to Z"]];
 let INDS_=null;
 function indData(){
