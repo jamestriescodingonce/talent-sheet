@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Paper Shaders Experiment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:"Violet Sans";src:url(VioletSans-Regular.woff2) format("woff2");font-weight:400}
+:root{--accent:#9ae230;--bg:#05080a;--card:#0d1613;--surface:#101915}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#e9f1ea;font-family:"Violet Sans",system-ui,sans-serif;font-weight:400;padding:24px 16px 64px}
+h1,.card-title{font-family:"Bricolage Grotesque",system-ui,sans-serif}
+.hero{position:relative;overflow:hidden;border-radius:24px;max-width:1100px;margin:0 auto;min-height:380px;display:flex;align-items:flex-end}
+.hero-fade{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,8,10,.85),transparent 65%)}
+.hero-copy{position:relative;padding:40px}
+.hero h1{font-size:clamp(32px,5vw,56px);line-height:1.02;margin:12px 0 8px;max-width:14ch;font-weight:700}
+.hero p{margin:0;color:#c9d6cb}
+.pill{display:inline-block;padding:6px 12px;border-radius:999px;background:rgba(0,0,0,.45);border:1px solid rgba(154,226,48,.4);color:var(--accent);font-size:13px}
+.label{max-width:1100px;margin:40px auto 12px;color:#7d8f82;font-size:13px}
+.grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{background:var(--card);border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+.card-art{position:relative;height:120px}
+.card-body{display:flex;gap:12px;align-items:center;padding:16px}
+.logo{width:40px;height:40px;border-radius:12px;background:var(--surface);border:1px solid rgba(255,255,255,.08);flex:none}
+.card-title{font-weight:600;font-size:16px}
+.card-sub{color:#7d8f82;font-size:13px;margin-top:2px}
+.tag{margin-left:auto;font-size:12px;color:var(--accent);background:rgba(154,226,48,.1);padding:4px 10px;border-radius:999px;white-space:nowrap}
+.band{position:relative;overflow:hidden;border-radius:20px;max-width:1100px;margin:0 auto;height:160px;display:grid;place-items:center}
+.band-copy{position:relative;background:rgba(5,8,10,.75);padding:10px 16px;border-radius:12px}
+</style></head>
+<body><div id="root"></div><script src="main.js"></script></body></html>

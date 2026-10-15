@@ -1,0 +1,20 @@
+{
+  "name": "paper-shaders",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {"build": "esbuild src/main.jsx --bundle --minify --outfile=dist/main.js --define:process.env.NODE_ENV=\\\"production\\\""},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@paper-design/shaders": "^0.0.81",
+    "@paper-design/shaders-react": "^0.0.81",
+    "esbuild": "^0.28.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  }
+}
