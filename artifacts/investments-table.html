@@ -630,7 +630,7 @@ function filterPanel(){
 }
 function renderControls(){
   const n=activeChips().length,shown=n||state.q.trim()?filtered().length:ALL.length;
-  $("#views").innerHTML=`<span class="count num"><b>${shown.toLocaleString()}</b> ${shown===1?"deal":"deals"}</span>`;
+  $("#views").innerHTML="";
   $("#fpop").innerHTML=`<button class="tool" id="fbtn" aria-haspopup="true" aria-expanded="${state.menu==="f"}">${ic("i-sliders","icon")}<span class="lbl">Filters</span>${n?`<span class="cnt num">${n}</span>`:""}${n&&state.menu!=="f"?`<span class="of num">${shown} of ${ALL.length}</span>`:""}</button>`+(state.menu==="f"?filterPanel():"");
   $("#spop").innerHTML=`<button class="tool" id="sbtn" aria-haspopup="true" aria-expanded="${state.menu==="s"}">${ic("i-sort","icon")}<span class="lbl">Sort</span></button>`+(state.menu==="s"?`<div class="menu" role="menu">${SORTS[state.view].map(([k,l])=>`<button class="mi" role="menuitemradio" aria-checked="${state.sort[state.view]===k}" data-sort="${k}">${l}<span class="chk">${ic("i-check","icon")}</span></button>`).join("")}</div>`:"");
 }
@@ -768,6 +768,7 @@ window.addEventListener("pageshow",e=>{if(e.persisted){resetDeals();if(state.mod
 function route(){
   const h=decodeURIComponent(location.hash.replace(/^#/,""));
   let mode="inv",co=null;
+  if(h==="investments")history.replaceState(null,"",location.pathname+location.search);
   if(h==="companies")mode="cos";else if(h==="faq")mode="faq";else if(h==="news")mode="news";else if(h.startsWith("company=")){mode="co";co=h.slice(8)}
   if(mode!==state.mode&&(mode==="cos"||state.mode==="cos"||mode==="news"||state.mode==="news")){state.q="";$("#q").value=""}
   if(state.mode==="inv"&&mode!=="inv")resetDeals();
@@ -776,10 +777,19 @@ function route(){
   const cp=$("#cpage");cp.hidden=mode!=="cos"&&mode!=="co";$("#faqpage").hidden=mode!=="faq";$("#newspage").hidden=mode!=="news";
   document.querySelectorAll("[data-nav]").forEach(a=>{const on=(a.dataset.nav==="inv"&&mode==="inv")||(a.dataset.nav==="cos"&&(mode==="cos"||mode==="co"))||(a.dataset.nav==="faq"&&mode==="faq")||(a.dataset.nav==="news"&&mode==="news");on?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current")});
   if(mode==="cos"){state.cpg=1;renderCos()}else if(mode==="co"){renderCompany()}else if(mode==="faq"){renderCredits()}else if(mode==="news"){renderNews()}else{render()}
+  syncUrl(mode);lastHref=location.href;
   window.scrollTo({top:0})
 }
-window.addEventListener("hashchange",route);
-render();if(location.hash)route();
+// Deals lives at /deals; every other page keeps the root path plus its #hash
+function syncUrl(mode){
+  const want=mode==="inv"?"/deals":"/";
+  if(location.pathname.replace(/\/+$/,"")!==want.replace(/\/+$/,""))history.replaceState(null,"",want+location.search+(mode==="inv"?"":location.hash))
+}
+let lastHref=location.href;
+// Back/forward can change the path without a hashchange, so listen for both and skip duplicates
+function onNav(){if(location.href!==lastHref)route()}
+window.addEventListener("hashchange",onNav);window.addEventListener("popstate",onNav);
+render();if(location.hash)route();else syncUrl("inv");
 // Theme: follows the system until toggled; the choice is remembered per browser
 (function(){
   const root=document.documentElement,btns=[...document.querySelectorAll(".themebtn")];
