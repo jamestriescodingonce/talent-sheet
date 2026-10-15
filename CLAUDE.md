@@ -17,6 +17,7 @@ connected to this GitHub repo and its **production branch is `main`**.
 - The Claude Artifact "Investments Table"
   (`https://claude.ai/artifact/KnV2RuHPYEF3R4wmTbAXBy`) is the editable source;
   after changing it, copy the page to `index.html` and push to `main`.
+- Company founders live in `public.company_founders` (company_id, name, title Founder/Co-founder, source_url; public read). Only add a founder when a source explicitly calls them a founder/co-founder; keep the supporting URL. `refresh_data.py` embeds them as `DATA.fnd` and company pages show a "Founders" row (a founder who is also talent links to their profile).
 - Companies have an `hq` column in Supabase (`companies.hq`), filled for ~200 of 674;
   the page embeds it as `DATA.hq`.
 

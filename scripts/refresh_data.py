@@ -3,7 +3,7 @@
 
 Usage:  python3 scripts/refresh_data.py [--check]
 
-Rebuilds: const DATA (rows, ind, desc, dom), DATA.hq, const ADDED, const LEAGUE.
+Rebuilds: const DATA (rows, ind, desc, dom), DATA.hq, DATA.fnd (company founders), const ADDED, const LEAGUE.
 Rules baked in (from product feedback):
   - only sports figures are shown (talent categories Athlete, Coach, Executive; Magnus Carlsen kept)
   - palmares.vc / pitchbook.com sources are never shown
@@ -52,11 +52,16 @@ def build():
         if domain(c.get('website_url')): dom[n] = domain(c['website_url'])
         if c.get('hq'): hq[n] = c['hq']
     added = {n: c['created_at'][:16] for n, c in cos.items() if c['created_at'] >= CUTOFF}
-    return rows, ind, desc, dom, hq, added, league
+    # founders per company (company_founders table; only companies that are shown on the site)
+    fnd = {}
+    for f in get('company_founders?select=name,title,company:companies(name)&order=title.desc,name'):
+        co = (f.get('company') or {}).get('name')
+        if co in cos: fnd.setdefault(co, []).append([f['name'], f.get('title')])
+    return rows, ind, desc, dom, hq, added, league, fnd
 
 def main():
     P = 'index.html'; s = open(P, encoding='utf8').read()
-    rows, ind, desc, dom, hq, added, league = build()
+    rows, ind, desc, dom, hq, added, league, fnd = build()
     dump = lambda x: json.dumps(x, ensure_ascii=False, separators=(',', ':'))
     def sub(prefix, new):
         nonlocal s
@@ -65,9 +70,10 @@ def main():
         s = pat.sub(lambda m: new, s, count=1)
     sub('const DATA={', 'const DATA=' + dump({'rows': rows, 'ind': ind, 'desc': desc, 'dom': dom}) + ';')
     sub('DATA.hq={', 'DATA.hq=' + dump(hq) + ';')
+    sub('DATA.fnd={', 'DATA.fnd=' + dump(fnd) + ';')
     sub('const ADDED={', 'const ADDED=' + dump(added) + ';')
     sub('const LEAGUE={', 'const LEAGUE=' + dump(league) + ';')
-    print(f'{len(rows)} deal rows, {len({r[1] for r in rows})} companies, {len(desc)} bios, {len(hq)} HQs')
+    print(f'{len(rows)} deal rows, {len({r[1] for r in rows})} companies, {len(desc)} bios, {len(hq)} HQs, {sum(len(v) for v in fnd.values())} founders across {len(fnd)} companies')
     if '--check' not in sys.argv:
         open(P, 'w', encoding='utf8').write(s)
         a = 'artifacts/investments-table.html'
