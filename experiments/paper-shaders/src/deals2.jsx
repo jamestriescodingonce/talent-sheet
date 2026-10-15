@@ -46,8 +46,14 @@ function App() {
   return (
     <div className="shell">
       <div className="bgfx" aria-hidden="true">
-        <MeshGradient style={fill} colors={["#0a0c10", "#0a0d0f", "#0a1210", "#0c1814"]}
-          distortion={0.5} swirl={0.15} grainMixer={0} grainOverlay={0} scale={1.6} speed={sp(0.025)} />
+        <MeshGradient style={fill} colors={["#0a0c10", "#0d1c16", "#1a4533", "#2b6247"]}
+          distortion={0.6} swirl={0.2} grainMixer={0} grainOverlay={0} scale={1.5} speed={sp(0.025)} />
+        <svg className="lines" viewBox="0 0 1600 900" preserveAspectRatio="xMaxYMin slice">
+          {Array.from({ length: 28 }, (_, i) => {
+            const y = -60 + i * 38;
+            return <path key={i} d={`M-200 ${y + 220} C 300 ${y - 60}, 800 ${y + 340}, 1800 ${y - 40 + i * 6}`} />;
+          })}
+        </svg>
       </div>
       <aside className="side">
         <div className="logoRow">

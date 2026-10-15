@@ -10,7 +10,12 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);font-
 h1,p{margin:0}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 /* Page-wide glow: fixed behind everything, brightest at the top, fading into the dark so content scrolls over it. */
-.bgfx{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.bgfx{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+  -webkit-mask-image:radial-gradient(ellipse 80% 75% at 100% 0%,#000 0,rgba(0,0,0,.6) 40%,transparent 100%);
+  mask-image:radial-gradient(ellipse 80% 75% at 100% 0%,#000 0,rgba(0,0,0,.6) 40%,transparent 100%)}
+.lines{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:#a6e3c4;stroke-width:1;opacity:.1;animation:drift 70s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate(0,0)}to{transform:translate(-36px,22px)}}
+@media (prefers-reduced-motion:reduce){.lines{animation:none}}
 .shell{position:relative;z-index:1;display:grid;grid-template-columns:216px minmax(0,1fr);min-height:100vh}
 .side{border-right:1px solid rgba(255,255,255,.06);padding:18px 14px;display:flex;flex-direction:column;gap:36px;position:sticky;top:0;height:100vh}
 .logoRow{display:flex;align-items:center;gap:12px;padding-left:2px}
