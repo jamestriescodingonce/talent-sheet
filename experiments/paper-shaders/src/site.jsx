@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { MeshGradient, GrainGradient } from "@paper-design/shaders-react";
+import { MeshGradient, GrainGradient, LiquidMetal } from "@paper-design/shaders-react";
 
 const C = { accent: "#9ae230", bg: "#05080a", card: "#0d1613", surface: "#101915" };
 const fill = { position: "absolute", inset: 0, width: "100%", height: "100%" };
@@ -34,6 +34,23 @@ function Hero() {
       />
       <div className="fade" />
       <div className="grain grain-hero" />
+      <div className="orb">
+        <LiquidMetal
+          style={fill}
+          colorBack="#00000000"
+          colorTint={C.accent}
+          shape="metaballs"
+          repetition={4}
+          softness={0.45}
+          shiftRed={0.2}
+          shiftBlue={-0.2}
+          distortion={0.1}
+          contour={0.5}
+          angle={70}
+          speed={reduced ? 0 : 0.25}
+          scale={0.9}
+        />
+      </div>
       <div className="hero-copy">
         <span className="pill"><i /> 1,240 deals tracked</span>
         <h1>Follow the money behind the athletes.</h1>
@@ -82,7 +99,11 @@ function App() {
   return (
     <>
       <nav className="nav">
-        <div className="brand"><span className="dot" />Talent Sheet</div>
+        <div className="brand"><span className="dot">
+          <LiquidMetal style={fill} colorBack="#00000000" colorTint={C.accent} shape="circle"
+            repetition={2} softness={0.5} shiftRed={0.2} shiftBlue={-0.2} distortion={0.1}
+            contour={0.5} angle={70} speed={reduced ? 0 : 0.25} scale={1} />
+        </span>Talent Sheet</div>
         <div className="links"><a>Deals</a><a>Athletes</a><a>FAQ</a></div>
       </nav>
       <Hero />
