@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { MeshGradient, LiquidMetal } from "@paper-design/shaders-react";
+import { LiquidMetal } from "@paper-design/shaders-react";
 
 const fill = { position: "absolute", inset: 0, width: "100%", height: "100%" };
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -43,18 +43,12 @@ function Row({ r }) {
 
 function App() {
   const [active] = useState("Deals");
+  const [tab, setTab] = useState("All deals");
+  const types = ["Investment", "Ownership", "Partnership"];
+  const count = (t) => (t === "All deals" ? rows.length : rows.filter((r) => r.type === t).length);
+  const shown = tab === "All deals" ? rows : rows.filter((r) => r.type === tab);
   return (
     <div className="shell">
-      <div className="bgfx" aria-hidden="true">
-        <MeshGradient style={fill} colors={["#0a0c10", "#0d1c16", "#1a4533", "#2b6247"]}
-          distortion={0.6} swirl={0.2} grainMixer={0} grainOverlay={0} scale={1.5} speed={sp(0.025)} />
-        <svg className="lines" viewBox="0 0 1600 900" preserveAspectRatio="xMaxYMin slice">
-          {Array.from({ length: 28 }, (_, i) => {
-            const y = -60 + i * 38;
-            return <path key={i} d={`M-200 ${y + 220} C 300 ${y - 60}, 800 ${y + 340}, 1800 ${y - 40 + i * 6}`} />;
-          })}
-        </svg>
-      </div>
       <aside className="side">
         <div className="logoRow">
           <span className="mark"><LiquidMetal style={fill} colorBack="#00000000" colorTint="#58ca9d" shape="circle"
@@ -71,10 +65,16 @@ function App() {
           <div className="hcopy"><h1>Deals</h1>
             <p>Every deal on record between athletes and the companies they back. Try “owned since 2024” or “partnered football”, then press Enter to keep it as a filter.</p></div>
         </header>
-        <div className="tools"><span><Icon d="M4 6h16M7 12h10M10 18h4" />Filters</span><span><Icon d="M4 7h10M4 12h7M4 17h4M18 5v14M15 16l3 3 3-3" />Sort</span></div>
+        <div className="panel">
+        <div className="ptabs">
+          <div className="tabs" role="tablist">{["All deals", ...types].map((t) => (
+            <button key={t} role="tab" aria-selected={tab === t} className={tab === t ? "tab on" : "tab"} onClick={() => setTab(t)}>{t}<em>{count(t)}</em></button>))}</div>
+          <div className="tools"><span><Icon d="M4 6h16M7 12h10M10 18h4" />Filters</span><span><Icon d="M4 7h10M4 12h7M4 17h4M18 5v14M15 16l3 3 3-3" />Sort</span></div>
+        </div>
         <div className="tbl"><table>
           <thead><tr><th>Company</th><th>Industry</th><th>Talent</th><th>Type</th><th>Verified / Reported</th><th>Website</th></tr></thead>
-          <tbody>{rows.map((r) => <Row key={r.co} r={r} />)}</tbody></table></div>
+          <tbody>{shown.map((r) => <Row key={r.co} r={r} />)}</tbody></table></div>
+        </div>
       </main>
       <div className="grain grain-page" />
     </div>
