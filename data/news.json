@@ -81,6 +81,24 @@
   "company": "Novig"
  },
  {
+  "title": "Thibaut Courtois joins Astralis owner Fusion Esports Group as investor",
+  "outlet": "Inven Global",
+  "url": "https://www.invenglobal.com/articles/26553/thibaut-courtois-joins-astralis-owner-fusion-esports-group-as-investor",
+  "img": "assets/news/2026-09-28-89bb1e.webp",
+  "date": "2026-09-28",
+  "talent": "Thibaut Courtois",
+  "company": "NXTPLAY"
+ },
+ {
+  "title": "Vincent Kompany ziet BX Brussels nog steeds groeien als club die \"impact wil hebben\": \"Al 12 miljoen euro ingepompt\"",
+  "outlet": "Sporza",
+  "url": "https://sporza.be/nl/2026/09/23/vincent-kompany-ziet-bx-brussels-nog-steeds-groeien-als-club-die-impact-wil-hebben-al-12-miljoen-euro-ingepompt~1790174877443/",
+  "img": "assets/news/2026-09-23-e63d82.webp",
+  "date": "2026-09-23",
+  "talent": "Vincent Kompany",
+  "company": "BX Brussels"
+ },
+ {
   "title": "Ndamukong Suh Says He Almost Invested in the Seahawks",
   "outlet": "Front Office Sports",
   "url": "https://frontofficesports.com/article/ndamukong-suh-says-he-almost-invested-in-the-seahawks/",
@@ -88,6 +106,15 @@
   "date": "2026-09-16",
   "talent": "Ndamukong Suh",
   "company": "HMS Developments"
+ },
+ {
+  "title": "LeBron James Invests in Mike's Red Tacos Franchise",
+  "outlet": "L'Express Franchise",
+  "url": "https://lexpress-franchise.com/en-us/news/lebron-james-takes-equity-stake-in-mikes-red-tacos-as-franchise-commitments-top-300/",
+  "img": "assets/news/2026-09-16-235d35.webp",
+  "date": "2026-09-16",
+  "talent": "LeBron James",
+  "company": "Mike's Red Tacos"
  },
  {
   "title": "Mike’s Red Tacos gets an assist from LeBron James",
@@ -108,10 +135,28 @@
   "company": "Unrivaled"
  },
  {
+  "title": "Unrivaled Women's Basketball League Earns $650M Valuation & Expands To More Cities",
+  "outlet": "BlackAmericaWeb",
+  "url": "https://blackamericaweb.com/2026/08/28/unrivaled-womens-league-650-million-valuation-expands/",
+  "img": "assets/news/2026-08-28-cf0233.webp",
+  "date": "2026-08-28",
+  "talent": "Carmelo Anthony",
+  "company": "Unrivaled"
+ },
+ {
   "title": "Unrivaled Hits $650M Valuation Following Oversubscribed Funding Round",
   "outlet": "Just Women's Sports",
   "url": "https://justwomenssports.com/reads/unrivaled-650m-valuation-series-c-funding/",
   "img": "assets/news/2026-08-27-7345d2.webp",
+  "date": "2026-08-27",
+  "talent": "Alex Morgan",
+  "company": "Unrivaled"
+ },
+ {
+  "title": "Unrivaled valuation jumps to $650M after latest round of fundraising",
+  "outlet": "Field Level Media",
+  "url": "https://fieldlevelmedia.com/news/unrivaled-valuation-jumps-to-650m-after-latest-round-of-fundraising/",
+  "img": "assets/news/2026-08-27-04fb8c.webp",
   "date": "2026-08-27",
   "talent": "Alex Morgan",
   "company": "Unrivaled"
@@ -144,6 +189,15 @@
   "company": "CardVault"
  },
  {
+  "title": "Axum Capital Partners To Acquire Controlling Stake In BARCODE",
+  "outlet": "Pulse 2.0",
+  "url": "https://pulse2.com/axum-capital-partners-to-acquire-controlling-stake-in-barcode/",
+  "img": "assets/news/2026-08-14-3babec.webp",
+  "date": "2026-08-14",
+  "talent": "Victor Wembanyama",
+  "company": "Barcode"
+ },
+ {
   "title": "CardVault by Tom Brady Announces Investor Group, led by Jay-Z, Aaron Judge, and Dana White",
   "outlet": "Collectibles On SI",
   "url": "https://www.si.com/collectibles/cardvault-tom-brady-investor-group-jay-z-aaron-judge-dana-white",
@@ -153,15 +207,6 @@
   "company": "CardVault"
  },
  {
-  "title": "Watch Gronk Go Off Script in New Campaign for DNA Vibe",
-  "outlet": "Adweek",
-  "url": "https://www.adweek.com/convergent-tv/watch-gronk-go-off-script-in-new-campaign-for-dna-vibe/",
-  "img": "assets/news/2026-08-12-4a539d.webp",
-  "date": "2026-08-12",
-  "talent": "Rob Gronkowski",
-  "company": "DNA Vibe"
- },
- {
   "title": "The 'IMDb for Athletes' Is Here — And Its Founders Built It Without Spending a Dime on Marketing",
   "outlet": "Entrepreneur",
   "url": "https://www.entrepreneur.com/business-news/the-imdb-for-athletes-is-here-and-its-founders-built-it-without-spending-a-dime-on-marketing",
@@ -169,6 +214,51 @@
   "date": "2026-08-12",
   "talent": "Aaron Rodgers",
   "company": "AthleteAgent"
+ },
+ {
+  "title": "Pau Gasol Is Betting Big on Women's Soccer. Here's What He's Actually Building",
+  "outlet": "Players' TV",
+  "url": "https://playerstv.com/pau-gasol-is-betting-big-on-womens-soccer-heres-what-hes-actually-building/",
+  "img": "assets/news/2026-08-07-744d40.webp",
+  "date": "2026-08-07",
+  "talent": "Pau Gasol",
+  "company": "Gasol16 Ventures"
+ },
+ {
+  "title": "Tom Brady’s Sports Card Venture Makes Bold Claim Amid Rapid Expansion",
+  "outlet": "Heavy",
+  "url": "https://heavy.com/sports/cards/tom-brady-nobull-cardvault/",
+  "img": "assets/news/2026-08-06-eb9bc4.webp",
+  "date": "2026-08-06",
+  "talent": "Tom Brady",
+  "company": "NOBULL"
+ },
+ {
+  "title": "Tom Brady Explains His Aggressive Push Into Trading Cards",
+  "outlet": "Front Office Sports",
+  "url": "https://frontofficesports.com/article/tom-brady-cardvault-interview/",
+  "img": "assets/news/2026-08-06-09371f.webp",
+  "date": "2026-08-06",
+  "talent": "Tom Brady",
+  "company": "CardVault"
+ },
+ {
+  "title": "US sports-drinks brand Barcode sold to PE firm Axum",
+  "outlet": "Just Drinks",
+  "url": "https://www.just-drinks.com/news/barcode-sold-to-axum/",
+  "img": "assets/news/2026-08-05-0d6dca.webp",
+  "date": "2026-08-05",
+  "talent": "Victor Wembanyama",
+  "company": "Barcode"
+ },
+ {
+  "title": "Wemby-Backed Hydration Brand Barcode Acquired by Axum Capital Partners",
+  "outlet": "Athletech News",
+  "url": "https://athletechnews.com/victor-wembanyama-wemby-barcode-axum-capital-partners-acquisition/",
+  "img": "assets/news/2026-08-04-ed89f2.webp",
+  "date": "2026-08-04",
+  "talent": "Victor Wembanyama",
+  "company": "Barcode"
  },
  {
   "title": "Chan Ho Park becomes first Korean to buy a stake in an MLB club by joining Athletics group",
@@ -198,6 +288,15 @@
   "company": "Tiva"
  },
  {
+  "title": "Spain’s Liga F Approves Record €55 Million Investment Deal",
+  "outlet": "Just Women's Sports",
+  "url": "https://justwomenssports.com/reads/liga-f-pau-gasol-55-million-womens-soccer-investment-deal/",
+  "img": "assets/news/2026-07-02-225f56.webp",
+  "date": "2026-07-02",
+  "talent": "Pau Gasol",
+  "company": "Gasol16 Ventures"
+ },
+ {
   "title": "Giannis Antetokounmpo Reveals Personal Reason Behind New Health Investment",
   "outlet": "ClutchPoints",
   "url": "https://clutchpoints.com/celebrity/giannis-antetokounmpo-reveals-personal-reason-behind-new-health-investment",
@@ -205,6 +304,15 @@
   "date": "2026-07-01",
   "talent": "Giannis Antetokounmpo",
   "company": "Superpower"
+ },
+ {
+  "title": "Gasol completes €55m Liga F investment despite Real Madrid dissent",
+  "outlet": "Sportcal",
+  "url": "https://www.sportcal.com/news/gasol-completes-e55m-liga-f-investment-despite-real-madrid-dissent/",
+  "img": "assets/news/2026-07-01-da3403.webp",
+  "date": "2026-07-01",
+  "talent": "Pau Gasol",
+  "company": "Gasol16 Ventures"
  },
  {
   "title": "NBA Star Giannis Antetokounmpo Backs Preventative Health Platform Superpower",
@@ -232,6 +340,33 @@
   "date": "2026-06-08",
   "talent": "Tom Brady",
   "company": "Good Nut"
+ },
+ {
+  "title": "Gary Lineker’s punt on podcasts pays off as firm tops list of fastest-growing",
+  "outlet": "LBC",
+  "url": "https://www.lbc.co.uk/article/f0713f7d20db4b488216cf3e499dc145-5Hjdb9S_2/",
+  "img": "assets/news/2026-06-05-5443a1.webp",
+  "date": "2026-06-05",
+  "talent": "Gary Lineker",
+  "company": "Goalhanger"
+ },
+ {
+  "title": "Thibaut Courtois expands business portfolio with Racing Genk investment",
+  "outlet": "Inside World Football",
+  "url": "https://www.insideworldfootball.com/2026/06/02/thibaut-courtois-racing-genk-nxtplay-investment/",
+  "img": "assets/news/2026-06-02-a30502.webp",
+  "date": "2026-06-02",
+  "talent": "Thibaut Courtois",
+  "company": "NXTPLAY"
+ },
+ {
+  "title": "Thibaut Courtois keert als investeerder terug naar Racing Genk: \"Een historisch moment voor de club\"",
+  "outlet": "Sporza",
+  "url": "https://sporza.be/nl/2026/05/29/thibaut-courtois-keert-als-investeerder-terug-naar-racing-genk-een-historisch-moment-voor-de-club~1780054673346/",
+  "img": "assets/news/2026-06-01-57c057.webp",
+  "date": "2026-06-01",
+  "talent": "Thibaut Courtois",
+  "company": "KRC Genk"
  },
  {
   "title": "Former FC Barcelona star Gerard Pique fined for insider trading",
@@ -270,6 +405,15 @@
   "company": "Nike"
  },
  {
+  "title": "Wembanyama becomes minority investor in childhood club Nanterre",
+  "outlet": "Eurohoops",
+  "url": "https://www.eurohoops.net/en/nba-news/1938606/wembanyama-becomes-minority-investor-in-childhood-club-nanterre/",
+  "img": "assets/news/2026-03-02-e5cbae.webp",
+  "date": "2026-03-02",
+  "talent": "Victor Wembanyama",
+  "company": "Nanterre 92"
+ },
+ {
   "title": "Cristiano Ronaldo buys 25 per cent stake in Spanish club Almeria",
   "outlet": "The Irish News",
   "url": "https://www.irishnews.com/sport/soccer/cristiano-ronaldo-buys-25-per-cent-stake-in-spanish-club-almeria-KLWRYGJDJZK2FMFG4XK6P3S5Y4/",
@@ -277,6 +421,24 @@
   "date": "2026-02-26",
   "talent": "Cristiano Ronaldo",
   "company": "UD Almería"
+ },
+ {
+  "title": "Cristiano Ronaldo Buys 25% Stake In Spanish Side UD Almería",
+  "outlet": "Arise News",
+  "url": "https://www.arise.tv/cristiano-ronaldo-buys-25-stake-in-spanish-side-ud-almeria/",
+  "img": "assets/news/2026-02-26-bb0dfb.webp",
+  "date": "2026-02-26",
+  "talent": "Cristiano Ronaldo",
+  "company": "UD Almería"
+ },
+ {
+  "title": "Piqué levanta otros 53 millones de euros para su Kings League",
+  "outlet": "Emprendedores",
+  "url": "https://emprendedores.es/startups/pique-levanta-53-millones-de-euros-para-kings-league/",
+  "img": "assets/news/2026-02-05-f87e3b.webp",
+  "date": "2026-02-05",
+  "talent": "Gerard Piqué",
+  "company": "Kings League"
  },
  {
   "title": "How World Cup champion Mario Götze built a parallel career as an angel investor",
@@ -288,6 +450,15 @@
   "company": "Companion-M"
  },
  {
+  "title": "From film to sport, celebrities invest in women's health",
+  "outlet": "Il Sole 24 Ore",
+  "url": "https://en.ilsole24ore.com/art/from-cinema-sports-celebrities-invest-in-womens-health-AIyJKda",
+  "img": "assets/news/2025-12-28-938ddd.webp",
+  "date": "2025-12-28",
+  "talent": "Serena Williams",
+  "company": "Midi Health"
+ },
+ {
   "title": "Ja Morant invests in French club Levallois Metropolitans",
   "outlet": "Eurohoops",
   "url": "https://www.eurohoops.net/en/nba-news/1909728/ja-morant-invests-in-french-club-levallois-metropolitans/",
@@ -295,6 +466,24 @@
   "date": "2025-12-20",
   "talent": "Ja Morant",
   "company": "EuroStep Ventures"
+ },
+ {
+  "title": "Iniesta Heralds NSN Cycling After Israel-Premier Tech Takeover",
+  "outlet": "FloBikes",
+  "url": "https://www.flobikes.com/articles/14921132-iniesta-heralds-nsn-cycling-after-israel-premier-tech-takeover",
+  "img": "assets/news/2025-12-10-6cf034.webp",
+  "date": "2025-12-10",
+  "talent": "Andrés Iniesta",
+  "company": "NSN Cycling Team"
+ },
+ {
+  "title": "Iniesta enters the world of cycling by acquiring the team that bore the name of Israel",
+  "outlet": "Ara",
+  "url": "https://en.ara.cat/sports/iniesta-enters-the-world-of-cycling-by-acquiring-the-team-that-bore-the-name-of-israel_1_5572902.html",
+  "img": "assets/news/2025-11-25-0fd7c3.webp",
+  "date": "2025-11-25",
+  "talent": "Andrés Iniesta",
+  "company": "NSN Cycling Team"
  },
  {
   "title": "MADE Hoops Launches Youth Basketball Nonprofit and Development Center",
@@ -306,6 +495,33 @@
   "company": "MADE Hoops"
  },
  {
+  "title": "Can Didier Drogba",
+  "outlet": "ESPN",
+  "url": "https://africa.espn.com/espn/story/_/id/46755605/can-didier-drogba-team-outpace-tom-brady-miami-e1-powerboat-event",
+  "img": "assets/news/2025-10-28-a7e55b.webp",
+  "date": "2025-10-28",
+  "talent": "Didier Drogba",
+  "company": "E1 Series (Team Drogba)"
+ },
+ {
+  "title": "LA Mad Drops Pickleball Franchise Sold for Record $13 Million",
+  "outlet": "Sportico",
+  "url": "https://www.sportico.com/leagues/other-sports/2025/los-angeles-pickleball-team-sold-mlp-million-1234867784/",
+  "img": "assets/news/2025-08-21-5e5179.webp",
+  "date": "2025-08-21",
+  "talent": "Drew Brees",
+  "company": "Los Angeles Mad Drops"
+ },
+ {
+  "title": "Jump Raises $23M to Help Sports Teams Modernize Fan Engagement",
+  "outlet": "Built In NYC",
+  "url": "https://www.builtinnyc.com/articles/jump-raises-23m-to-modernize-fan-engagement-20250815",
+  "img": "assets/news/2025-08-15-12a791.webp",
+  "date": "2025-08-15",
+  "talent": "Alex Rodriguez",
+  "company": "Jump"
+ },
+ {
   "title": "Social Sports Concept Ballers Raises $20M To Launch Nationwide Expansion",
   "outlet": "Bisnow",
   "url": "https://www.bisnow.com/news/national/retail/social-sports-concept-ballers-raises-20m-round-for-30m-launch-pipeline-129710",
@@ -313,5 +529,410 @@
   "date": "2025-06-09",
   "talent": "Andre Agassi",
   "company": "Ballers"
+ },
+ {
+  "title": "Garage Beer, owned by Kelce brothers, now part-owner of arena football team",
+  "outlet": "Fox Business",
+  "url": "https://www.foxbusiness.com/sports/garage-beer-owned-kelce-brothers-now-part-owners-arena-football-team",
+  "img": "assets/news/2025-05-29-a7f509.webp",
+  "date": "2025-05-29",
+  "talent": "Jason Kelce",
+  "company": "Garage Beer"
+ },
+ {
+  "title": "Cesc Fàbregas’ Future with Como Revealed",
+  "outlet": "beIN SPORTS",
+  "url": "https://www.beinsports.com/en-us/soccer/serie-a/articles-video/cesc-f%C3%A0bregas-future-with-como-revealed-2025-05-13",
+  "img": "assets/news/2025-05-13-6eae7f.webp",
+  "date": "2025-05-13",
+  "talent": "Cesc Fàbregas",
+  "company": "Como 1907"
+ },
+ {
+  "title": "Mookie Betts, Nashville native and Dodgers baseball star, becomes pro bowling team owner",
+  "outlet": "Yahoo Sports",
+  "url": "https://www.yahoo.com/news/mookie-betts-nashville-native-dodgers-100034738.html",
+  "img": "assets/news/2025-04-02-cddc69.webp",
+  "date": "2025-04-02",
+  "talent": "Mookie Betts",
+  "company": "World Bowling League"
+ },
+ {
+  "title": "England captain Harry Kane backs premium ticketing firm",
+  "outlet": "City AM",
+  "url": "https://www.cityam.com/?p=2319225",
+  "img": "assets/news/2025-03-31-9729c1.webp",
+  "date": "2025-03-31",
+  "talent": "Harry Kane",
+  "company": "Seat Unique"
+ },
+ {
+  "title": "Harry Kane Backs Premium Ticketing Platform Seat Unique",
+  "outlet": "FC Business",
+  "url": "https://fcbusiness.co.uk/news/harry-kane-backs-premium-ticketing-platform-seat-unique/",
+  "img": "assets/news/2025-03-31-56b7a7.webp",
+  "date": "2025-03-31",
+  "talent": "Harry Kane",
+  "company": "Seat Unique"
+ },
+ {
+  "title": "Mookie Betts to Own World Bowling League Franchise",
+  "outlet": "Sportico",
+  "url": "https://www.sportico.com/personalities/athletes/2025/mookie-betts-world-bowling-league-owner-1234843553/",
+  "img": "assets/news/2025-03-18-8949e1.webp",
+  "date": "2025-03-18",
+  "talent": "Mookie Betts",
+  "company": "World Bowling League"
+ },
+ {
+  "title": "Kylian Mbappé invests in France SailGP team",
+  "outlet": "Marine Industry News",
+  "url": "https://marineindustrynews.co.uk/kylian-mbappe-invests-in-france-sailgp-team/",
+  "img": "assets/news/2025-03-17-0a5c43.webp",
+  "date": "2025-03-17",
+  "talent": "Kylian Mbappé",
+  "company": "France SailGP Team"
+ },
+ {
+  "title": "Kylian Mbappé’s ‘Coalition Capital’ invests in France SailGP Team",
+  "outlet": "All at Sea",
+  "url": "https://www.allatsea.co.uk/?p=36392",
+  "img": "assets/news/2025-03-14-03c3be.webp",
+  "date": "2025-03-14",
+  "talent": "Kylian Mbappé",
+  "company": "France SailGP Team"
+ },
+ {
+  "title": "Vinicius consortium buys Liga Portugal 2 side Alverca",
+  "outlet": "Inside World Football",
+  "url": "https://insideworldfootball.com/?p=159410",
+  "img": "assets/news/2025-02-19-e963bc.webp",
+  "date": "2025-02-19",
+  "talent": "Vinícius Júnior",
+  "company": "FC Alverca"
+ },
+ {
+  "title": "Vinicius purchases Portuguese club in second division",
+  "outlet": "Football España",
+  "url": "https://www.football-espana.net/2025/02/17/vinicius-real-madrid-alverca",
+  "img": "assets/news/2025-02-17-165e7b.webp",
+  "date": "2025-02-17",
+  "talent": "Vinícius Júnior",
+  "company": "FC Alverca"
+ },
+ {
+  "title": "Brazilian forward of Cameroonian descent Vinícius Júnior joins consortium to acquire FC Alverca",
+  "outlet": "Africa Soccer",
+  "url": "https://africasoccer.com/brazilian-forward-of-cameroonian-descent-vinicius-junior-joins-consortium-to-acquire-fc-alverca/",
+  "img": "assets/news/2025-02-17-5f4793.webp",
+  "date": "2025-02-17",
+  "talent": "Vinícius Júnior",
+  "company": "FC Alverca"
+ },
+ {
+  "title": "Tom Brady ownership in CardVault shows NFL GOAT’s love for sports cards, hobby",
+  "outlet": "Sports Collectors Digest",
+  "url": "https://sportscollectorsdigest.com/news/tom-brady-ownership-in-cardvault-shows-nfl-goats-love-for-sports-cards-hobby",
+  "img": "assets/news/2025-02-13-0ed6ef.webp",
+  "date": "2025-02-13",
+  "talent": "Tom Brady",
+  "company": "CardVault"
+ },
+ {
+  "title": "Baller League raises £33m for 6v6 entertainment product",
+  "outlet": "Inside World Football",
+  "url": "https://www.insideworldfootball.com/2024/12/16/baller-league-raises-33m-6v6-entertainment-product/",
+  "img": "assets/news/2024-12-16-279045.webp",
+  "date": "2024-12-16",
+  "talent": "Mats Hummels",
+  "company": "Baller League"
+ },
+ {
+  "title": "NBA Champion Giannis Antetokounmpo Reveals Build Your Legacy VC Firm",
+  "outlet": "Pulse 2.0",
+  "url": "https://pulse2.com/nba-champion-giannis-antetokounmpo-reveals-build-your-legacy-vc-firm",
+  "img": "assets/news/2024-12-05-0bd529.webp",
+  "date": "2024-12-05",
+  "talent": "Giannis Antetokounmpo",
+  "company": "Build Your Legacy Ventures"
+ },
+ {
+  "title": "Tom Brady Approved As Raiders Minority Owner in Unanimous NFL Vote",
+  "outlet": "Collectibles On SI",
+  "url": "https://www.si.com/nfl/tom-brady-raiders-minority-owner-vote",
+  "img": "assets/news/2024-10-15-985bce.webp",
+  "date": "2024-10-15",
+  "talent": "Tom Brady",
+  "company": "Las Vegas Raiders"
+ },
+ {
+  "title": "NFL team owners approve Tom Brady's purchase of minority stake in Las Vegas Raiders",
+  "outlet": "FOX 13",
+  "url": "https://www.fox13news.com/news/nfl-owners-approve-tom-bradys-purchase-minority-stake-las-vegas-raiders-2024",
+  "img": "assets/news/2024-10-15-fc9277.webp",
+  "date": "2024-10-15",
+  "talent": "Tom Brady",
+  "company": "Las Vegas Raiders"
+ },
+ {
+  "title": "Tom Brady gets approval to become part owner of the NFL's Las Vegas Raiders",
+  "outlet": "Scripps News",
+  "url": "https://www.scrippsnews.com/sports/tom-brady-gets-approval-to-become-part-owner-of-the-nfls-las-vegas-raiders",
+  "img": "assets/news/2024-10-15-1995df.webp",
+  "date": "2024-10-15",
+  "talent": "Tom Brady",
+  "company": "Las Vegas Raiders"
+ },
+ {
+  "title": "Boston Celtics star Jaylen Brown unveils his own brand and signature shoe ahead of 2024 NBA season",
+  "outlet": "Andscape",
+  "url": "https://andscape.com/features/jaylen-brown-launches-new-sneaker-brand-741/",
+  "img": "assets/news/2024-09-26-5210e8.webp",
+  "date": "2024-09-26",
+  "talent": "Jaylen Brown",
+  "company": "741 Performance"
+ },
+ {
+  "title": "After turning down $50 million in endorsements, Jaylen Brown launches new sneaker, performance brand",
+  "outlet": "The Boston Globe",
+  "url": "https://www.bostonglobe.com/2024/09/26/lifestyle/jaylen-brown-shoes-741-performance-launch",
+  "img": "assets/news/2024-09-26-8e96cb.webp",
+  "date": "2024-09-26",
+  "talent": "Jaylen Brown",
+  "company": "741 Performance"
+ },
+ {
+  "title": "Jaylen Brown launches new performance brand, signature shoe",
+  "outlet": "NBC Sports Boston",
+  "url": "https://www.nbcsportsboston.com/nba/boston-celtics/jaylen-brown-launches-new-performance-brand-signature-shoe/651275",
+  "img": "assets/news/2024-09-25-8fb5bc.webp",
+  "date": "2024-09-25",
+  "talent": "Jaylen Brown",
+  "company": "741 Performance"
+ },
+ {
+  "title": "NALA’S BABY ANNOUNCES INVESTMENT FROM MARCUS RASHFORD AND JADON SANCHO",
+  "outlet": "GUAP",
+  "url": "https://www.guap.co/p/nalas-baby-announces-investment-from-marcus-rashford-and-jadon-sancho",
+  "img": "assets/news/2024-08-06-66d7dc.webp",
+  "date": "2024-08-06",
+  "talent": "Marcus Rashford",
+  "company": "Nala's Baby"
+ },
+ {
+  "title": "Goalhanger celebrates record breaking downloads and views",
+  "outlet": "Podcasting Today",
+  "url": "https://podcastingtoday.co.uk/goalhanger-celebrates-record-breaking-downloads-and-views/",
+  "img": "assets/news/2024-08-06-690d0a.webp",
+  "date": "2024-08-06",
+  "talent": "Gary Lineker",
+  "company": "Goalhanger"
+ },
+ {
+  "title": "Marcus Rashford and Jadon Sancho boost business empires by investing in £17m company launched by British rapper Krept and backed by Anthony Joshua",
+  "outlet": "GOAL",
+  "url": "https://www.goal.com/en/lists/marcus-rashford-jadon-sancho-investing-company-british-rapper-krept-backed-anthony-joshua/bltfbba919c7c53e798",
+  "img": "assets/news/2024-08-05-988e68.webp",
+  "date": "2024-08-05",
+  "talent": "Marcus Rashford",
+  "company": "Nala's Baby"
+ },
+ {
+  "title": "Kylian Mbappé Officially Becomes Football Team Owner",
+  "outlet": "beIN SPORTS",
+  "url": "https://beinsports.com/en-us/soccer/ligue-2/articles-video/kylian-mbapp%C3%A9-officially-becomes-football-team-owner-2024-07-31",
+  "img": "assets/news/2024-07-31-5a92f8.webp",
+  "date": "2024-07-31",
+  "talent": "Kylian Mbappé",
+  "company": "SM Caen"
+ },
+ {
+  "title": "David Beckham partners with Prenetics to launch heath and wellness brand IM8",
+  "outlet": "FashionUnited",
+  "url": "https://fashionunited.uk/news/business/david-beckham-partners-with-prenetics-to-launch-heath-and-wellness-brand-im8/2024071576620",
+  "img": "assets/news/2024-07-15-0fac69.webp",
+  "date": "2024-07-15",
+  "talent": "David Beckham",
+  "company": "IM8"
+ },
+ {
+  "title": "Jason and Travis Kelce Just Made a Big Investment in Light Beer",
+  "outlet": "InsideHook",
+  "url": "https://www.insidehook.com/sports/jason-travis-kelce-light-beer-investment/amp",
+  "img": "assets/news/2024-06-15-825d5d.webp",
+  "date": "2024-06-15",
+  "talent": "Jason Kelce",
+  "company": "Garage Beer"
+ },
+ {
+  "title": "Marcus Rashford and Jadon Sancho Have Invested in Nala's Baby",
+  "outlet": "Versus",
+  "url": "https://versus.uk.com/articles/marcus-rashford-and-jadon-sancho-have-invested-in-krepts-nalas-baby",
+  "img": "assets/news/2024-05-08-6e7df8.webp",
+  "date": "2024-05-08",
+  "talent": "Marcus Rashford",
+  "company": "Nala's Baby"
+ },
+ {
+  "title": "Real Madrid legend Ronaldo Nazario to sell club - 'Real Valladolid are next'",
+  "outlet": "Football España",
+  "url": "https://www.football-espana.net/2024/04/30/real-madrid-legend-ronaldo-nazario-to-sell-club-real-valladolid-are-next",
+  "img": "assets/news/2024-04-30-07cf5f.webp",
+  "date": "2024-04-30",
+  "talent": "Ronaldo Nazário",
+  "company": "Real Valladolid"
+ },
+ {
+  "title": "Ronaldo sells stake in Brazilian club Cruzeiro amid criticism, says Spain's Real Valladolid is next",
+  "outlet": "AOL",
+  "url": "https://www.aol.com/ronaldo-sells-stake-brazilian-club-225532701.html",
+  "img": "assets/news/2024-04-29-4697da.webp",
+  "date": "2024-04-29",
+  "talent": "Ronaldo Nazário",
+  "company": "Cruzeiro"
+ },
+ {
+  "title": "Premier League takes stake in VR firm Rezzil, strikes licensing deal",
+  "outlet": "Sportcal",
+  "url": "https://www.sportcal.com/news/premier-league-takes-stake-in-vr-firm-rezzil-strikes-licensing-deal/",
+  "img": "assets/news/2024-03-28-9fab76.webp",
+  "date": "2024-03-28",
+  "talent": "Thierry Henry",
+  "company": "Rezzil"
+ },
+ {
+  "title": "Electric boats charge ahead in the world of fast thrills and celebrity",
+  "outlet": "Euronews",
+  "url": "https://www.euronews.com/2024/03/23/celebrities-and-sport-superstars-enter-the-water-to-compete-in-e1-electric-powerboat-serie",
+  "img": "assets/news/2024-03-23-3a2819.webp",
+  "date": "2024-03-23",
+  "talent": "Didier Drogba",
+  "company": "E1 Series (Team Drogba)"
+ },
+ {
+  "title": "StatusPRO Announces $20M Raise Led By Google Ventures, Reportedly One Of The Largest Series A Rounds Of Any VR Gaming Company To Date",
+  "outlet": "AfroTech",
+  "url": "https://afrotech.com/statuspro-google-ventures-series-a-funding-round",
+  "img": "assets/news/2024-02-05-a58fbd.webp",
+  "date": "2024-02-05",
+  "talent": "Drake",
+  "company": "StatusPro"
+ },
+ {
+  "title": "Dallas Cowboys’ Dak Prescott Invests in Agave Spirits With Tequila Volteo",
+  "outlet": "The Daily Pour",
+  "url": "https://thedailypour.com/?p=10951",
+  "img": "assets/news/2024-01-11-b92377.webp",
+  "date": "2024-01-11",
+  "talent": "Dak Prescott",
+  "company": "Tequila Volteo"
+ },
+ {
+  "title": "Ennis-Hill and Aluko added to venture capital fund backed by Broad",
+  "outlet": "City AM",
+  "url": "https://cityam.com/?p=2092951",
+  "img": "assets/news/2023-12-18-8fab66.webp",
+  "date": "2023-12-18",
+  "talent": "Ben Stokes",
+  "company": "The Players Fund"
+ },
+ {
+  "title": "Andre Iguodala Suits Up To Lead His VC Fund Mosaic Following Retirement From The NBA",
+  "outlet": "AfroTech",
+  "url": "https://afrotech.com/listicle/andre-iguodala-nba-retirement-mosaic-vc-fund/",
+  "img": "assets/news/2023-10-20-51423d.webp",
+  "date": "2023-10-20",
+  "talent": "Andre Iguodala",
+  "company": "Mosaic General Partnership"
+ },
+ {
+  "title": "Iguodala To Run $200M Fund After Retiring From NBA",
+  "outlet": "Front Office Sports",
+  "url": "https://frontofficesports.com/article/iguodala-to-run-200m-fund-after-retiring-from-nba/",
+  "img": "assets/news/2023-10-20-6143ca.webp",
+  "date": "2023-10-20",
+  "talent": "Andre Iguodala",
+  "company": "Mosaic General Partnership"
+ },
+ {
+  "title": "Steph Curry, Marc Lasry Buy San Francisco TGL Franchise",
+  "outlet": "Sportico",
+  "url": "https://www.sportico.com/business/team-sales/2023/tgl-san-francisco-owners-steph-curry-marc-lasry-1234742615/",
+  "img": "assets/news/2023-10-19-643cc4.webp",
+  "date": "2023-10-19",
+  "talent": "Andre Iguodala",
+  "company": "The Bay Golf Club"
+ },
+ {
+  "title": "Fantasy Life Lands $2M In Funding From NFL Stars, Other Celebs",
+  "outlet": "Casino.org",
+  "url": "https://www.casino.org/news/fantasy-life-lands-2m-in-funding-from-nfl-stars-other-celebs/",
+  "img": "assets/news/2023-08-15-83b8bd.webp",
+  "date": "2023-08-15",
+  "talent": "Josh Allen",
+  "company": "Fantasy Life"
+ },
+ {
+  "title": "Drake and Michael B. Jordan are investing in a pro pickleball team | Daily Hive",
+  "outlet": "Daily Hive",
+  "url": "https://dailyhive.com/vancouver/drake-michael-b-jordan-pickleball",
+  "img": "assets/news/2023-07-21-14aef5.webp",
+  "date": "2023-07-21",
+  "talent": "Kevin Durant",
+  "company": "Brooklyn Aces"
+ },
+ {
+  "title": "Celtics star Jayson Tatum joins ownership group of a professional pickleball team",
+  "outlet": "The Boston Globe",
+  "url": "https://www.bostonglobe.com/2023/05/11/sports/celtics-star-jayson-tatum-joins-ownership-group-professional-pickleball-team",
+  "img": "assets/news/2023-05-11-b21777.webp",
+  "date": "2023-05-11",
+  "talent": "Jayson Tatum",
+  "company": "Los Angeles Mad Drops"
+ },
+ {
+  "title": "Customized Nootropics Start-Up Thesis Raises $8.4 Million Series A",
+  "outlet": "BeautyMatter",
+  "url": "https://beautymatter.com/articles/nootropics-startup-thesis-raises-8-4-series-a",
+  "img": "assets/news/2023-05-08-87800c.webp",
+  "date": "2023-05-08",
+  "talent": "Kevin Love",
+  "company": "Thesis"
+ },
+ {
+  "title": "Michael Jordan reportedly to sell majority stake in Hornets",
+  "outlet": "Eurohoops",
+  "url": "https://www.eurohoops.net/en/nba-news/1477054/michael-jordan-reportedly-to-sell-majority-stake-in-hornets/",
+  "img": "assets/news/2023-03-17-a1902e.webp",
+  "date": "2023-03-17",
+  "talent": "Michael Jordan",
+  "company": "Charlotte Hornets"
+ },
+ {
+  "title": "Alex Rodriguez, Marc Lore startup raises $20M to take on Ticketmaster",
+  "outlet": "Scripps News",
+  "url": "https://www.scrippsnews.com/business/company-news/alex-rodriguez-marc-lore-startup-to-take-on-ticketmaster",
+  "img": "assets/news/2023-03-02-7f048b.webp",
+  "date": "2023-03-02",
+  "talent": "Alex Rodriguez",
+  "company": "Jump"
+ },
+ {
+  "title": "A-Rod co-founded ticketing startup Jump raises $20 million to take on Ticketmaster",
+  "outlet": "Fortune",
+  "url": "https://fortune.com/2023/03/01/a-rod-alex-rodriguez-ticketing-startup-jump-raises-30-million-ticketmaster-taylor-swift-fiasco/",
+  "img": "assets/news/2023-03-01-07c00d.webp",
+  "date": "2023-03-01",
+  "talent": "Alex Rodriguez",
+  "company": "Jump"
+ },
+ {
+  "title": "La Kings League: la reinvención del fútbol y el negocio en el que se enfoca Piqué",
+  "outlet": "Bloomberg Línea",
+  "url": "https://www.bloomberglinea.com/2023/01/14/la-kings-league-la-reinvencion-del-futbol-y-el-negocio-en-el-que-se-enfoca-pique/",
+  "img": "assets/news/2023-01-14-62ed39.webp",
+  "date": "2023-01-14",
+  "talent": "Gerard Piqué",
+  "company": "Kings League"
  }
 ]
