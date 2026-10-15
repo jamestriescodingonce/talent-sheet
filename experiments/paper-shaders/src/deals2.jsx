@@ -45,6 +45,11 @@ function App() {
   const [active] = useState("Deals");
   return (
     <div className="shell">
+      <div className="bgfx" aria-hidden="true">
+        <MeshGradient style={fill} colors={["#0a0c10", "#0a1f1a", "#10382d", "#2a7f61"]}
+          distortion={0.75} swirl={0.4} grainMixer={0.35} grainOverlay={0.25} scale={1.3} speed={sp(0.07)} />
+        <div className="grain grain-bg" />
+      </div>
       <aside className="side">
         <div className="logoRow">
           <span className="mark"><LiquidMetal style={fill} colorBack="#00000000" colorTint="#58ca9d" shape="circle"
@@ -58,11 +63,6 @@ function App() {
       <main className="main">
         <div className="top"><div className="pill"><Icon d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3" />Search deals, talent, companies…</div></div>
         <header className="head">
-          <MeshGradient style={fill} colors={["#0a0c10", "#0b1a16", "#10362b", "#2c7a5f"]}
-            distortion={0.6} swirl={0.3} grainMixer={0.3} grainOverlay={0.2} speed={sp(0.07)} />
-          <div className="shade" /><div className="grain grain-head" />
-          <div className="chrome"><LiquidMetal style={fill} colorBack="#00000000" colorTint="#58ca9d" shape="metaballs" scale={0.85}
-            repetition={2} softness={0.7} shiftRed={0.06} shiftBlue={-0.06} distortion={0.05} contour={0.35} angle={70} speed={sp(0.1)} /></div>
           <div className="hcopy"><h1>Deals</h1>
             <p>Every deal on record between athletes and the companies they back. Try “owned since 2024” or “partnered football”, then press Enter to keep it as a filter.</p></div>
         </header>
