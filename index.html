@@ -352,17 +352,17 @@ a.fchip:focus-visible{outline:1.5px solid var(--focus);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 /* --- product update: sidebar footer, FAQ, filter chips, spacing */
 .side-foot{position:absolute;left:12px;right:12px;bottom:20px}
-/* Subscribe card: theme-aware mint glow over the surface color. */
-.sub-card{position:relative;overflow:hidden;margin-bottom:12px;padding:14px 12px 12px;border:1px solid var(--accent-line);border-radius:12px;
-  background:radial-gradient(130% 90% at 0% 0%,color-mix(in srgb,var(--accent) 26%,transparent),transparent 62%),radial-gradient(90% 70% at 100% 100%,color-mix(in srgb,var(--accent) 10%,transparent),transparent 70%),var(--surface)}
-.sub-ic{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:var(--accent);background:color-mix(in srgb,var(--accent) 16%,transparent);margin-bottom:10px}
-.sub-ic svg{width:15px;height:15px}
-.sub-card h2{font-size:13px;font-weight:500;color:var(--text-hi);letter-spacing:-.005em}
-.sub-card p{margin-top:4px;font-size:12px;line-height:1.4;color:var(--sub)}
-.sub-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;height:34px;margin-top:12px;border:0;border-radius:999px;background:var(--accent);color:#04140D;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;transition:background-color 150ms ease,transform 150ms var(--ease)}
-.sub-btn:hover{background:var(--accent-hover)}
+/* Subscribe card: small, quiet mint glow over the surface color. */
+.sub-card{position:relative;overflow:hidden;margin-bottom:8px;padding:10px 10px 10px;border:1px solid color-mix(in srgb,var(--accent) 16%,var(--rule));border-radius:10px;
+  background:radial-gradient(130% 100% at 0% 0%,color-mix(in srgb,var(--accent) 13%,transparent),transparent 65%),var(--surface)}
+.sub-card h2{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:500;color:var(--text-hi)}
+.sub-ic{display:grid;place-items:center;color:var(--accent)}
+.sub-ic svg{width:13px;height:13px}
+.sub-card p{margin-top:3px;font-size:11.5px;line-height:1.35;color:var(--sub)}
+.sub-btn{display:flex;align-items:center;justify-content:center;gap:5px;width:100%;height:28px;margin-top:9px;border:1px solid var(--accent-line);border-radius:999px;background:var(--accent-wash);color:var(--accent);font:inherit;font-size:12px;font-weight:500;cursor:pointer;transition:background-color 150ms ease,color 150ms ease,transform 150ms var(--ease)}
+.sub-btn:hover{background:var(--accent);color:#04140D}
 .sub-btn:active{transform:scale(.97)}
-.sub-btn svg{width:14px;height:14px;transition:transform 200ms var(--ease)}
+.sub-btn svg{width:12px;height:12px;transition:transform 200ms var(--ease)}
 .sub-btn:hover svg{transform:translateX(2px)}
 @media (max-height:700px),(max-width:760px){.sub-card{display:none}}
 .themebtn{display:flex;align-items:center;gap:10px;width:100%;height:38px;padding:0 10px;border:0;border-radius:6px;background:none;font:inherit;font-size:12px;color:var(--nav-text);cursor:pointer;transition:color 150ms ease,background-color 150ms ease}
@@ -447,9 +447,8 @@ body::after{content:"";position:fixed;inset:-50%;width:200%;height:200%;pointer-
   </nav>
   <div class="side-foot">
     <section class="sub-card" aria-labelledby="sub-t">
-      <div class="sub-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10.3 20a2 2 0 0 0 3.4 0"/></svg></div>
-      <h2 id="sub-t">Stay up to date</h2>
-      <p>New athlete deals in your inbox, weekly.</p>
+      <h2 id="sub-t"><span class="sub-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10.3 20a2 2 0 0 0 3.4 0"/></svg></span>Stay up to date</h2>
+      <p>New deals each week.</p>
       <button class="sub-btn" type="button">Subscribe<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
     </section>
     <button class="themebtn" id="theme" type="button" aria-label="Switch theme"><svg class="icon"><use href="#i-sun"/></svg><span class="lbl">Light</span></button>
