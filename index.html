@@ -270,6 +270,20 @@ a.fchip:focus-visible{outline:1.5px solid var(--focus);outline-offset:2px}
 .thead h1{margin:0;font-size:30px;font-weight:500;letter-spacing:-.025em;line-height:1.1;color:var(--text-hi)}
 .lgchip{display:inline-flex;align-items:center;gap:8px;margin-top:12px;height:28px;padding:0 12px;border:1px solid var(--border);border-radius:14px;background:var(--card);font-size:13px;color:var(--text-2)}
 .lgchip img{width:18px;height:18px;margin-left:-6px;border-radius:50%;object-fit:cover;background:#fff}
+/* Industries explore */
+.inner[data-mode="ind"] .inv,.inner[data-mode="indd"] .inv{display:none}
+.icard .itm{display:flex;align-items:center;gap:6px;margin-bottom:10px;font-size:12px;color:var(--muted)}
+.ibar{display:flex;gap:2px;height:4px;border-radius:2px;overflow:hidden;margin-top:12px}
+.ibar i{display:block;min-width:3px}
+.b-investment{background:var(--c-inv)}.b-ownership{background:var(--c-own)}.b-partnership{background:var(--c-par)}.b-executive{background:var(--c-exe)}.b-founded{background:var(--c-fou)}
+.ileg{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:16px;font-size:13px;color:var(--text-2)}
+.ileg span{display:inline-flex;align-items:center;gap:7px}
+.ileg i{width:7px;height:7px;border-radius:50%}
+.ileg .num{color:var(--muted)}
+.ihead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.ipeople{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.ipeople .tpill{height:36px;padding:0 14px 0 6px}
+.ipeople .av{width:24px;height:24px}
 .sech{display:flex;align-items:baseline;gap:10px;margin-top:28px}
 .sech h2{margin:0;font-size:16px;font-weight:500;letter-spacing:-.01em;color:var(--text-hi)}
 .sech .n{font-size:13px;color:var(--muted)}
@@ -454,7 +468,7 @@ body::after{content:"";position:fixed;inset:-50%;width:200%;height:200%;pointer-
     <a href="#talent" data-nav="tal"><svg class="icon"><use href="#i-people"/></svg>Talent</a>
     <a href="#investments" data-nav="inv" aria-current="page"><svg class="icon"><use href="#i-chart"/></svg>Deals</a>
     <a href="#companies" data-nav="cos"><svg class="icon"><use href="#i-building"/></svg>Companies</a>
-    <a href="#top"><svg class="icon"><use href="#i-grid"/></svg>Industries</a>
+    <a href="#industries" data-nav="ind"><svg class="icon"><use href="#i-grid"/></svg>Industries</a>
     <a href="#news" data-nav="news"><svg class="icon"><use href="#i-story"/></svg>News</a>
     <a href="#faq" data-nav="faq"><svg class="icon"><use href="#i-help"/></svg>FAQ</a>
   </nav>
@@ -476,7 +490,7 @@ body::after{content:"";position:fixed;inset:-50%;width:200%;height:200%;pointer-
       <a href="#talent" data-nav="tal"><svg class="icon"><use href="#i-people"/></svg>Talent</a>
       <a href="#investments" data-nav="inv" aria-current="page"><svg class="icon"><use href="#i-chart"/></svg>Deals</a>
     <a href="#companies" data-nav="cos"><svg class="icon"><use href="#i-building"/></svg>Companies</a>
-      <a href="#top"><svg class="icon"><use href="#i-grid"/></svg>Industries</a>
+      <a href="#industries" data-nav="ind"><svg class="icon"><use href="#i-grid"/></svg>Industries</a>
       <a href="#news" data-nav="news"><svg class="icon"><use href="#i-story"/></svg>News</a>
     <a href="#faq" data-nav="faq"><svg class="icon"><use href="#i-help"/></svg>FAQ</a>
       <button class="themebtn" type="button" aria-label="Switch theme"><svg class="icon"><use href="#i-sun"/></svg><span class="lbl">Light</span></button>
@@ -513,6 +527,7 @@ body::after{content:"";position:fixed;inset:-50%;width:200%;height:200%;pointer-
       <div id="newslist"></div>
     </section>
     <section id="cpage" hidden></section>
+    <section id="indpage" hidden></section>
     <section id="tpage" hidden></section>
     <section id="faqpage" hidden>
       <section class="head"><h1>FAQ</h1><p class="sub">How Talent Sheet works and where the numbers come from.</p></section>
@@ -610,7 +625,7 @@ function mark(co,domain,sm){
   return u?`<span class="${c} has-logo${!TEAMLOGO[co]&&LOGODARK.has(domain)?" dk":""}" aria-hidden="true"><img src="${u}" alt="" data-co="${esc(co)}"></span>`:`<span class="${c} abs" aria-hidden="true">${absMark(co)}</span>`;
 }
 
-const state={mode:"inv",coName:null,cpg:1,csort:"recent",cind:[],view:"deals",f:{types:[],leagues:[],inds:[],vers:[],min:0,disc:false,since:0,text:[]},sort:{deals:"date",athletes:"latest"},open:new Set(),menu:null,showChips:true,q:"",page:1,sig:""};
+const state={ix:{sort:"cos",n:24},mode:"inv",coName:null,cpg:1,csort:"recent",cind:[],view:"deals",f:{types:[],leagues:[],inds:[],vers:[],min:0,disc:false,since:0,text:[]},sort:{deals:"date",athletes:"latest"},open:new Set(),menu:null,showChips:true,q:"",page:1,sig:""};
 const SORTS={
   deals:[["date","Newest"],["co","Company A-Z"]],
   athletes:[["latest","Newest"],["name","Name A-Z"]]
@@ -784,8 +799,8 @@ function commit(){
   p.text.forEach(t=>{if(!F.text.includes(t))F.text.push(t)});
   state.q="";$("#q").value="";render();
 }
-$("#describe").addEventListener("submit",e=>{e.preventDefault();if(state.mode==="news")return;commit()});
-$("#q").addEventListener("input",e=>{state.q=e.target.value;if(state.mode==="news"){renderNews();return}if(state.mode==="co"){location.hash="#companies";return}if(state.mode==="tals"){state.tl.n=24;renderTalentIndex();return}if(state.mode==="tal"||state.mode==="deal"){location.hash="#investments";return}if(state.mode==="cos"){state.cpg=1;renderCos();return}const n=renderTable(filtered());renderChips(n);settab()});
+$("#describe").addEventListener("submit",e=>{e.preventDefault();if(state.mode==="news"||state.mode==="ind"||state.mode==="indd")return;commit()});
+$("#q").addEventListener("input",e=>{state.q=e.target.value;if(state.mode==="news"){renderNews();return}if(state.mode==="ind"){renderIndustries();return}if(state.mode==="indd"){location.hash="#industries";return}if(state.mode==="co"){location.hash="#companies";return}if(state.mode==="tals"){state.tl.n=24;renderTalentIndex();return}if(state.mode==="tal"||state.mode==="deal"){location.hash="#investments";return}if(state.mode==="cos"){state.cpg=1;renderCos();return}const n=renderTable(filtered());renderChips(n);settab()});
 document.addEventListener("click",e=>{
   const c=s=>e.target.closest(s),F=state.f;let b;
   if(c("#fbtn")){state.menu=state.menu==="f"?null:"f";return renderControls()}
@@ -805,6 +820,9 @@ document.addEventListener("click",e=>{
   if(c("#mbtn")){const m=$("#mnav"),o=m.hidden;m.hidden=!o;$("#mbtn").setAttribute("aria-expanded",String(o));return}
   if(b=c("[data-pg]")){if(b.disabled)return;state.page=+b.dataset.pg;renderTable(filtered());settab();$(".tw").scrollIntoView({block:"start"});return}
   if(b=c("[data-tf]")){state.tf=b.dataset.tf;return renderTalent()}
+  if(b=c("[data-isort]")){state.ix.sort=b.dataset.isort;return renderIndustries()}
+  if(c("[data-imore]")){state.ix.n+=24;return renderIndustry()}
+  if(b=c("[data-ind-deals]")){const n=b.dataset.indDeals;resetDeals();state.f.inds=[n];location.hash="#investments";return}
   if(b=c("[data-tlg]")){state.tl.lg=b.dataset.tlg;state.tl.n=24;return renderTalentIndex()}
   if(b=c("[data-tsort]")){state.tl.sort=b.dataset.tsort;state.tl.n=24;return renderTalentIndex()}
   if(c("[data-tmore]")){state.tl.n+=24;return renderTalentIndex()}
@@ -1031,21 +1049,70 @@ function renderDeal(){
 function resetDeals(){Object.assign(state.f,{types:[],leagues:[],inds:[],vers:[],min:0,disc:false,since:0,text:[]});state.q="";$("#q").value="";state.showChips=true;state.menu=null;state.page=1;state.seenChips=new Set()}
 window.addEventListener("pageshow",e=>{if(e.persisted){resetDeals();if(state.mode==="inv")render()}});
 let routed=false;
+// ---- Industries explore (#industries) and industry page (#industry=Name)
+const iLink=n=>`#industry=${encodeURIComponent(n)}`;
+const ISORTS=[["cos","Most companies"],["deals","Most deals"],["latest","Latest activity"],["az","A to Z"]];
+let INDS_=null;
+function indData(){
+  if(INDS_)return INDS_;
+  const m=new Map();
+  COS.forEach(c=>c.ind.forEach(i=>{
+    let e=m.get(i);if(!e)e=m.set(i,{name:i,cos:[],deals:0,tal:new Map(),types:{},latest:""}).get(i);
+    e.cos.push(c);e.deals+=c.deals;if(c.latest>e.latest)e.latest=c.latest;
+    c.rows.forEach(r=>{e.types[r.type]=(e.types[r.type]||0)+1;e.tal.set(r.ath,(e.tal.get(r.ath)||0)+1)})}));
+  m.forEach(e=>e.cos.sort((a,b)=>b.deals-a.deals||b.n-a.n||a.co.localeCompare(b.co)));
+  return INDS_=m;
+}
+const typeBar=t=>`<div class="ibar" aria-hidden="true">${REL_ORDER.filter(k=>t[k]).map(k=>`<i class="b-${k.toLowerCase()}" style="flex:${t[k]}"></i>`).join("")}</div>`;
+const plural=(n,a,b)=>`${n.toLocaleString()} ${n===1?a:b}`;
+function indCard(e){
+  const top=e.cos.slice(0,5);
+  return `<a class="tcard icard" href="${iLink(e.name)}"><div class="tn">${esc(e.name)}</div><div class="tl num">${plural(e.cos.length,"company","companies")} · ${plural(e.deals,"deal","deals")}</div>${typeBar(e.types)}<div class="tstack">${top.map(c=>mark(c.co,c.domain)).join("")}${e.cos.length>5?`<span class="tmore num">+${e.cos.length-5}</span>`:""}</div></a>`;
+}
+function renderIndustries(){
+  const q=state.q.trim().toLowerCase(),sort=state.ix.sort;
+  let list=[...indData().values()].filter(e=>!q||e.name.toLowerCase().includes(q));
+  const cmp={cos:(a,b)=>b.cos.length-a.cos.length||b.deals-a.deals,deals:(a,b)=>b.deals-a.deals||b.cos.length-a.cos.length,latest:(a,b)=>b.latest.localeCompare(a.latest)||b.deals-a.deals,az:()=>0}[sort];
+  list.sort((a,b)=>cmp(a,b)||a.name.localeCompare(b.name));
+  const pill=(k,l)=>`<button class="tpill" data-isort="${k}" aria-pressed="${sort===k}">${l}</button>`;
+  $("#indpage").innerHTML=`<section class="head"><h1>Industries</h1><p class="sub">Where athletes put their money. Open an industry to see its companies and the talent behind them.</p></section>
+  <div class="tbar"><span class="n num">${plural(list.length,"industry","industries")}${q?` matching “${esc(state.q.trim())}”`:""}</span><div class="tfilt" role="group" aria-label="Sort">${ISORTS.map(([k,l])=>pill(k,l)).join("")}</div></div>
+  ${list.length?`<div class="tgrid">${list.map(indCard).join("")}</div>`:`<p class="foot" style="margin-top:32px">No industries match.</p>`}`;
+}
+function companyCard(c){
+  const bits=[plural(c.deals,"deal","deals"),plural(c.n,"person","people")];
+  return `<a class="dcard" href="${cLink(c.co)}"><div class="ctop">${mark(c.co,c.domain)}<div class="ct"><div class="cn">${esc(c.co)}</div>${c.hq?`<div class="ci">${esc(c.hq)}</div>`:""}</div></div><p class="dd">${esc(c.desc)}</p><div class="fx"><div class="f1"><span class="num">${bits.join(" · ")}</span></div></div></a>`;
+}
+function renderIndustry(){
+  const e=indData().get(state.indName);
+  if(!e){$("#indpage").innerHTML=`<a class="back" href="#industries">${ic("i-arrow")}Industries</a><section class="head"><h1>Industry not found</h1><p class="sub">That industry isn't in the database.</p></section>`;return}
+  const people=[...e.tal.entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0])).slice(0,12);
+  const shown=e.cos.slice(0,state.ix.n);
+  $("#indpage").innerHTML=`<a class="back" href="#industries">${ic("i-arrow")}Industries</a>
+  <section class="head"><div class="ihead"><div><h1>${esc(e.name)}</h1><p class="sub num">${plural(e.cos.length,"company","companies")} · ${plural(e.deals,"deal","deals")} · ${plural(e.tal.size,"person","people")}</p></div>
+    <button class="tpill" aria-pressed="true" data-ind-deals="${esc(e.name)}">View all deals ${ic("i-arrow")}</button></div>
+    ${typeBar(e.types)}<div class="ileg">${REL_ORDER.filter(k=>e.types[k]).map(k=>`<span><i class="b-${k.toLowerCase()}"></i>${k} <span class="num">${e.types[k]}</span></span>`).join("")}</div></section>
+  <div class="sech"><h2>Most active talent</h2></div>
+  <div class="ipeople">${people.map(([n,c])=>`<a class="tpill" href="${tLink(n)}">${avatar(n)}${esc(n)}<span class="num">${c}</span></a>`).join("")}</div>
+  <div class="sech"><h2>Companies</h2><span class="n num">${e.cos.length}</span></div>
+  <div class="tgrid">${shown.map(companyCard).join("")}</div>
+  ${e.cos.length>shown.length?`<button class="tmorebtn" data-imore="1">Show ${Math.min(24,e.cos.length-shown.length)} more</button>`:""}`;
+}
 function route(){
   const raw=location.hash.replace(/^#/,""),h=decodeURIComponent(raw);
-  let mode="inv",co=null,tal=null,deal=null;
+  let mode="inv",co=null,tal=null,deal=null,ind=null;
   if(h==="investments")history.replaceState(null,"",location.pathname+location.search);
-  if(h==="talent")mode="tals";else if(h==="companies")mode="cos";else if(h==="faq")mode="faq";else if(h==="news")mode="news";else if(h.startsWith("company=")){mode="co";co=h.slice(8)}else if(h.startsWith("talent=")){mode="tal";tal=h.slice(7)}else if(raw.startsWith("deal=")){const p=raw.slice(5).split("/");if(p.length>1){mode="deal";deal=[decodeURIComponent(p[0]),decodeURIComponent(p.slice(1).join("/"))]}}
-  if(mode!==state.mode&&(mode==="cos"||state.mode==="cos"||mode==="news"||state.mode==="news"||mode==="tals"||state.mode==="tals")){state.q="";$("#q").value=""}
+  if(h==="talent")mode="tals";else if(h==="companies")mode="cos";else if(h==="faq")mode="faq";else if(h==="news")mode="news";else if(h==="industries")mode="ind";else if(h.startsWith("industry=")){mode="indd";ind=h.slice(9)}else if(h.startsWith("company=")){mode="co";co=h.slice(8)}else if(h.startsWith("talent=")){mode="tal";tal=h.slice(7)}else if(raw.startsWith("deal=")){const p=raw.slice(5).split("/");if(p.length>1){mode="deal";deal=[decodeURIComponent(p[0]),decodeURIComponent(p.slice(1).join("/"))]}}
+  if(mode!==state.mode&&(mode==="cos"||state.mode==="cos"||mode==="news"||state.mode==="news"||mode==="ind"||state.mode==="ind"||mode==="tals"||state.mode==="tals")){state.q="";$("#q").value=""}
   {const pf=m=>m==="tal"||m==="deal";if((state.mode==="inv"||pf(state.mode))&&mode!=="inv"&&!pf(mode))resetDeals()} // keep filters while hopping between deals and profiles
   if(tal!==state.talName||mode!=="tal")state.tf="";
   state.prev=routed?state.mode:null;routed=true;
-  state.mode=mode;state.coName=co;state.talName=tal;state.deal=deal;
+  if(mode==="indd"&&ind!==state.indName)state.ix.n=24;state.mode=mode;state.indName=ind;state.coName=co;state.talName=tal;state.deal=deal;
   document.querySelector(".inner").dataset.mode=mode;
-  const cp=$("#cpage");cp.hidden=mode!=="cos"&&mode!=="co";$("#faqpage").hidden=mode!=="faq";$("#newspage").hidden=mode!=="news";$("#tpage").hidden=mode!=="tal"&&mode!=="deal"&&mode!=="tals";
-  document.querySelectorAll("[data-nav]").forEach(a=>{const on=(a.dataset.nav==="inv"&&mode==="inv")||(a.dataset.nav==="cos"&&(mode==="cos"||mode==="co"))||(a.dataset.nav==="faq"&&mode==="faq")||(a.dataset.nav==="news"&&mode==="news")||(a.dataset.nav==="tal"&&(mode==="tals"||mode==="tal"||mode==="deal"));on?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current")});
-  if(mode==="cos"){state.cpg=1;renderCos()}else if(mode==="co"){renderCompany()}else if(mode==="faq"){renderCredits()}else if(mode==="news"){renderNews()}else if(mode==="tals"){renderTalentIndex()}else if(mode==="tal"){renderTalent()}else if(mode==="deal"){renderDeal()}else{render()}
-  document.title=mode==="tals"?"Talent · Talent Sheet":mode==="tal"?`${tal} · Talent Sheet`:mode==="deal"?`${deal[0]} × ${deal[1]} · Talent Sheet`:"Investments Table"
+  const cp=$("#cpage");cp.hidden=mode!=="cos"&&mode!=="co";$("#faqpage").hidden=mode!=="faq";$("#newspage").hidden=mode!=="news";$("#tpage").hidden=mode!=="tal"&&mode!=="deal"&&mode!=="tals";$("#indpage").hidden=mode!=="ind"&&mode!=="indd";
+  document.querySelectorAll("[data-nav]").forEach(a=>{const on=(a.dataset.nav==="inv"&&mode==="inv")||(a.dataset.nav==="cos"&&(mode==="cos"||mode==="co"))||(a.dataset.nav==="faq"&&mode==="faq")||(a.dataset.nav==="news"&&mode==="news")||(a.dataset.nav==="ind"&&(mode==="ind"||mode==="indd"))||(a.dataset.nav==="tal"&&(mode==="tals"||mode==="tal"||mode==="deal"));on?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current")});
+  if(mode==="cos"){state.cpg=1;renderCos()}else if(mode==="co"){renderCompany()}else if(mode==="faq"){renderCredits()}else if(mode==="news"){renderNews()}else if(mode==="ind"){renderIndustries()}else if(mode==="indd"){renderIndustry()}else if(mode==="tals"){renderTalentIndex()}else if(mode==="tal"){renderTalent()}else if(mode==="deal"){renderDeal()}else{render()}
+  document.title=mode==="ind"?"Industries · Talent Sheet":mode==="indd"?`${ind} · Talent Sheet`:mode==="tals"?"Talent · Talent Sheet":mode==="tal"?`${tal} · Talent Sheet`:mode==="deal"?`${deal[0]} × ${deal[1]} · Talent Sheet`:"Investments Table"
   syncUrl(mode);lastHref=location.href;
   window.scrollTo({top:0})
 }
