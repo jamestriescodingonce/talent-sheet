@@ -62,7 +62,7 @@ h1,h2,h3,h4,p{margin:0}
 .main{margin-left:170px;overflow-x:clip}
 .inner{max-width:1280px;margin:0 auto;padding:24px 40px 72px}
 .top{display:flex;justify-content:flex-end}
-.search{display:flex;align-items:center;gap:8px;width:300px;height:36px;padding:0 14px;background:var(--card);border:1px solid var(--border);border-radius:16px;color:var(--muted);transition:border-color 150ms ease}
+.search{display:flex;align-items:center;gap:8px;width:320px;height:36px;padding:0 14px;background:var(--card);border:1px solid var(--border);border-radius:16px;color:var(--muted);transition:border-color 150ms ease}
 .search:hover{border-color:var(--border-hover)}
 .search:focus-within{border-color:var(--border-hover);outline:1.5px solid var(--focus);outline-offset:2px}
 .search input{flex:1;min-width:0;border:0;background:none;outline:none;font-size:13.5px;color:var(--text)}
@@ -121,7 +121,7 @@ h1,h2,h3,h4,p{margin:0}
 .tw{margin-top:8px;overflow-x:auto;scrollbar-width:thin;scrollbar-color:var(--border-hover) transparent}
 .tw::-webkit-scrollbar{height:8px}.tw::-webkit-scrollbar-thumb{background:var(--border-hover);border-radius:4px}
 /* Deals panel: tabs, chips and table sit in one contained surface so the table reads as a single object. */
-.panel{margin-top:20px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.panel{margin-top:20px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:clip}
 .panel .tabs{margin-top:0;border-top:0;border-bottom:0;height:44px;padding-inline:16px}
 .panel .chips{margin-top:0;padding:10px 16px;border-bottom:1px solid var(--rule)}
 .panel .chips:empty{display:none}
@@ -130,6 +130,14 @@ h1,h2,h3,h4,p{margin:0}
 .panel th:first-child,.panel td:first-child{padding-left:16px}
 .panel th:last-child,.panel td:last-child{padding-right:16px}
 .panel tbody tr:last-child td{border-bottom:0}
+/* Row affordance: the + is easier to see and lights up with the row. */
+.panel .plus{width:14px;height:14px;color:var(--muted)}
+.panel .row:hover .plus,.panel .row:focus-visible .plus{color:var(--accent);transform:scale(1.1)}
+/* Reported is the weaker claim, so it reads quieter than Verified; empty cells recede. */
+.panel .v-reported{color:var(--muted)}
+.panel td>.dim{opacity:.6}
+/* Sticky column headers. Needs the table to stop being its own scroll box, so only where it fits without horizontal scroll. */
+@media (min-width:1280px){.panel .tw{overflow:visible}.panel th{position:sticky;top:0;z-index:2}}
 table{border-collapse:collapse;width:100%;min-width:960px;table-layout:fixed}
 td{overflow:hidden;text-overflow:ellipsis}
 .w-co{width:22%}.w-ind{width:15%}.w-tal{width:20%}.w-rel{width:11%}.w-ver{width:13%}.w-web{width:19%}
@@ -444,12 +452,12 @@ body::after{content:"";position:fixed;inset:-50%;width:200%;height:200%;pointer-
 
   <div class="inner" data-mode="inv">
     <div class="top">
-      <form class="search" id="describe" role="search"><svg class="icon"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Search deals, talent, companies..." autocomplete="off" aria-label="Search deals"></form>
+      <form class="search" id="describe" role="search"><svg class="icon"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Search or try “owned since 2024”" title="Press Enter to keep a search as a filter" autocomplete="off" aria-label="Search deals"></form>
     </div>
 
     <section class="head inv">
       <h1>Deals</h1>
-      <p class="sub">Every deal on record between athletes and the companies they back. Try “owned since 2024” or “partnered football”, then press Enter to keep it as a filter.</p>
+      <p class="sub">Every deal on record between athletes and the companies they back.</p>
     </section>
 
     <div class="panel inv">
