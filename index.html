@@ -269,6 +269,11 @@ a.fchip:focus-visible{outline:1.5px solid var(--focus);outline-offset:2px}
 .thead{display:flex;align-items:center;gap:22px;margin-top:20px;padding-bottom:26px;border-bottom:1px solid var(--rule)}
 .thead h1{margin:0;font-size:30px;font-weight:500;letter-spacing:-.025em;line-height:1.1;color:var(--text-hi)}
 .lgchip{display:inline-flex;align-items:center;gap:8px;margin-top:12px;height:28px;padding:0 12px;border:1px solid var(--border);border-radius:14px;background:var(--card);font-size:13px;color:var(--text-2)}
+.tchips{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px}
+.tchips .lgchip{margin-top:0}
+.fundchip{border-color:var(--accent-line);background:var(--accent-wash);color:var(--accent);transition:border-color 150ms ease,background-color 150ms ease,color 150ms ease}
+a.fundchip:hover{border-color:var(--accent);color:var(--accent-hover)}
+.fundchip .mark{width:18px;height:18px;margin-left:-6px;border-radius:5px;flex:none}
 .lgchip img{width:18px;height:18px;margin-left:-6px;border-radius:50%;object-fit:cover;background:#fff}
 .il{color:inherit;transition:color 150ms ease}
 .il:hover,.il:focus-visible{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
@@ -1034,10 +1039,13 @@ function renderTalent(){
   const up=state.prev==="inv"?`<a class="back" href="#investments">${ic("i-arrow")} Deals</a>`:`<a class="back" href="#talent">${ic("i-arrow")} Talent</a>`;
   if(!rows.length){$("#tpage").innerHTML=`${up}<p class="foot" style="margin-top:24px">Talent not found.</p>`;return}
   const l=lgOf(n),lu=l&&LGLOGOS[l],types=REL_ORDER.filter(t=>gs.some(g=>g.r.type===t));
+  // A fund they run or belong to: an Executive/Founded role at a Venture & Private Equity company.
+  const funds=[...new Set(rows.filter(r=>(r.type==="Executive"||r.type==="Founded")&&(DATA.ind[r.co]||[]).includes("Venture & Private Equity")).map(r=>r.co))];
+  const fundChips=funds.slice(0,3).map(co=>`<a class="lgchip fundchip" href="${cLink(co)}" title="${esc(co)}">${mark(co,DATA.dom[co]||null,true)}${esc(co.replace(/\s*\([^)]*\)\s*$/,""))}</a>`).join("")+(funds.length>3?`<span class="lgchip fundchip">+${funds.length-3}</span>`:"");
   const f=types.length>1&&types.includes(state.tf)?state.tf:"",shown=f?gs.filter(g=>g.r.type===f):gs;
   const tabs=types.length>1?`<div class="tfilt" role="group" aria-label="Filter portfolio by type">${["",...types].map(t=>`<button class="tpill" data-tf="${t}" aria-pressed="${t===f}">${t||"All"}<span class="num">${t?gs.filter(g=>g.r.type===t).length:gs.length}</span></button>`).join("")}</div>`:"";
   $("#tpage").innerHTML=`${up}
-  <div class="thead">${avatar(n,"xl")}<div><h1>${esc(n)}</h1>${l?`<span class="lgchip">${lu?`<img src="${lu}" alt="" data-lg="1">`:""}${esc(l)}</span>`:""}</div></div>
+  <div class="thead">${avatar(n,"xl")}<div><h1>${esc(n)}</h1>${l||funds.length?`<div class="tchips">${l?`<span class="lgchip">${lu?`<img src="${lu}" alt="" data-lg="1">`:""}${esc(l)}</span>`:""}${fundChips}</div>`:""}</div></div>
   <div class="sech"><h2>Portfolio</h2><span class="n num">${gs.length}</span></div>
   ${tabs}
   <div class="pgrid">${shown.map(dealCard).join("")}</div>
