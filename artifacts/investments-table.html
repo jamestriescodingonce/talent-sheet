@@ -289,6 +289,11 @@ td{padding:0 10px;height:60px;white-space:nowrap;vertical-align:middle;font-size
 .tcard .tstack .mark+.mark{margin-left:-7px}
 .tcard .tmore{margin-left:8px;font-size:12px;color:var(--muted)}
 @media (max-width:520px){.tgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tcard{padding:14px}.tcard .av.xl{width:56px;height:56px;font-size:18px;margin-bottom:10px}.tcard .av.xl .lgb{width:18px;height:18px}.tcard .tstack .mark{width:22px;height:22px}}
+@media (max-width:760px){.tgrid.sim3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.tgrid.sim3 .tcard:nth-child(3){grid-column:1/-1}}
+.tcard .tr{margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--text-2)}
+.tgrid.sim3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.dcard .f1 .hq{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px;color:var(--muted)}
 .tmorebtn{display:block;margin:22px auto 0;height:36px;padding:0 18px;border:1px solid var(--border);border-radius:18px;background:none;font-size:13px;color:var(--text-2);transition:border-color 150ms ease,color 150ms ease}
 .tmorebtn:hover{border-color:var(--border-hover);color:var(--text)}
 @media (max-width:760px){.dgrid{grid-template-columns:minmax(0,1fr)}.thead{gap:16px}.thead h1{font-size:24px}.av.xl{width:72px;height:72px;font-size:24px}}
@@ -818,7 +823,8 @@ function renderCompany(){
   $("#cpage").innerHTML=`<button class="back" data-back="1">${ic("i-arrow")} Companies</button>
   <div class="chead">${mark(c.co,c.domain)}<div><h1>${esc(c.co)}</h1><div class="meta">${c.ind.length?`<span>${esc(c.ind.join(", "))}</span>`:""}${c.domain?`<a href="https://${c.domain}" target="_blank" rel="noopener">${c.domain}</a>`:""}${c.hq?`<span>${esc(c.hq)}</span>`:""}</div></div></div>
   ${c.desc?`<p class="cdesc">${esc(c.desc)}</p>`:""}
-  ${tw("t-co-detail",head,body)}`;
+  ${tw("t-co-detail",head,body)}
+  ${simCompanyHTML(c.co)}`;
 }
 function renderCredits(){
   const el=document.getElementById("credits");if(!el)return;
@@ -837,6 +843,54 @@ function renderNews(){
   }
   $("#newslist").innerHTML=h||`<p class="nempty">No stories match “${esc(state.q)}”.</p>`;
 }
+// ---- "Similar" suggestions (talent <-> talent, company <-> company), computed from the embedded rows
+function talentCard(t,reason){const cs=t.cos.slice(0,5);return `<a class="tcard" href="${tLink(t.name)}">${avatar(t.name,"xl")}<div class="tn">${esc(t.name)}</div><div class="tl">${t.lg?esc(t.lg)+" · ":""}${t.n} ${t.n===1?"company":"companies"}</div>${reason!=null?`<div class="tr">${esc(reason)}</div>`:""}<div class="tstack">${cs.map(c=>mark(c,DATA.dom[c]||null)).join("")}${t.n>5?`<span class="tmore num">+${t.n-5}</span>`:""}</div></a>`}
+const joinN=(a,k=2)=>a.slice(0,k).join(", ")+(a.length>k?` +${a.length-k}`:"");
+let SIMT_=null;
+function simTalentData(){
+  if(SIMT_)return SIMT_;
+  SIMT_=new Map();
+  BYTAL.forEach((rs,name)=>{const cos=new Set(rs.map(r=>r.co)),ind=new Map();cos.forEach(c=>(DATA.ind[c]||[]).forEach(i=>ind.set(i,(ind.get(i)||0)+1)));SIMT_.set(name,{cos,ind,norm:Math.sqrt([...ind.values()].reduce((a,v)=>a+v*v,0))})});
+  return SIMT_;
+}
+function similarTalent(n,k=3){
+  const S=simTalentData(),me=S.get(n);if(!me)return[];
+  const lg=lgOf(n),out=[];
+  S.forEach((o,name)=>{
+    if(name===n)return;
+    const shared=[...me.cos].filter(c=>o.cos.has(c));
+    let dot=0,best=null,bv=0;me.ind.forEach((v,i)=>{const w=o.ind.get(i);if(w){dot+=v*w;if(Math.min(v,w)>bv){bv=Math.min(v,w);best=i}}});
+    const cs=me.norm&&o.norm?dot/(me.norm*o.norm):0,sameLg=!!lg&&lgOf(name)===lg;
+    if(!shared.length&&cs<.2&&!sameLg)return;
+    const score=shared.length*4+cs*6+(sameLg?2:0)+(DATA.img[name]?.3:0)+Math.min(o.cos.size,10)*.02;
+    const reason=shared.length?`Also in ${joinN(shared)}`:best&&sameLg?`${lg} · ${best}`:best?`Also in ${best}`:`Also ${lg}`;
+    out.push({name,score,reason});
+  });
+  out.sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name));
+  return out.slice(0,k);
+}
+function similarCompanies(co,k=3){
+  const c=COS.find(x=>x.co===co);if(!c)return[];
+  const mine=new Set(c.ind),tal=BYCO.get(co).ath,out=[];
+  COS.forEach(o=>{
+    if(o.co===co)return;
+    const shared=[...BYCO.get(o.co).ath].filter(a=>tal.has(a)),common=o.ind.filter(i=>mine.has(i)),uni=new Set([...c.ind,...o.ind]).size,jac=uni?common.length/uni:0;
+    if(!common.length&&!shared.length)return;
+    const score=shared.length*2+jac*8+(c.hq&&c.hq===o.hq?1:0)+(LOGOS[o.domain]?.3:0)+Math.min(o.n,10)*.05;
+    const reason=common.length&&shared.length?`${common[0]} · backed by ${joinN(shared,1)}`:common.length?`Same industry · ${common[0]}`:`Both backed by ${joinN(shared)}`;
+    out.push({o,score,reason,tier:common.length?1:0});
+  });
+  out.sort((a,b)=>b.tier-a.tier||b.score-a.score||a.o.co.localeCompare(b.o.co));
+  return out.slice(0,k);
+}
+function simTalentHTML(n){
+  const m=new Map(talsList().map(t=>[t.name,t])),sim=similarTalent(n).filter(x=>m.has(x.name));
+  return sim.length?`<div class="sech"><h2>Similar talent</h2></div><div class="tgrid sim3">${sim.map(x=>talentCard(m.get(x.name),x.reason)).join("")}</div>`:"";
+}
+function simCompanyHTML(co){
+  const sim=similarCompanies(co);
+  return sim.length?`<div class="sech"><h2>Similar companies</h2></div><div class="pgrid">${sim.map(({o,reason})=>`<a class="dcard" href="${cLink(o.co)}"><div class="ctop">${mark(o.co,o.domain)}<div class="ct"><div class="cn">${esc(o.co)}</div>${o.ind.length?`<div class="ci">${esc(o.ind.slice(0,2).join(", "))}</div>`:""}</div></div><p class="dd">${esc(o.desc)}</p><div class="fx"><div class="f1"><span>${o.n} ${o.n===1?"person":"people"}</span>${o.hq?`<span class="hq">${esc(o.hq)}</span>`:""}</div><div class="f2">${esc(reason)}</div></div></a>`).join("")}</div>`:"";
+}
 // ---- Talent explore (#talent)
 let TALS_=null;const talsList=()=>TALS_||(TALS_=[...BYTAL.entries()].map(([name,rs])=>{const sorted=rs.slice().sort(byDate),gs=groupByCo(sorted);return {name,lg:lgOf(name)||"",n:gs.length,latest:sorted[0].date||"",cos:gs.map(g=>g.r.co),hay:(name+" "+(lgOf(name)||"")+" "+gs.map(g=>g.r.co).join(" ")).toLowerCase()}}));
 state.tl={lg:"",sort:"deals",n:24};
@@ -851,7 +905,7 @@ function renderTalentIndex(){
   list.sort((a,b)=>cmp(a,b)||a.name.localeCompare(b.name));
   const shown=list.slice(0,T.n);
   const pill=(attr,val,label,cnt,pressed,logo)=>`<button class="tpill" ${attr}="${esc(val)}" aria-pressed="${pressed}">${logo?`<img src="${logo}" alt="">`:""}${esc(label)}${cnt!=null?`<span class="num">${cnt}</span>`:""}</button>`;
-  const card=t=>{const cs=t.cos.slice(0,5);return `<a class="tcard" href="${tLink(t.name)}">${avatar(t.name,"xl")}<div class="tn">${esc(t.name)}</div><div class="tl">${t.lg?esc(t.lg)+" · ":""}${t.n} ${t.n===1?"company":"companies"}</div><div class="tstack">${cs.map(c=>mark(c,DATA.dom[c]||null)).join("")}${t.n>5?`<span class="tmore num">+${t.n-5}</span>`:""}</div></a>`};
+  const card=t=>talentCard(t);
   $("#tpage").innerHTML=`<section class="head"><h1>Talent</h1><p class="sub">Every athlete and public figure on record. Open anyone to see their full portfolio, then follow a deal from there.</p></section>
   <div class="tfilt lgrow" role="group" aria-label="Filter by league">${pill("data-tlg","","All",TALS.length,!T.lg)}${lgs.map(([l,c])=>pill("data-tlg",l,l,c,T.lg===l,LGLOGOS[l])).join("")}</div>
   <div class="tbar"><span class="n num">${list.length.toLocaleString()} ${list.length===1?"person":"people"}${q?` matching “${esc(state.q.trim())}”`:""}</span><div class="tfilt" role="group" aria-label="Sort">${TSORTS.map(([k,l])=>pill("data-tsort",k,l,null,T.sort===k)).join("")}</div></div>
@@ -882,7 +936,8 @@ function renderTalent(){
   <div class="thead">${avatar(n,"xl")}<div><h1>${esc(n)}</h1>${l?`<span class="lgchip">${lu?`<img src="${lu}" alt="" data-lg="1">`:""}${esc(l)}</span>`:""}</div></div>
   <div class="sech"><h2>Portfolio</h2><span class="n num">${gs.length}</span></div>
   ${tabs}
-  <div class="pgrid">${shown.map(dealCard).join("")}</div>`;
+  <div class="pgrid">${shown.map(dealCard).join("")}</div>
+  ${simTalentHTML(n)}`;
 }
 function renderDeal(){
   const [n,co]=state.deal,rs=(BYTAL.get(n)||[]).filter(r=>r.co===co).sort(byDate);
@@ -904,6 +959,7 @@ function renderDeal(){
 }
 function resetDeals(){Object.assign(state.f,{types:[],leagues:[],inds:[],vers:[],min:0,disc:false,since:0,text:[]});state.q="";$("#q").value="";state.showChips=true;state.menu=null;state.page=1;state.seenChips=new Set()}
 window.addEventListener("pageshow",e=>{if(e.persisted){resetDeals();if(state.mode==="inv")render()}});
+let routed=false;
 function route(){
   const raw=location.hash.replace(/^#/,""),h=decodeURIComponent(raw);
   let mode="inv",co=null,tal=null,deal=null;
@@ -912,7 +968,7 @@ function route(){
   if(mode!==state.mode&&(mode==="cos"||state.mode==="cos"||mode==="news"||state.mode==="news"||mode==="tals"||state.mode==="tals")){state.q="";$("#q").value=""}
   {const pf=m=>m==="tal"||m==="deal";if((state.mode==="inv"||pf(state.mode))&&mode!=="inv"&&!pf(mode))resetDeals()} // keep filters while hopping between deals and profiles
   if(tal!==state.talName||mode!=="tal")state.tf="";
-  if(mode!==state.mode)state.prev=state.mode;
+  state.prev=routed?state.mode:null;routed=true;
   state.mode=mode;state.coName=co;state.talName=tal;state.deal=deal;
   document.querySelector(".inner").dataset.mode=mode;
   const cp=$("#cpage");cp.hidden=mode!=="cos"&&mode!=="co";$("#faqpage").hidden=mode!=="faq";$("#newspage").hidden=mode!=="news";$("#tpage").hidden=mode!=="tal"&&mode!=="deal"&&mode!=="tals";
