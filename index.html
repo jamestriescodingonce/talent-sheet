@@ -375,6 +375,9 @@ a.fchip:focus-visible{outline:1.5px solid var(--focus);outline-offset:2px}
 .stack .av+.av{margin-left:-4px}
 .faq .credits{padding:0 32px 18px 0;font-size:13px;line-height:1.6;color:var(--sub)}.faq .credits ul{margin:10px 0 0;padding-left:18px}.faq .credits a{color:var(--accent)}.faq .credits p{padding:0;font-size:13px}
 .ln .who{display:inline-flex;align-items:center;gap:8px;min-width:0}
+/* Film grain: faint turbulence tile, stepped jitter so it reads as film, not motion. */
+body::after{content:"";position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:9999;opacity:.025;mix-blend-mode:overlay;animation:film-grain 1.8s steps(6) infinite;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.2 -0.1'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+@keyframes film-grain{0%{transform:translate(0,0)}17%{transform:translate(-4%,3%)}33%{transform:translate(3%,-5%)}50%{transform:translate(-6%,-2%)}67%{transform:translate(5%,4%)}83%{transform:translate(-2%,6%)}100%{transform:translate(0,0)}}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1015,4 +1018,5 @@ render();if(location.hash)route();else syncUrl("inv");
 })();
 </script>
 
+<script src="assets/js/metal-logo.js" defer></script>
 </body></html>
