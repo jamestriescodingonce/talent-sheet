@@ -216,6 +216,12 @@ td{padding:0 10px;height:60px;white-space:nowrap;vertical-align:middle;font-size
 .dc .top2{display:flex;align-items:center;gap:10px}
 .dc .top2 .co{max-width:none;color:var(--text-hi)}
 .dc .top2 .catl{display:block;margin-top:2px;font-size:13px;color:var(--muted)}
+.dc .top2 a{color:inherit;text-decoration:none}
+.dc .top2 .mlink{display:block;flex:none}
+.dc .top2 .colink{display:inline-block;transition:color 150ms ease}
+.dc .top2 .colink::after{content:" \2192";opacity:0;margin-left:2px;transition:opacity 150ms ease}
+.dc .top2 .colink:hover,.dc .top2 .colink:focus-visible{color:var(--accent)}
+.dc .top2 .colink:hover::after,.dc .top2 .colink:focus-visible::after{opacity:1}
 .ln{display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px solid var(--rule);font-size:13.5px}
 .ln:last-child{border-bottom:0;padding-bottom:0}
 .ln>span:first-child{color:var(--muted)}
@@ -667,7 +673,7 @@ function facts(g){
 }
 function detail(g,cols){
   return `<tr class="detail"><td colspan="${cols}"><div class="din">
-   <div class="dc"><div class="top2">${mark(g.co,g.domain)}<span><span class="co">${esc(g.co)}</span>${g.ind.length?`<span class="catl">${esc(g.ind.join(", "))}</span>`:""}</span></div>${g.desc?`<p class="desc">${esc(g.desc)}</p>`:""}
+   <div class="dc"><div class="top2"><a class="mlink" href="${cLink(g.co)}" tabindex="-1" aria-hidden="true">${mark(g.co,g.domain)}</a><span><a class="co colink" href="${cLink(g.co)}">${esc(g.co)}</a>${g.ind.length?`<span class="catl">${esc(g.ind.join(", "))}</span>`:""}</span></div>${g.desc?`<p class="desc">${esc(g.desc)}</p>`:""}
      ${g.domain?`<div class="ln" style="margin-top:12px"><span>Website</span><a href="https://${g.domain}" target="_blank" rel="noopener">${g.domain}</a></div>`:""}
      ${DATA.hq[g.co]?`<div class="ln"${g.domain?"":' style="margin-top:12px"'}><span>HQ</span><b>${esc(DATA.hq[g.co])}</b></div>`:""}
      ${g.ath.length>1&&peopleCount(g.co)?`<div class="ln"><span>All talent</span><a href="#company=${encodeURIComponent(g.co)}">${peopleCount(g.co)} ${peopleCount(g.co)===1?"person":"people"} &rarr;</a></div>`:""}
