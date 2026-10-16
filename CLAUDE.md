@@ -69,14 +69,14 @@ canvas and are **not** the live look.
   8px rounded rectangles; the table panel, talent cards and the search field are
   10px; deal and company cards and the subscribe card are 8px; pager buttons 6px.
   Only avatars and league badges are round.
-- **Phones (under 760px):** Deals and Companies tables show only Company and
+- **Phones and small tablets (under 850px, the same point the sidebar collapses to the top bar):** Deals and Companies tables show only Company and
   Talent (tap a deal to expand the rest), with one avatar on Deals; nothing
   scrolls sideways. Under 600px: 16px side padding that respects safe areas,
   44px touch targets for the menu, tools and nav, industry and talent card names
   wrap to two lines, company cards stack one per row, league chips scroll
   sideways with a fade, and the Filters menu becomes a full-screen sheet with a
   sticky Reset / Done bar. The search dropdown fits the phone width. Between
-  760px and 1280px the table keeps all six columns and scrolls inside its panel.
+  850px and 1280px the table keeps all six columns and scrolls inside its panel.
 - **Components:** company-name links in expanded deal cards open the company
   page; every industry label links to `#industry=<Name>`; talent profiles show
   the league chip plus a neutral chip for any fund they run or belong to
