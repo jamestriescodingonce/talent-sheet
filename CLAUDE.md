@@ -127,7 +127,7 @@ Boards:
   - This palette is the artifact's only. It superseded the earlier lime
     exploration in `styles/theme.css`, and that file now holds the live
     site's mint tokens instead (see "Live site design system").
-- **Fonts (artifact only; the live site uses Instrument Sans + Geist Mono, see above)** — settled after several iterations (Space Grotesk/IBM Plex →
+- **Fonts (artifact only; the live site uses Instrument Sans only, see above)** — settled after several iterations (Space Grotesk/IBM Plex →
   Figtree → Violet Sans only → current):
   - Headings: **Bricolage Grotesque** (Google Fonts, full weight range).
   - Body: **Violet Sans** (OFL-licensed, cloned from
@@ -230,7 +230,7 @@ future reuse, not wired into anything yet:
 | `assets/fonts/violet-sans/` | `github.com/violetoffice/violet_sans` | `VioletSans-Regular.{woff2,ttf}` + `OFL.txt`. Regular weight only — see font note above. |
 | `lib/utils.ts` | shadcn convention | `cn()` via `clsx` + `tailwind-merge`. Current canonical `cn` for this repo. |
 | `lib/ease.ts` | beui.dev (placeholder) | beui's exact easing export wasn't fetchable (network-blocked) when stashed; `EASE_OUT = [0.23, 1, 0.32, 1]` is a standard strong-ease-out curve used as a stand-in, matching the `better-ui`/`emil-design-eng` skills' recommendation. Swap in the real value if it differs. |
-| `styles/theme.css` | live site tokens | Current: mirrors the `:root` token blocks in `index.html` (dark, light, `--sans`, `--mono`). Replaced the old lime exploration. |
+| `styles/theme.css` | live site tokens | Current: mirrors the `:root` token blocks in `index.html` (dark, light, `--sans`). Replaced the old lime exploration. |
 
 ## Skills installed in this repo
 
