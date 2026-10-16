@@ -3,7 +3,7 @@
 
 Usage:  python3 scripts/refresh_data.py [--check]
 
-Rebuilds: const DATA (rows, ind, desc, dom), DATA.hq, DATA.fnd (company founders), const ADDED, const LEAGUE.
+Rebuilds: const DATA (rows [last field = when the deal row was added, null for the bulk import], ind, desc, dom), DATA.hq, DATA.fnd (company founders), const ADDED, const LEAGUE.
 Rules baked in (from product feedback):
   - only sports figures are shown (talent categories Athlete, Coach, Executive; Magnus Carlsen kept)
   - palmares.vc / pitchbook.com sources are never shown
@@ -32,13 +32,13 @@ def domain(u):
     return re.sub(r'^www\.', '', h) or None
 
 def build():
-    inv = get('investments?select=investment_date,deal_type,amount_invested,round_total_raised,post_money_valuation,amount_precision,source_url,verification,status,talent(name,sport:sports(name),category:categories(name)),company:companies!investments_company_id_fkey(name,website_url,description,hq,created_at,company_industries(industries(name))),round:rounds(name)&order=investment_date.desc.nullslast,id')
+    inv = get('investments?select=created_at,investment_date,deal_type,amount_invested,round_total_raised,post_money_valuation,amount_precision,source_url,verification,status,talent(name,sport:sports(name),category:categories(name)),company:companies!investments_company_id_fkey(name,website_url,description,hq,created_at,company_industries(industries(name))),round:rounds(name)&order=investment_date.desc.nullslast,id')
     rows, cos, league = [], {}, {}
     for i in inv:
         t, c = i['talent'], i['company']
         if (t.get('category') or {}).get('name') not in KEEP_CATS and t['name'] not in KEEP_NAMES: continue
         src = i['source_url']; src = None if src and BAD.search(src) else src
-        rows.append([t['name'], c['name'], i['investment_date'], i['deal_type'], i['amount_invested'], i['round_total_raised'], i['post_money_valuation'], i['amount_precision'], (i.get('round') or {}).get('name'), src, i['verification']])
+        rows.append([t['name'], c['name'], i['investment_date'], i['deal_type'], i['amount_invested'], i['round_total_raised'], i['post_money_valuation'], i['amount_precision'], (i.get('round') or {}).get('name'), src, i['verification'], i['created_at'][:16] if i['created_at'] >= CUTOFF else None])
         cos[c['name']] = c
         if (t.get('sport') or {}).get('name'): league[t['name']] = t['sport']['name']
     ind, desc, dom, hq = {}, {}, {}, {}
