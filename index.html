@@ -70,7 +70,7 @@ h1,h2,h3,h4,p{margin:0}
 .search input::placeholder{color:var(--muted)}
 .search .icon{width:14px;height:14px}
 .head{margin-top:20px}
-.head h1{font-size:22px;font-weight:500;letter-spacing:-.02em;color:var(--text-hi)}
+.head h1{font-size:30px;font-weight:500;letter-spacing:-.035em;line-height:1.1;color:var(--text-hi)}
 .head .sub{margin-top:6px;font-size:14px;color:var(--sub)}
 
 /* Tab band + tools */
@@ -253,7 +253,7 @@ td{padding:0 10px;height:60px;white-space:nowrap;vertical-align:middle;font-size
 .back .icon{width:13px;height:13px;rotate:225deg}
 .chead{display:flex;align-items:center;gap:18px;margin-top:18px}
 .chead .mark{width:60px;height:60px;border-radius:14px}
-.chead h1{font-size:23px;font-weight:500;letter-spacing:-.02em;color:var(--text-hi)}
+.chead h1{font-size:34px;font-weight:500;letter-spacing:-.035em;line-height:1.1;color:var(--text-hi)}
 .chead .meta{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:6px;font-size:13.5px;color:var(--sub)}
 .chead .meta a{color:var(--accent)}.chead .meta a:hover{color:var(--accent-hover)}
 .cdesc{margin-top:14px;max-width:720px;font-size:14px;line-height:1.55;color:var(--sub)}
@@ -268,7 +268,7 @@ a.fchip:focus-visible{outline:1.5px solid var(--focus);outline-offset:2px}
 .av.xl{width:96px;height:96px;font-size:30px}
 .thead .lgb{display:none}
 .thead{display:flex;align-items:center;gap:22px;margin-top:20px;padding-bottom:26px;border-bottom:1px solid var(--rule)}
-.thead h1{margin:0;font-size:30px;font-weight:500;letter-spacing:-.025em;line-height:1.1;color:var(--text-hi)}
+.thead h1{margin:0;font-size:40px;font-weight:500;letter-spacing:-.035em;line-height:1.05;color:var(--text-hi)}
 .lgchip{display:inline-flex;align-items:center;gap:8px;margin-top:12px;height:28px;padding:0 12px;border:1px solid var(--border);border-radius:8px;background:var(--card);font-size:13px;color:var(--text-2)}
 .tchips{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px}
 .tchips .lgchip{margin-top:0}
@@ -370,6 +370,7 @@ a.fundchip:hover{border-color:var(--border-hover);color:var(--text)}
 .tmorebtn{display:block;margin:22px auto 0;height:36px;padding:0 18px;border:1px solid var(--border);border-radius:8px;background:none;font-size:13px;color:var(--text-2);transition:border-color 150ms ease,color 150ms ease}
 .tmorebtn:hover{border-color:var(--border-hover);color:var(--text)}
 @media (max-width:760px){.dgrid{grid-template-columns:minmax(0,1fr)}.thead{gap:16px}.thead h1{font-size:24px}.av.xl{width:72px;height:72px;font-size:24px}}
+@media (max-width:600px){.head h1{font-size:26px}.chead h1{font-size:26px}}
 
 .csub{margin-top:6px;font-size:13.5px;color:var(--sub)}
 .crow{cursor:pointer}

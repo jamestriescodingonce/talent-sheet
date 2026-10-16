@@ -2,7 +2,8 @@
  * Talent Sheet design tokens: the single source for the live site (index.html).
  * These are copied verbatim from the :root blocks in index.html; if one changes, change the other.
  *
- * Type:    Instrument Sans only (Google Fonts, variable 400 to 700). Column labels are sentence case, 12.5px, weight 550.
+ * Type:    Instrument Sans only (Google Fonts, variable 400 to 700). Page titles 30px / weight 500 / -0.035em tracking
+ *          (profile name 40px). Column labels are sentence case, 12.5px, weight 550.
  *          Numbers use tabular figures (font-variant-numeric) in the same face; there is no mono face.
  * Color:   dark by default; light follows prefers-color-scheme or [data-theme="light"].
  * Accent:  mint (#3DDC97 dark, #0C9A5E light). Deal-type colors are --c-inv / --c-own / --c-par / --c-exe / --c-fou.

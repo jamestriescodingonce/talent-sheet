@@ -45,8 +45,9 @@ canvas and are **not** the live look.
 
 - **Type (since 2026-10-16):** **Instrument Sans** only, loaded as a variable
   font (`wght@400..700`) from one Google Fonts `<link>` in `index.html`; token
-  `--sans`. Table column labels are sentence case, 12.5px, weight 550,
-  full-contrast text. Numbers use tabular figures (`.num`) in the same face.
+  `--sans`. Page titles are 30px at weight 500 with -0.035em tracking (talent
+  profile name 40px, company page 34px; smaller on phones). Table column labels
+  are sentence case, 12.5px, weight 550, full-contrast text. Numbers use tabular figures (`.num`) in the same face.
   Geist Mono was used for numerals and uppercase column labels for a day and
   was removed because the mono read as too "AI". The site used Geist before
   that. Nine font sets were compared (Geist, Satoshi, DM Sans + DM Mono, Clash
