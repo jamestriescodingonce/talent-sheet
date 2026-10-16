@@ -43,17 +43,15 @@ This is what the deployed site actually uses. The artifact notes further down
 (lime accent, Bricolage Grotesque, Violet Sans) describe the earlier design
 canvas and are **not** the live look.
 
-- **Type (since 2026-10-16):** **Instrument Sans** for all UI text and
-  **Geist Mono** for numerals only: counts, pager text and meta lines (the
-  `.num` class, `.count b`). Both load from one Google Fonts `<link>` in
-  `index.html` (Instrument Sans as a variable font, `wght@400..700`); tokens
-  are `--sans` and `--mono`. Table column labels are Instrument Sans in
-  sentence case, 12.5px at weight 550, full-contrast text; they were uppercase
-  mono at first but that read as too "AI". Before this the site used Geist.
-  Chosen from a side-by-side of nine sets for a tech-forward feel; Geist,
-  Satoshi, DM Sans + DM Mono, Clash Grotesk + Figtree, Hanken Grotesk,
-  Bricolage Grotesque, Sora and Space Grotesk were the others tried. Don't
-  put mono on running sentences (for example the word "deals" in "500+ deals").
+- **Type (since 2026-10-16):** **Instrument Sans** only, loaded as a variable
+  font (`wght@400..700`) from one Google Fonts `<link>` in `index.html`; token
+  `--sans`. Table column labels are sentence case, 12.5px, weight 550,
+  full-contrast text. Numbers use tabular figures (`.num`) in the same face.
+  Geist Mono was used for numerals and uppercase column labels for a day and
+  was removed because the mono read as too "AI". The site used Geist before
+  that. Nine font sets were compared (Geist, Satoshi, DM Sans + DM Mono, Clash
+  Grotesk + Figtree, Hanken Grotesk, Bricolage Grotesque, Sora, Space Grotesk,
+  Instrument Sans + Geist Mono). Don't put uppercase tracked labels in mono.
 - **Color:** dark by default, light via `prefers-color-scheme` or
   `[data-theme]`. Mint accent (`#3DDC97` dark, `#0C9A5E` light), page `#090C0F`
   dark / `#F5F7F6` light. Deal-type colors: `--c-inv` Investment, `--c-own`
@@ -66,19 +64,23 @@ canvas and are **not** the live look.
   left ("500+ deals", never the exact total for now), Filters and Sort on the
   right, tinted column header row, hairline rows, sticky headers at 1280px and
   wider. Talent, Industries and similar lists use the `.tgrid` card grid.
+  Corners are squarer than a typical SaaS look: pills, chips and buttons are
+  8px rounded rectangles; the table panel, talent cards and the search field are
+  10px; deal and company cards and the subscribe card are 8px; pager buttons 6px.
+  Only avatars and league badges are round.
 - **Components:** company-name links in expanded deal cards open the company
   page; every industry label links to `#industry=<Name>`; talent profiles show
   the league chip plus a neutral chip for any fund they run or belong to
   (Executive or Founded role at a "Venture & Private Equity" company); the top
   search shows a suggestions dropdown (talent, companies, industries) with
   keyboard support.
-- **Effects, kept very quiet:** a liquid-metal logo mark (Paper Shaders;
-  source `assets/js/metal-logo.src.js`, bundled to `assets/js/metal-logo.js`,
-  falls back to the original SVG if WebGL fails) and a faint stepped film-grain
-  overlay. The sidebar subscribe card is visual only for now; the plan is to
-  link it to a Substack.
+- **Effects, kept very quiet:** a faint static film grain over the page
+  (2.5% white noise, normal blend; invisible in light mode). The logo is the
+  plain T tile; a liquid-metal mark (Paper Shaders) was tried and removed as
+  too much of an AI-product cue. The sidebar subscribe card is visual only for
+  now; the plan is to link it to a Substack.
 - **Not done on purpose:** no glow or gradient behind the page, no stacked
-  logo-above-name card layout.
+  logo-above-name card layout, no mono type, no chrome or metal effects.
 
 ## Current state
 

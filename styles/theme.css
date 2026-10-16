@@ -2,9 +2,8 @@
  * Talent Sheet design tokens: the single source for the live site (index.html).
  * These are copied verbatim from the :root blocks in index.html; if one changes, change the other.
  *
- * Type:    Instrument Sans for UI text (column labels: sentence case, 12.5px, weight 550), Geist Mono for
- *          numerals, counts and meta lines only. Both load from Google Fonts (see the <link> in index.html).
- *          Set Geist Mono on .num.
+ * Type:    Instrument Sans only (Google Fonts, variable 400 to 700). Column labels are sentence case, 12.5px, weight 550.
+ *          Numbers use tabular figures (font-variant-numeric) in the same face; there is no mono face.
  * Color:   dark by default; light follows prefers-color-scheme or [data-theme="light"].
  * Accent:  mint (#3DDC97 dark, #0C9A5E light). Deal-type colors are --c-inv / --c-own / --c-par / --c-exe / --c-fou.
  */
@@ -19,7 +18,6 @@
   --text-hi:#EFF3F5;--nav-text:#7F8B94;--sub:#75828C;--tab:#71808A;--mark-bg:#E7ECEF;--mark-fg:#0B1014;--av-bg:#1A252D;--sel:rgba(61,220,151,.28);
   --c-inv:#5EE6A8;--c-own:#7FB2FF;--c-par:#F2C14E;--c-exe:#C3A2FF;--c-fou:#FF9DB0;--c-neu:#9FB0BA;--c-unv:#6B7A84;
   --sans:"Instrument Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
   --ease:cubic-bezier(.23,1,.32,1);
 }
 
