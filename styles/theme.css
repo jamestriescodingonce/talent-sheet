@@ -2,8 +2,9 @@
  * Talent Sheet design tokens: the single source for the live site (index.html).
  * These are copied verbatim from the :root blocks in index.html; if one changes, change the other.
  *
- * Type:    Instrument Sans for UI text, Geist Mono for numerals, counts, column labels and meta lines.
- *          Both load from Google Fonts (see the <link> in index.html). Set Geist Mono on .num and th.
+ * Type:    Instrument Sans for UI text (column labels: sentence case, 12.5px, weight 550), Geist Mono for
+ *          numerals, counts and meta lines only. Both load from Google Fonts (see the <link> in index.html).
+ *          Set Geist Mono on .num.
  * Color:   dark by default; light follows prefers-color-scheme or [data-theme="light"].
  * Accent:  mint (#3DDC97 dark, #0C9A5E light). Deal-type colors are --c-inv / --c-own / --c-par / --c-exe / --c-fou.
  */

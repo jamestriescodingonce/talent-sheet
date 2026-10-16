@@ -44,10 +44,12 @@ This is what the deployed site actually uses. The artifact notes further down
 canvas and are **not** the live look.
 
 - **Type (since 2026-10-16):** **Instrument Sans** for all UI text and
-  **Geist Mono** for numerals, counts, table column labels, pager text and
-  meta lines (the `.num` class, `th`, `.count b`). Both load from one Google
-  Fonts `<link>` in `index.html`; tokens are `--sans` and `--mono`. Table
-  column labels are 11px uppercase mono. Before this the site used Geist.
+  **Geist Mono** for numerals only: counts, pager text and meta lines (the
+  `.num` class, `.count b`). Both load from one Google Fonts `<link>` in
+  `index.html` (Instrument Sans as a variable font, `wght@400..700`); tokens
+  are `--sans` and `--mono`. Table column labels are Instrument Sans in
+  sentence case, 12.5px at weight 550, full-contrast text; they were uppercase
+  mono at first but that read as too "AI". Before this the site used Geist.
   Chosen from a side-by-side of nine sets for a tech-forward feel; Geist,
   Satoshi, DM Sans + DM Mono, Clash Grotesk + Figtree, Hanken Grotesk,
   Bricolage Grotesque, Sora and Space Grotesk were the others tried. Don't
