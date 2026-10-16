@@ -397,6 +397,11 @@ a.fundchip:hover{border-color:var(--border-hover);color:var(--text)}
   .tools{gap:14px}
   .tool .lbl{display:none}
 }
+@keyframes pgin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes imgin{from{opacity:0}to{opacity:1}}
+.inner.pgin{animation:pgin 200ms var(--ease)}
+.av img,.mark img,.nthumb img,.lgchip img{animation:imgin 240ms ease}
+@media (hover:hover){.tcard:hover,.dcard:hover{transform:translateY(-2px)}.tcard:active,.dcard:active{transform:scale(.985)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 /* --- product update: sidebar footer, FAQ, filter chips, spacing */
 .side-foot{position:absolute;left:12px;right:12px;bottom:20px}
@@ -1224,7 +1229,8 @@ function route(){
   if(mode==="cos"){state.cpg=1;renderCos()}else if(mode==="co"){renderCompany()}else if(mode==="faq"){renderCredits()}else if(mode==="news"){renderNews()}else if(mode==="ind"){renderIndustries()}else if(mode==="indd"){renderIndustry()}else if(mode==="tals"){renderTalentIndex()}else if(mode==="tal"){renderTalent()}else if(mode==="deal"){renderDeal()}else{render()}
   document.title=mode==="ind"?"Industries · Talent Sheet":mode==="indd"?`${ind} · Talent Sheet`:mode==="tals"?"Talent · Talent Sheet":mode==="tal"?`${tal} · Talent Sheet`:mode==="deal"?`${deal[0]} × ${deal[1]} · Talent Sheet`:"Investments Table"
   syncUrl(mode);lastHref=location.href;
-  window.scrollTo({top:0})
+  window.scrollTo({top:0});
+  {const i=document.querySelector(".inner");i.classList.remove("pgin");void i.offsetWidth;i.classList.add("pgin")}
 }
 // Deals lives at /deals; every other page keeps the root path plus its #hash
 function syncUrl(mode){
