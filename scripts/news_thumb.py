@@ -16,6 +16,10 @@ def og(page, base):
     for pat in (r'<meta[^>]+property=["\']og:image(?::secure_url)?["\'][^>]+content=["\']([^"\']+)', r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image', r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']([^"\']+)'):
         m = re.search(pat, page, re.I)
         if m: return urllib.parse.urljoin(base, html.unescape(m.group(1)))
+def ogtitle(page):
+    for pat in (r'<meta[^>]+property=["\']og:title["\'][^>]+content=["\']([^"\']+)', r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:title'):
+        m = re.search(pat, page, re.I)
+        if m: return html.unescape(m.group(1)).strip()
 def main():
     cands = json.load(open(sys.argv[1], encoding='utf8'))
     P = 'data/news.json'; items = json.load(open(P, encoding='utf8')); have = {x['url'] for x in items}
@@ -34,7 +38,8 @@ def main():
         im = im.resize((480, 270), Image.LANCZOS)
         name = f"assets/news/{c['date']}-{hashlib.md5(c['url'].encode()).hexdigest()[:6]}.webp"
         im.save(name, 'WEBP', quality=82)
-        items.append({'title': c['title'], 'outlet': c['outlet'], 'url': c['url'], 'img': name, 'date': c['date'], 'talent': c['talent'], 'company': c.get('company', '')})
+        t = ogtitle(page) or c['title']; t = re.sub(r'\s*[|\u2013\u2014-]\s*[^|\u2013\u2014-]{2,40}$', '', t) if len(t) > 90 else t
+        items.append({'title': t, 'outlet': c['outlet'], 'url': c['url'], 'img': name, 'date': c['date'], 'talent': c['talent'], 'company': c.get('company', '')})
         have.add(c['url']); added += 1
     json.dump(items, open(P, 'w', encoding='utf8'), indent=1, ensure_ascii=False)
     print('added', added, 'of', len(cands))
