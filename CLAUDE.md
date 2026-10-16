@@ -18,6 +18,8 @@ connected to this GitHub repo and its **production branch is `main`**.
   (`https://claude.ai/artifact/KnV2RuHPYEF3R4wmTbAXBy`) is the editable source;
   after changing it, copy the page to `index.html` and push to `main`.
 - Companies also have `founded_year` (shown as "Est. YYYY" on the company page, embedded as `DATA.yr`). Companies with no logo show a neutral monogram tile (initials, `.mark.mono`), not a generated pattern; don't bring back the geometric shapes.
+- Profile pills: league chip plus a chip for every company where the talent has an Executive or Founded role (not just funds). Company founders render as plain text ("Founder" label sentence case, names link to profiles), no boxes or initials avatars. Sidebar has "Randomize" under News: jumps to a random talent or company page.
+- Logos for pro teams: `TEAMLOGO` (company name -> data URI) takes precedence; US major-league/WNBA logos come from `a.espncdn.com/i/teamlogos/<league>/500/<abbr>.png` resized to 128px. Instagram is a logo/info source for companies with no website, but instagram.com is login-walled from this sandbox (302), so it needs a manual pull.
 - Company founders live in `public.company_founders` (company_id, name, title Founder/Co-founder, source_url; public read). Only add a founder when a source explicitly calls them a founder/co-founder; keep the supporting URL. `refresh_data.py` embeds them as `DATA.fnd` and company pages show a "Founders" row (a founder who is also talent links to their profile).
 - Companies have an `hq` column in Supabase (`companies.hq`), filled for ~200 of 674;
   the page embeds it as `DATA.hq`.
