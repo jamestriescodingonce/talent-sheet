@@ -1,35 +1,43 @@
 /*
- * Talent Sheet — brand color tokens
+ * Talent Sheet design tokens: the single source for the live site (index.html).
+ * These are copied verbatim from the :root blocks in index.html; if one changes, change the other.
  *
- * Three values given directly:
- *   accent      #68bf0f
- *   background  #151515  (main content surface)
- *   dark partner #111111 (paired secondary surface — sidebar / nav / elevated
- *                          panels; darker than --color-background)
- *
- * Everything else here (foreground, muted, border, accent-foreground) is
- * derived for contrast, not specified — adjust freely.
- *
- * Plain CSS custom properties for now since there's no Tailwind/shadcn
- * config in this repo yet. Once scaffolded, map these into
- * tailwind.config's theme.colors (or a Tailwind v4 @theme block) under the
- * same names shadcn components expect: background, foreground, card,
- * card-foreground, muted, muted-foreground, accent, accent-foreground,
- * border.
+ * Type:    Instrument Sans for UI text, Geist Mono for numerals, counts, column labels and meta lines.
+ *          Both load from Google Fonts (see the <link> in index.html). Set Geist Mono on .num and th.
+ * Color:   dark by default; light follows prefers-color-scheme or [data-theme="light"].
+ * Accent:  mint (#3DDC97 dark, #0C9A5E light). Deal-type colors are --c-inv / --c-own / --c-par / --c-exe / --c-fou.
  */
 
-:root {
-  --color-accent: #68bf0f;
-  --color-accent-foreground: #111111;
-
-  --color-background: #151515;
-  --color-foreground: #ececea;
-
-  --color-surface: #111111;
-  --color-surface-foreground: #ececea;
-
-  --color-muted: #1f1f1f;
-  --color-muted-foreground: #9a9a94;
-
-  --color-border: #262626;
+:root{
+  color-scheme:dark;
+  --bg:#090C0F;--surface:#0B1014;--card:#0D1419;--card-hover:#10181E;
+  --border:#1A252D;--border-hover:#26343D;--rule:#172127;
+  --text:#F1F4F6;--text-2:#98A5AE;--muted:#687680;--very-muted:#4F5D66;
+  --accent:#3DDC97;--accent-hover:#6BE7B1;--accent-wash:rgba(61,220,151,.10);--accent-line:rgba(61,220,151,.30);
+  --nav-on:#10231A;--focus:#8FB4FF;
+  --text-hi:#EFF3F5;--nav-text:#7F8B94;--sub:#75828C;--tab:#71808A;--mark-bg:#E7ECEF;--mark-fg:#0B1014;--av-bg:#1A252D;--sel:rgba(61,220,151,.28);
+  --c-inv:#5EE6A8;--c-own:#7FB2FF;--c-par:#F2C14E;--c-exe:#C3A2FF;--c-fou:#FF9DB0;--c-neu:#9FB0BA;--c-unv:#6B7A84;
+  --sans:"Instrument Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.23,1,.32,1);
 }
+
+/* Light theme: applies when the OS prefers light unless the user forced dark, or when forced via data-theme. */
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){--bg:#F5F7F6;--surface:#FFFFFF;--card:#FFFFFF;--card-hover:#EDF2EF;
+  --border:#D8E0DC;--border-hover:#C2CDC8;--rule:#E2E8E5;
+  --text:#0E1512;--text-2:#46544E;--muted:#68766F;--very-muted:#98A39E;
+  --accent:#0C9A5E;--accent-hover:#087A4A;--accent-wash:rgba(12,154,94,.10);--accent-line:rgba(12,154,94,.35);
+  --nav-on:#E2F2EA;--focus:#2F6FEB;
+  --text-hi:#0A100D;--nav-text:#5A6862;--sub:#5A6862;--tab:#5E6C66;--mark-bg:#DCE5E0;--mark-fg:#0E1512;--av-bg:#E1E8E4;--sel:rgba(12,154,94,.22);
+  --c-inv:#0B8A55;--c-own:#2A64CC;--c-par:#9A6200;--c-exe:#7144C9;--c-fou:#BE3355;--c-neu:#55646D;--c-unv:#8A979F;
+  color-scheme:light;}
+}
+:root[data-theme="light"]{--bg:#F5F7F6;--surface:#FFFFFF;--card:#FFFFFF;--card-hover:#EDF2EF;
+  --border:#D8E0DC;--border-hover:#C2CDC8;--rule:#E2E8E5;
+  --text:#0E1512;--text-2:#46544E;--muted:#68766F;--very-muted:#98A39E;
+  --accent:#0C9A5E;--accent-hover:#087A4A;--accent-wash:rgba(12,154,94,.10);--accent-line:rgba(12,154,94,.35);
+  --nav-on:#E2F2EA;--focus:#2F6FEB;
+  --text-hi:#0A100D;--nav-text:#5A6862;--sub:#5A6862;--tab:#5E6C66;--mark-bg:#DCE5E0;--mark-fg:#0E1512;--av-bg:#E1E8E4;--sel:rgba(12,154,94,.22);
+  --c-inv:#0B8A55;--c-own:#2A64CC;--c-par:#9A6200;--c-exe:#7144C9;--c-fou:#BE3355;--c-neu:#55646D;--c-unv:#8A979F;
+  color-scheme:light;}

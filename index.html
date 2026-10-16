@@ -2,9 +2,9 @@
 <title>Investments Table</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
 <style>
-/* DESIGN.md v6 tokens. Layout: 170px sidebar, quiet top-right search, heading, tab band with tools, hairline table. */
+/* DESIGN.md v6 tokens. Type: Instrument Sans for UI, Geist Mono for numerals and column labels. Layout: 170px sidebar, quiet top-right search, heading, tab band with tools, hairline table. */
 :root{
   color-scheme:dark;
   --bg:#090C0F;--surface:#0B1014;--card:#0D1419;--card-hover:#10181E;
@@ -14,7 +14,8 @@
   --nav-on:#10231A;--focus:#8FB4FF;
   --text-hi:#EFF3F5;--nav-text:#7F8B94;--sub:#75828C;--tab:#71808A;--mark-bg:#E7ECEF;--mark-fg:#0B1014;--av-bg:#1A252D;--sel:rgba(61,220,151,.28);
   --c-inv:#5EE6A8;--c-own:#7FB2FF;--c-par:#F2C14E;--c-exe:#C3A2FF;--c-fou:#FF9DB0;--c-neu:#9FB0BA;--c-unv:#6B7A84;
-  --sans:"Geist","Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --sans:"Instrument Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
   --ease:cubic-bezier(.23,1,.32,1);
 }
 @media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#F5F7F6;--surface:#FFFFFF;--card:#FFFFFF;--card-hover:#EDF2EF;
@@ -44,7 +45,9 @@ button{cursor:pointer}
 h1,h2,h3,h4,p{margin:0}
 :focus-visible{outline:1.5px solid var(--focus);outline-offset:2px;border-radius:4px}
 .icon{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.num{font-variant-numeric:tabular-nums}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:0}
+.count.num{font-family:var(--sans)}.count b{font-family:var(--mono);font-weight:500}
+th{font-family:var(--mono)}
 
 /* Sidebar */
 .side{position:fixed;inset:0 auto 0 0;width:170px;background:var(--bg);border-right:1px solid var(--rule);padding:24px 12px}
@@ -148,7 +151,7 @@ table{border-collapse:collapse;width:100%;min-width:960px;table-layout:fixed}
 td{overflow:hidden;text-overflow:ellipsis}
 .w-co{width:22%}.w-ind{width:15%}.w-tal{width:20%}.w-rel{width:11%}.w-ver{width:13%}.w-web{width:19%}
 .w-a1{width:24%}.w-a2{width:8%}.w-a3{width:32%}.w-a4{width:22%}.w-a5{width:14%}.t-ath th:nth-child(6){width:12%}
-th{padding:0 10px;height:40px;text-align:left;white-space:nowrap;font-size:12px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--rule)}
+th{padding:0 10px;height:40px;text-align:left;white-space:nowrap;font-size:11px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--rule)}
 th:first-child,td:first-child{padding-left:4px}
 td{padding:0 10px;height:60px;white-space:nowrap;vertical-align:middle;font-size:13.5px;color:var(--text-2);border-bottom:1px solid var(--rule);transition:background-color 150ms ease}
 .row{cursor:pointer}
