@@ -3,7 +3,7 @@
 
 Usage:  python3 scripts/refresh_data.py [--check]
 
-Rebuilds: const DATA (rows [last field = when the deal row was added, null for the bulk import], ind, desc, dom), DATA.hq, DATA.fnd (company founders), const ADDED, const LEAGUE.
+Rebuilds: const DATA (rows [last field = when the deal row was added, null for the bulk import], ind, desc, dom), DATA.hq, DATA.yr (founded year), DATA.fnd (company founders), const ADDED, const LEAGUE.
 Rules baked in (from product feedback):
   - only sports figures are shown (talent categories Athlete, Coach, Executive; Magnus Carlsen kept)
   - palmares.vc / pitchbook.com sources are never shown
@@ -32,7 +32,7 @@ def domain(u):
     return re.sub(r'^www\.', '', h) or None
 
 def build():
-    inv = get('investments?select=created_at,investment_date,deal_type,amount_invested,round_total_raised,post_money_valuation,amount_precision,source_url,verification,status,talent(name,sport:sports(name),category:categories(name)),company:companies!investments_company_id_fkey(name,website_url,description,hq,created_at,company_industries(industries(name))),round:rounds(name)&order=investment_date.desc.nullslast,id')
+    inv = get('investments?select=created_at,investment_date,deal_type,amount_invested,round_total_raised,post_money_valuation,amount_precision,source_url,verification,status,talent(name,sport:sports(name),category:categories(name)),company:companies!investments_company_id_fkey(name,website_url,description,hq,founded_year,created_at,company_industries(industries(name))),round:rounds(name)&order=investment_date.desc.nullslast,id')
     rows, cos, league = [], {}, {}
     for i in inv:
         t, c = i['talent'], i['company']
@@ -41,7 +41,7 @@ def build():
         rows.append([t['name'], c['name'], i['investment_date'], i['deal_type'], i['amount_invested'], i['round_total_raised'], i['post_money_valuation'], i['amount_precision'], (i.get('round') or {}).get('name'), src, i['verification'], i['created_at'][:16] if i['created_at'] >= CUTOFF else None])
         cos[c['name']] = c
         if (t.get('sport') or {}).get('name'): league[t['name']] = t['sport']['name']
-    ind, desc, dom, hq = {}, {}, {}, {}
+    ind, desc, dom, hq, yr = {}, {}, {}, {}, {}
     for n, c in cos.items():
         inds = []
         for ci in c.get('company_industries') or []:
@@ -51,17 +51,18 @@ def build():
         if c.get('description'): desc[n] = c['description']
         if domain(c.get('website_url')): dom[n] = domain(c['website_url'])
         if c.get('hq'): hq[n] = c['hq']
+        if c.get('founded_year'): yr[n] = c['founded_year']
     added = {n: c['created_at'][:16] for n, c in cos.items() if c['created_at'] >= CUTOFF}
     # founders per company (company_founders table; only companies that are shown on the site)
     fnd = {}
     for f in get('company_founders?select=name,title,company:companies(name)&order=title.desc,name'):
         co = (f.get('company') or {}).get('name')
         if co in cos: fnd.setdefault(co, []).append([f['name'], f.get('title')])
-    return rows, ind, desc, dom, hq, added, league, fnd
+    return rows, ind, desc, dom, hq, added, league, fnd, yr
 
 def main():
     P = 'index.html'; s = open(P, encoding='utf8').read()
-    rows, ind, desc, dom, hq, added, league, fnd = build()
+    rows, ind, desc, dom, hq, added, league, fnd, yr = build()
     dump = lambda x: json.dumps(x, ensure_ascii=False, separators=(',', ':'))
     def sub(prefix, new):
         nonlocal s
@@ -70,6 +71,7 @@ def main():
         s = pat.sub(lambda m: new, s, count=1)
     sub('const DATA={', 'const DATA=' + dump({'rows': rows, 'ind': ind, 'desc': desc, 'dom': dom}) + ';')
     sub('DATA.hq={', 'DATA.hq=' + dump(hq) + ';')
+    sub('DATA.yr={', 'DATA.yr=' + dump(yr) + ';')
     sub('DATA.fnd={', 'DATA.fnd=' + dump(fnd) + ';')
     sub('const ADDED={', 'const ADDED=' + dump(added) + ';')
     sub('const LEAGUE={', 'const LEAGUE=' + dump(league) + ';')
